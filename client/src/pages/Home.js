@@ -27,7 +27,7 @@ function Home() {
                     <p>Introduction paragaraph</p>
                 </Grid>
             </Grid>
-            <Grid container sytle={{ textAlign: 'center' }} direction="row" justify="center" alignItems="center">
+            <Grid container direction="row" justify="center" alignItems="center">
                 <Grid item xs={12} sm={6} style={{textAlign: "center"}}>
                     <FormControl style={{ minWidth: 180, marginLeft: "30px" }}>
                         <InputLabel id="demo-simple-select-autowidth-label">Difficulty</InputLabel>
