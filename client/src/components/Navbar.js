@@ -6,20 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import { createMuiTheme } from '@material-ui/core/styles';
-import { ThemeProvider } from '@material-ui/styles';
 
-const theme = createMuiTheme({
-    palette: {
-      primary: {
-        dark: "#142850",
-        main:"#27496d"
-      },
-      secondary: {
-        main: '#00909e',
-      },
-    },
-  });
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,7 +25,6 @@ export default function ButtonAppBar() {
   const classes = useStyles();
 
   return (
-    <ThemeProvider theme={theme}>
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
@@ -55,6 +41,5 @@ export default function ButtonAppBar() {
         </Toolbar>
       </AppBar>
     </div>
-    </ThemeProvider>
   );
 }
