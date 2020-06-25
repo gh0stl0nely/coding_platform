@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Visual from "./pages/VisualPage";
@@ -9,20 +10,28 @@ import CodeEditor from "./components/CodeEditor"
 
 function App() {
   return (
-    <div>
-      <header>
+    <Router>
+      <div>
         <Navbar />
-      </header>
-      <main>
-        <Home />
-        <Visual />
-        <QuestionPage />
-        <SignUp />
-        <SignIn />
-        <CodeEditor />
-      </main>
-
-    </div>
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route exact path="/signin">
+            <SignIn />
+          </Route>
+          <Route exact path="/signup">
+            <SignUp />
+          </Route>
+          <Route exact path="/visualization">
+            <Visual />
+          </Route>
+          <Route path="/question">
+          <QuestionPage />
+          </Route>
+        </Switch>
+      </div>
+    </Router>
   );
 }
 

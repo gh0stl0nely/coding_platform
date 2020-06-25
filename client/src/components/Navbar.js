@@ -34,10 +34,9 @@ export default function ButtonAppBar() {
           <Typography variant="h6" className={classes.title}>
             App Name/Logo
           </Typography>
-          <Button color="inherit">Home</Button>
-          <Button color="inherit">Visualization</Button>
-          <Button color="inherit">Sign Up</Button>
-          <Button color="inherit">Sign In</Button>
+          <Button href="/" color="inherit">Home</Button>
+          <Button href="/visualization" color="inherit">Visualization</Button>
+          <Button href="/signin" color="inherit">Sign In</Button>
         </Toolbar>
       </AppBar>
     </div>
