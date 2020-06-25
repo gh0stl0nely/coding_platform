@@ -2,7 +2,12 @@ const express = require("express");
 const router = express.Router();
 const User = require("../model/User");
 const Question = require("../model/Question");
-const Answer = require("../model/Answer");
+
+
+router.post("/code", (req,res) => {
+    const userInputs = req.body;
+    console.log(userInputs);
+});
 
 // Test 
 // A sample route for creating a en

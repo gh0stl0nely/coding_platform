@@ -5,6 +5,7 @@ import Visual from "./pages/VisualPage";
 import QuestionPage from "./pages/QuestionDisplayPage";
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
+import CodeEditor from "./components/CodeEditor"
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <QuestionPage />
         <SignUp />
         <SignIn />
+        <CodeEditor />
       </main>
 
     </div>
