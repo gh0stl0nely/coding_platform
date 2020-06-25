@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import SimpleTab from "../components/Tab";
 import ReplayIcon from '@material-ui/icons/Replay';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
+import CodeEditor from "../components/CodeEditor";
 
 const styles={
     button:{
@@ -13,6 +14,39 @@ const styles={
 }
 
 function QuestionPage() {
+    // This is sample of a question data model
+    // You can set CodeEditor value={cacheInput} when useEffect is called
+    const [theme, setTheme] = useState("monokai");
+
+    const sampleQuestion = {
+        _id: "123saddsahd",
+        title: "This is Title", // Use this for title
+        description: "This is description", // Use this for description
+        sampleInput: 3, // Use 
+        sampleOutput: 5,
+        difficulty: "Hard",
+        type: "Array",
+        cacheInput: `function(){
+            for(var i = 0; i < 3; i++){
+                console.log(i);
+            }
+        }`, // This goes to the editor value 
+        isSolved: true, // If it is solved, then status: Solved, and vice versa
+        // No need to check for answers yet ! But included here for data integrity
+        answers: {
+            inputs: [1,2,3],
+            expectedOutputs: [1,3,4]
+        }
+    }
+
+    function toggleEditorTheme(){
+        if(theme == "xcode"){
+            setTheme("monokai");
+        } else {
+            setTheme("xcode");
+        }
+    }
+
     return (
         <Container maxWidth="md">
             <Grid container direction="row" justify="center" alignItems="center">
@@ -27,6 +61,9 @@ function QuestionPage() {
                         <IconButton aria-label="replay" style={styles.button}>
                             <ReplayIcon size="small" color="primary" />
                         </IconButton>
+                        <Button onClick={toggleEditorTheme} size="small" variant="contained" color="primary" style={styles.button}>
+                            Toggle theme
+                        </Button>
                         <Button size="small" variant="contained" color="primary" style={styles.button}>
                             Run
                         </Button>
@@ -34,7 +71,7 @@ function QuestionPage() {
                             Submit Code
                         </Button>
                     </div>
-                    <p>Code Editor here</p>
+                    <CodeEditor editorTheme={theme}/>
                 </Grid>
             </Grid>
         </Container>
