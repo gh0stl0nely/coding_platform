@@ -36,7 +36,7 @@ const sampleQuestion = {
     }
 }
 
-function QuestionPage(props) {
+function QuestionPage() {
     // This is sample of a question data model
     // You can set CodeEditor value={cacheInput} when useEffect is called
     const [codeEditorValue, setCodeEditor] = useState("")
@@ -69,11 +69,11 @@ function QuestionPage(props) {
 
     return (
         <Container maxWidth="md">
-            <Grid container direction="row" alignItems="stretch" justify="center" key={sampleQuestion._id} data-isSolved={sampleQuestion.isSolved}>
+            <Grid container direction="row" justify="center" key={sampleQuestion._id} data-isSolved={sampleQuestion.isSolved}>
                 <Grid item xs={12} style={{ textAlign: "center" }}>
                     <h2 style={{ color: "#142850" }}>{sampleQuestion.title}</h2>
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} md={6} style={{ borderStyle: "solid none none solid", borderColor: "#142850" }}>
                     <div style={{ textAlign: "center" }}>
                         <Button size="small" variant="contained" style={styles.button} onClick={() => { handleShowSolution("question") }}>
                             Question
@@ -82,15 +82,15 @@ function QuestionPage(props) {
                             Solution
                         </Button>
                     </div>
-                    <Grid item xs={12} id="questionDiv" style={{paddingBottom: "80px"}}>
+                    <Grid item xs={12} id="questionDiv" style={{ padding: "0px 20px 80px 20px", overflow: "scroll", height: "294px" }}>
                         {sampleQuestion.description}
                     </Grid>
-                    <Grid item xs={12} id="solutionDiv" style={{paddingBottom: "80px", display:"none"}}>
-                        <p>Input: </p>[<span>[{sampleQuestion.answers.inputs.toString()}]</span>
+                    <Grid item xs={12} id="solutionDiv" style={{ padding: "0px 20px 80px 20px", display: "none", overflow: "scroll" }}>
+                        <p>Input: </p><span>[{sampleQuestion.answers.inputs.toString()}]</span>
                         <p>Expected Outputs: </p><span>[{sampleQuestion.answers.expectedOutputs.toString()}]</span>
                     </Grid>
                 </Grid>
-                <Grid item xs={12} md={6} style={{ textAlign: "center" }}>
+                <Grid item xs={12} md={6} style={{ borderStyle: "solid solid none solid", borderColor: "#142850", textAlign: "center" }}>
                     <IconButton aria-label="replay">
                         <ReplayIcon size="small" style={{ color: "#305c8a", fontWeight: "bold" }} />
                     </IconButton>
@@ -106,6 +106,9 @@ function QuestionPage(props) {
                     <Grid item xs={12}>
                         <CodeEditor editorTheme={theme} value={codeEditorValue} />
                     </Grid>
+                </Grid>
+                <Grid item xs={12} style={{ textAlign: "center", height: "200px", border: "black 2px solid" }}>
+                    <p>console log goes here</p>
                 </Grid>
             </Grid>
         </Container>
