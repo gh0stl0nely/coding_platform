@@ -7,7 +7,8 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
-import Table from "../components/QuestionTable";
+import QuestionCard from "../components/QuestionCard";
+
 
 
 function Home() {
@@ -19,17 +20,17 @@ function Home() {
     // They will be led to /question/:id, once they are on /question/:id, useEffect on that page will fire
     // And then we will query the database to find that particular question, send back to frontend (see the data model in QuestionDisplayPage),
     // and then we can use that data to setState. 
-    useEffect(() => {
-        // *** YOU DONT NEED TO IMPLEMENT THIS YET, just make sure rendering with sampleData is working first *** 
+    // useEffect(() => {
+    //     // *** YOU DONT NEED TO IMPLEMENT THIS YET, just make sure rendering with sampleData is working first *** 
 
-        // This useEffect will be fired whnever user goes to "/"  
+    //     // This useEffect will be fired whnever user goes to "/"  
 
-        // Basically it will query the backend, get all the questions and send it back here
-        // we will then call setQuestions(questionsFromBackEnd)
+    //     // Basically it will query the backend, get all the questions and send it back here
+    //     // we will then call setQuestions(questionsFromBackEnd)
 
-        return "Data from backend here";
+    //     return "Data from backend here";
         
-    }, [])
+    // }, [])
 
     // Use the data is received from the useEffect, we will do the rendering as follow:
     // You can use difficulty to translate to number of star (i.e: Easy == 1 star)
@@ -82,7 +83,7 @@ function Home() {
         title: "String Q2",
         description: "This is Description",
         difficulty: "Easy",
-        type: "Array",
+        type: "String",
         cacheInput: "Cache Input", // This goes to the editor value 
         isSolved: false, // If it is solved, then status: Solved, and vice versa
         // No need to check for answers yet ! But included here for data integrity
@@ -105,7 +106,7 @@ function Home() {
         }
     },{
         _id: "123saddsahd",
-        title: "Hash Table Q2",
+        title: "Hash Table Q2 Hash Table Q2 Hash Table Q2Hash Table Q2",
         description: "This is Description",
         difficulty: "Medium",
         type: "Hash Table",
@@ -122,6 +123,23 @@ function Home() {
         setDifficulty(event.target.value);
         setQuestionType(event.target.value);
     };
+
+    const renderQuestions = () => {
+        const types = ["Array", "String", "Hash Table"]; 
+        const result = [];
+
+        for(var i = 0; i < types.length; i++){
+            const questionType = types[i];
+            const filteredData = sampleData.filter(item => item.type == questionType);
+            const grid = (
+                <Grid item xs={12} sm={6} md={4}>
+                    <QuestionCard questionType={questionType} data={filteredData}/>
+                </Grid>
+            )
+            result.push(grid);
+        }
+        return result;
+    }
 
     return (
         <Container maxWidth="md">
@@ -175,11 +193,17 @@ function Home() {
                     </Button>
                 </Grid>
             </Grid>
-            <Grid container direction="row" justify="center" alignItems="center">
-                <Grid item xs={12} style={{textAlign: "center"}}>
-                    <Table />
-                    {/* This is where the rendering will happen */}
+            <Grid style={{marginTop: "20px"}} container direction="row" spacing={2}>
+                {renderQuestions()}
+                {/* <Grid item xs={12} sm={6} md={4}>
+                    <QuestionCard />
                 </Grid>
+                <Grid item xs={12} sm={6} md={4}>
+                    <QuestionCard />
+                </Grid>
+                <Grid item xs={12} sm={6} md={4}>
+                    <QuestionCard />
+                </Grid> */}
             </Grid>
         </Container>
     )

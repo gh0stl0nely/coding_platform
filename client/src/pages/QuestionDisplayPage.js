@@ -1,3 +1,4 @@
+import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from 'react';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
@@ -39,6 +40,7 @@ const sampleQuestion = {
 function QuestionPage() {
     // This is sample of a question data model
     // You can set CodeEditor value={cacheInput} when useEffect is called
+    let { id } = useParams();
     const [codeEditorValue, setCodeEditor] = useState("")
     const [theme, setTheme] = useState("monokai");
     const [btnLabel, setBtnLabel] = useState("Theme Toggle");
@@ -71,6 +73,7 @@ function QuestionPage() {
         <Container maxWidth="md">
             <Grid container direction="row" justify="center" key={sampleQuestion._id} data-isSolved={sampleQuestion.isSolved}>
                 <Grid item xs={12} style={{ textAlign: "center" }}>
+                    <h2>Q1: {id}</h2>
                     <h2 style={{ color: "#142850" }}>{sampleQuestion.title}</h2>
                 </Grid>
                 <Grid item xs={12} md={6} style={{ borderStyle: "solid none none solid", borderColor: "#142850" }}>
