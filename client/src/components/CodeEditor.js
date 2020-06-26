@@ -32,7 +32,7 @@ function CodeEditor(props){
             name="UNIQUE_ID_OF_DIV"
             editorProps={{ $blockScrolling: true }}
             setOptions={options}
-            style={{width: "100%"}}
+            style={{width: "100%", height: "300px"}}
         />
     )
 }

@@ -6,6 +6,7 @@ import Visual from "./pages/VisualPage";
 import QuestionPage from "./pages/QuestionDisplayPage";
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
+import NoMatch from './pages/NoMatch';
 
 function App() {
   return (
@@ -31,6 +32,9 @@ function App() {
           </Route>
           <Route path="/question">
             <Home />
+          </Route>
+          <Route path="*">
+            <NoMatch />
           </Route>
         </Switch>
       </div>
