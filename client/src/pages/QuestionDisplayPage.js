@@ -76,7 +76,7 @@ function QuestionPage() {
                     <h2>Q1: {id}</h2>
                     <h2 style={{ color: "#142850" }}>{sampleQuestion.title}</h2>
                 </Grid>
-                <Grid item xs={12} md={6} style={{ borderStyle: "solid none none solid", borderColor: "#142850" }}>
+                <Grid item xs={12} md={6} style={{ borderStyle: "solid solid none solid", borderColor: "#142850" }}>
                     <div style={{ textAlign: "center" }}>
                         <Button size="small" variant="contained" style={styles.button} onClick={() => { handleShowSolution("question") }}>
                             Question
