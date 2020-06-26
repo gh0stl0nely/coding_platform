@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { useParams } from "react-router-dom";
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import SimpleTab from "../components/Tab";
@@ -16,6 +17,7 @@ const styles={
 function QuestionPage() {
     // This is sample of a question data model
     // You can set CodeEditor value={cacheInput} when useEffect is called
+    let { id } = useParams();
     const [theme, setTheme] = useState("monokai");
 
     const sampleQuestion = {
@@ -40,18 +42,14 @@ function QuestionPage() {
     }
 
     function toggleEditorTheme(){
-        if(theme == "xcode"){
-            setTheme("monokai");
-        } else {
-            setTheme("xcode");
-        }
+        return theme == "xcode" ? setTheme("monokai") : setTheme("xcode");
     }
 
     return (
         <Container maxWidth="md">
             <Grid container direction="row" justify="center" alignItems="center">
                 <Grid item xs={12} style={{ textAlign: "center" }}>
-                    <h2>Q1: question name</h2>
+                    <h2>Q1: {id}</h2>
                 </Grid>
                 <Grid item xs={12} md={6} style={{ textAlign: "center" }}>
                     <SimpleTab />
