@@ -2,7 +2,8 @@ const express = require("express");
 const router = express.Router();
 const User = require("../model/User");
 const Question = require("../model/Question");
-
+const {questionList} = require("../question");
+const passport = require('passport');
 
 router.post("/code", (req,res) => {
     const userInputs = req.body;
@@ -10,41 +11,30 @@ router.post("/code", (req,res) => {
 });
 
 // Test 
-// A sample route for creating a en
+// A sample route for creating a new user, adding all questions for that user
 router.get("/newUser", async (req,res) => {
-    // 
-    console.log("Creating");
+    const createQuestions = async () => {
+        return Promise.all(questionList.map(async (item) => {
+            const question = await Question.create(item);
+            return question;
+        }))
+    }
 
-    const Q1 = await Question.create({
-        title: "One",
-        description: "One",
-        difficulty: "One",
-        type: "One",
-        cacheInput: "One",
-        answers: {
-            inputs: [1,2,3],
-            expectedOutputs: [4,5,6]
-        }
-    });
-
-    const u1 = await User.create({
+    const questionData = await createQuestions();
+    const user = await User.create({
         name: "Khoi",
         password: "2",
-        questions: [Q1]
+        lastQuestionID: "",
+        questions: questionData
     });
 
-    console.log(u1.questions[0]);
-//     // {
-//   answers: { inputs: [ 1, 2, 3 ], expectedOutputs: [ 4, 5, 6 ] },
-//   _id: 5ef3f9add08ae77f817206ac,
-//   title: 'One',
-//   description: 'One',
-//   difficulty: 'One',
-//   type: 'One',
-//   cacheInput: 'One',
-//   __v: 0
-// }
+    console.log(user);
 
+})
+
+// Log in and authenticate route
+router.post("/login", passport.authenticate("local"), (req,res) => {
+    
 })
 
 // This is sample route for getting user by ID and populate the list of questions :) 
@@ -67,8 +57,6 @@ router.get("/submit", async (req,res) => {
     const chosenQuestion = questionLists.filter(question => question["_id"] == "5ef3f8330b84527e5e1e8d92");
 
     console.log(chosenQuestion[0].answers); // { inputs: [ 1, 2, 3 ], expectedOutputs: [ 4, 5, 6 ] }
-
-
 })
 
 

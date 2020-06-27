@@ -7,6 +7,11 @@ const QuestionSchema = new mongoose.Schema({
     type: String,
     cacheInput: String,
     isSolved: Boolean,
+    beginningCode: String,
+    inputOne: mongoose.Schema.Types.Mixed,
+    inputTwo: mongoose.Schema.Types.Mixed,
+    outputOne: mongoose.Schema.Types.Mixed,
+    outputTwo: mongoose.Schema.Types.Mixed,
     answers: {
         inputs: Array,
         expectedOutputs: Array
