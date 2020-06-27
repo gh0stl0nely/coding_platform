@@ -3,16 +3,17 @@ const router = express.Router();
 const User = require("../model/User");
 const Question = require("../model/Question");
 const {questionList} = require("../question");
-const passport = require('passport');
+const passport = require("../auth/passport");
 
 router.post("/code", (req,res) => {
     const userInputs = req.body;
     console.log(userInputs);
 });
 
-// Test 
-// A sample route for creating a new user, adding all questions for that user
-router.get("/newUser", async (req,res) => {
+// This route handles creation of a new user
+router.post("/signup", async (req,res) => {
+    const { username, email, password } = req.body;
+
     const createQuestions = async () => {
         return Promise.all(questionList.map(async (item) => {
             const question = await Question.create(item);
@@ -21,20 +22,20 @@ router.get("/newUser", async (req,res) => {
     }
 
     const questionData = await createQuestions();
+
     const user = await User.create({
-        name: "Khoi",
-        password: "2",
+        username: username,
+        email: email,
+        password: password,
         lastQuestionID: "",
         questions: questionData
     });
-
-    console.log(user);
-
 })
 
 // Log in and authenticate route
 router.post("/login", passport.authenticate("local"), (req,res) => {
-    
+    // After this point we are authenticated? 
+
 })
 
 // This is sample route for getting user by ID and populate the list of questions :) 

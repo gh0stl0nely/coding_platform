@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -14,6 +14,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
+import axios from "axios";
 
 const themeColor = createMuiTheme({
   palette: {
@@ -59,6 +60,31 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUp() {
   const classes = useStyles();
+  const [userInput, setInput] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
+
+  function signUpUser(e){
+    e.preventDefault();
+
+    return axios.post("/api/signup", {
+      username: userInput.username,
+      email: userInput.email,
+      password: userInput.password
+    })
+  }
+
+  function handleChange(e){
+    const value = e.target.value;
+    const name = e.target.name;
+
+    setInput({
+      ...userInput,
+      [name] : value
+    })
+  }
 
   return (
     <ThemeProvider theme={themeColor}>
@@ -71,29 +97,20 @@ export default function SignUp() {
           <Typography component="h1" variant="h5">
             Sign up
         </Typography>
-          <form className={classes.form} noValidate>
+          <form onSubmit={signUpUser} className={classes.form} noValidate>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12}>
                 <TextField
-                  autoComplete="fname"
-                  name="firstName"
+                  autoComplete="username"
+                  name="username"
                   variant="outlined"
                   required
                   fullWidth
-                  id="firstName"
-                  label="First Name"
+                  id="username"
+                  label="User Name"
                   autoFocus
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="lname"
+                  value={userInput.username}
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -101,10 +118,12 @@ export default function SignUp() {
                   variant="outlined"
                   required
                   fullWidth
-                  id="username"
-                  label="User Name"
-                  name="username"
-                  autoComplete="username"
+                  id="email"
+                  label="Email"
+                  name="email"
+                  autoComplete="email"
+                  value={userInput.email}
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -117,6 +136,8 @@ export default function SignUp() {
                   type="password"
                   id="password"
                   autoComplete="current-password"
+                  value={userInput.password}
+                  onChange={handleChange}
                 />
               </Grid>
             </Grid>
