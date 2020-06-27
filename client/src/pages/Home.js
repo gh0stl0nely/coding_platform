@@ -11,9 +11,9 @@ import QuestionCard from "../components/QuestionCard";
 import StarIcon from "@material-ui/icons/Star";
 import API from "../utils/auth";
 
-const styles={
+const styles = {
     iconStyle: {
-        position:"relative", 
+        position: "relative",
         bottom: "10px"
     }
 }
@@ -135,10 +135,13 @@ function Home() {
         }
     }]
 
-    const handleChange = (event) => {
+    const handleChangeDifficulty = (event) => {
         setDifficulty(event.target.value);
-        setQuestionType(event.target.value);
     };
+
+    const handleChangeQuestionType = (event) => {
+        setQuestionType(event.target.value);
+    }
 
     const renderQuestions = () => {
         const types = ["Array", "String", "Hash Table"];
@@ -158,14 +161,14 @@ function Home() {
     }
 
     return (
-        <Container maxWidth="md">
+        <Container maxWidth="lg" style={{ marginTop: "20px" }}>
             <Grid container justify="center">
-                <Grid item style={{height: "300px", textAlign:"center", backgroundColor: "#4BB3DB" }} xs={12}>
+                <Grid item style={{ height: "300px", textAlign: "center", backgroundColor: "#80A7E3" }} xs={12}>
                     <h1>App name</h1>
                     <p>Introduction paragaraph</p>
                 </Grid>
             </Grid>
-            <Grid container direction="row" justify="center" alignItems="center">
+            <Grid container direction="row" justify="center" alignItems="center" style={{ marginTop: "30px" }}>
                 <Grid item xs={12} sm={6} style={{ textAlign: "center" }}>
                     <FormControl style={{ minWidth: 180, marginLeft: "30px" }}>
                         <InputLabel id="difficultyLabel">Difficulty</InputLabel>
@@ -173,14 +176,14 @@ function Home() {
                             labelId="difficultyLabel"
                             id="difficulty"
                             value={difficulty}
-                            onChange={handleChange}
+                            onChange={handleChangeDifficulty}
                             autoWidth
                         >
                             <MenuItem value={"Easy"}>Easy</MenuItem>
                             <MenuItem value={"Medium"}>Medium</MenuItem>
                             <MenuItem value={"Hard"}>Hard</MenuItem>
                         </Select>
-                        <FormHelperText>Choose question difficulty</FormHelperText>
+                        <FormHelperText>Choose desired difficulty</FormHelperText>
                     </FormControl>
                 </Grid>
                 <Grid item xs={12} sm={6} style={{ textAlign: "center" }}>
@@ -190,32 +193,29 @@ function Home() {
                             labelId="questionTypeLabel"
                             id="questionType"
                             value={questionType}
-                            onChange={handleChange}
+                            onChange={handleChangeQuestionType}
                             autoWidth
                         >
-                            <MenuItem value="">
-                                <em>None</em>
-                            </MenuItem>
                             <MenuItem value={"Array"}>Array</MenuItem>
                             <MenuItem value={"String"}>String</MenuItem>
                             <MenuItem value={"Hash Table"}>Hash Table</MenuItem>
                         </Select>
-                        <FormHelperText>Choose question type</FormHelperText>
+                        <FormHelperText>Choose desired type</FormHelperText>
                     </FormControl>
                 </Grid>
                 <Grid item xs={12} style={{ textAlign: "center", marginBottom: "10px" }}>
-                    <Button variant="contained" style={{backgroundColor: "#305c8a", color:"white"}}>
+                    <Button variant="contained" color="primary">
                         Reset Filter
                     </Button>
                 </Grid>
-                <Grid item xs={4} style={{ textAlign: "center", marginTop: "10px", backgroundColor: "#305c8a", color: "white"}}>
-                    <p style={{ fontSize: "20px", marginTop: "10px"}}>Easy </p><StarIcon style={styles.iconStyle}/>
+                <Grid item xs={4} style={{ textAlign: "center", marginTop: "10px", backgroundColor: "#305c8a", color: "white" }}>
+                    <p style={{ fontSize: "20px", marginTop: "10px" }}>Easy </p><StarIcon style={styles.iconStyle} />
                 </Grid>
-                <Grid item xs={4} style={{ textAlign: "center", marginTop: "10px", backgroundColor: "#305c8a", color: "white"}}>
-                    <p style={{ fontSize: "20px", marginTop: "10px"}}>Medium </p><StarIcon style={styles.iconStyle}/><StarIcon style={styles.iconStyle}/>
+                <Grid item xs={4} style={{ textAlign: "center", marginTop: "10px", backgroundColor: "#305c8a", color: "white" }}>
+                    <p style={{ fontSize: "20px", marginTop: "10px" }}>Medium </p><StarIcon style={styles.iconStyle} /><StarIcon style={styles.iconStyle} />
                 </Grid>
-                <Grid item xs={4} style={{ textAlign: "center", marginTop: "10px", backgroundColor: "#305c8a", color: "white"}}>
-                    <p style={{ fontSize: "20px", marginTop: "10px"}}>Hard </p><StarIcon style={styles.iconStyle}/><StarIcon style={styles.iconStyle}/><StarIcon style={styles.iconStyle}/>
+                <Grid item xs={4} style={{ textAlign: "center", marginTop: "10px", backgroundColor: "#305c8a", color: "white" }}>
+                    <p style={{ fontSize: "20px", marginTop: "10px" }}>Hard </p><StarIcon style={styles.iconStyle} /><StarIcon style={styles.iconStyle} /><StarIcon style={styles.iconStyle} />
                 </Grid>
             </Grid>
             <Grid container direction="row" spacing={2}>
