@@ -13,8 +13,7 @@ import StarIcon from "@material-ui/icons/Star";
 const styles={
     iconStyle: {
         position:"relative", 
-        top: "5px", 
-        left: "5px"
+        bottom: "10px"
     }
 }
 
@@ -200,14 +199,14 @@ function Home() {
                         Reset Filter
                     </Button>
                 </Grid>
-                <Grid item xs={4} style={{ textAlign: "right", marginTop: "10px", backgroundColor: "#305c8a", color: "white"}}>
-                    <p style={{ fontSize: "20px", display: "inline-block"}}>Easy </p><StarIcon style={styles.iconStyle}/>
+                <Grid item xs={4} style={{ textAlign: "center", marginTop: "10px", backgroundColor: "#305c8a", color: "white"}}>
+                    <p style={{ fontSize: "20px", marginTop: "10px"}}>Easy </p><StarIcon style={styles.iconStyle}/>
                 </Grid>
                 <Grid item xs={4} style={{ textAlign: "center", marginTop: "10px", backgroundColor: "#305c8a", color: "white"}}>
-                    <p style={{ fontSize: "20px", display: "inline-block"}}>Medium </p><StarIcon style={styles.iconStyle}/><StarIcon style={styles.iconStyle}/>
+                    <p style={{ fontSize: "20px", marginTop: "10px"}}>Medium </p><StarIcon style={styles.iconStyle}/><StarIcon style={styles.iconStyle}/>
                 </Grid>
-                <Grid item xs={4} style={{ textAlign: "left", marginTop: "10px", backgroundColor: "#305c8a", color: "white"}}>
-                    <p style={{ fontSize: "20px", display: "inline-block"}}>Hard </p><StarIcon style={styles.iconStyle}/><StarIcon style={styles.iconStyle}/><StarIcon style={styles.iconStyle}/>
+                <Grid item xs={4} style={{ textAlign: "center", marginTop: "10px", backgroundColor: "#305c8a", color: "white"}}>
+                    <p style={{ fontSize: "20px", marginTop: "10px"}}>Hard </p><StarIcon style={styles.iconStyle}/><StarIcon style={styles.iconStyle}/><StarIcon style={styles.iconStyle}/>
                 </Grid>
             </Grid>
             <Grid container direction="row" spacing={2}>
