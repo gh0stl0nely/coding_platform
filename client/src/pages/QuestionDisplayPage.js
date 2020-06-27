@@ -44,9 +44,11 @@ function QuestionPage() {
     const [codeEditorValue, setCodeEditor] = useState("")
     const [theme, setTheme] = useState("monokai");
     const [btnLabel, setBtnLabel] = useState("Theme Toggle");
+    const [solvedState, setSolvedState] = useState("");
 
     useEffect(() => {
-        setCodeEditor(sampleQuestion.cacheInput)
+        setCodeEditor(sampleQuestion.cacheInput);
+        checkSolved();
     }, [])
 
     function toggleEditorTheme() {
@@ -56,6 +58,14 @@ function QuestionPage() {
         } else {
             setTheme("xcode");
             setBtnLabel("Dark");
+        }
+    }
+
+    function checkSolved() {
+        if (sampleQuestion.isSolved === true) {
+            setSolvedState("Solved");
+        } else {
+            setSolvedState("Not Yet Solved");
         }
     }
 
@@ -73,8 +83,8 @@ function QuestionPage() {
         <Container maxWidth="md">
             <Grid container direction="row" justify="center" key={sampleQuestion._id} data-isSolved={sampleQuestion.isSolved}>
                 <Grid item xs={12} style={{ textAlign: "center" }}>
-                    <h2>Q1: {id}</h2>
                     <h2 style={{ color: "#142850" }}>{sampleQuestion.title}</h2>
+                    <h4>Question Id: {id}</h4>
                 </Grid>
                 <Grid item xs={12} md={6} style={{ borderStyle: "solid solid none solid", borderColor: "#142850" }}>
                     <div style={{ textAlign: "center" }}>
@@ -86,7 +96,13 @@ function QuestionPage() {
                         </Button>
                     </div>
                     <Grid item xs={12} id="questionDiv" style={{ padding: "0px 20px 80px 20px", overflow: "scroll", height: "294px" }}>
+                        <p>Question type: <span>{sampleQuestion.type}</span></p>
+                        <p>Difficulty: <span>{sampleQuestion.difficulty}</span></p>
+                        <p>Status: <span> {solvedState} </span></p>
+                        <p>Question Description</p>
                         {sampleQuestion.description}
+                        <p>Sample Input: </p><span>{sampleQuestion.sampleInput}</span>
+                        <p>Sample Output: </p><span>{sampleQuestion.sampleOutput}</span>
                     </Grid>
                     <Grid item xs={12} id="solutionDiv" style={{ padding: "0px 20px 80px 20px", display: "none", overflow: "scroll" }}>
                         <p>Input: </p><span>[{sampleQuestion.answers.inputs.toString()}]</span>
