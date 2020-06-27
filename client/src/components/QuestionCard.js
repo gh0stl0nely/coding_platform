@@ -11,17 +11,17 @@ import GradeIcon from '@material-ui/icons/Grade';
 const useStyles = makeStyles({
   root: {
     minWidth: 275,
+    backgroundColor: "#35618F",
+    marginTop: "20px"
   },
   bullet: {
     display: 'inline-block',
     margin: '0 2px',
     transform: 'scale(0.8)',
   },
-  title: {
-    fontSize: 14,
-  },
   pos: {
     marginBottom: 12,
+    color: "white"
   },
 });
 
@@ -29,7 +29,7 @@ export default function QuestionCard(props) {
   const classes = useStyles();
 
   function renderTick(isSolved){
-    return isSolved ? <CheckCircleIcon /> : "";
+    return isSolved ? <CheckCircleIcon style={{position: "relative", top: "5px"}}/> : "";
   }
 
   function renderStars(difficulty){
@@ -44,9 +44,9 @@ export default function QuestionCard(props) {
   }
 
   return (
-    <Card style={{marginTop: "20px"}} className={classes.root}>
+    <Card className={classes.root}>
       <CardContent>
-        <Typography style={{textAlign: "center"}} variant="h5" component="h2">
+        <Typography style={{textAlign: "center", color: "white", fontWeight: "bold"}} variant="h5" component="h2">
           {props.questionType}
         </Typography>
       </CardContent>
@@ -56,7 +56,7 @@ export default function QuestionCard(props) {
           <>
           <CardContent style={{paddingBottom: "0px"}}>
             <Typography>
-            <Link onClick={() => goToQuestion(item["_id"])} style={{cursor: "pointer"}}>{item.title} {renderTick(item.isSolved)}</Link>
+            <Link onClick={() => goToQuestion(item["_id"])} style={{cursor: "pointer", color: "white", fontSize: "18px"}}>{item.title} {renderTick(item.isSolved)}</Link>
             </Typography>
             <Typography className={classes.pos} color="textSecondary">
               {renderStars(item.difficulty)}
