@@ -8,7 +8,15 @@ import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import QuestionCard from "../components/QuestionCard";
+import StarIcon from "@material-ui/icons/Star";
 
+const styles={
+    iconStyle: {
+        position:"relative", 
+        top: "5px", 
+        left: "5px"
+    }
+}
 
 
 function Home() {
@@ -29,7 +37,7 @@ function Home() {
     //     // we will then call setQuestions(questionsFromBackEnd)
 
     //     return "Data from backend here";
-        
+
     // }, [])
 
     // Use the data is received from the useEffect, we will do the rendering as follow:
@@ -48,10 +56,10 @@ function Home() {
         isSolved: true, // If it is solved, then status: Solved, and vice versa
         // No need to check for answers yet ! But included here for data integrity
         answers: {
-            inputs: [1,2,3],
-            expectedOutputs: [1,3,4]
+            inputs: [1, 2, 3],
+            expectedOutputs: [1, 3, 4]
         }
-    },{
+    }, {
         _id: "123saddsahd",
         title: "Array Q2",
         description: "This is Description",
@@ -61,8 +69,8 @@ function Home() {
         isSolved: false, // If it is solved, then status: Solved, and vice versa
         // No need to check for answers yet ! But included here for data integrity
         answers: {
-            inputs: [1,2,3],
-            expectedOutputs: [1,3,4]
+            inputs: [1, 2, 3],
+            expectedOutputs: [1, 3, 4]
         }
     },
     {
@@ -75,10 +83,10 @@ function Home() {
         isSolved: true, // If it is solved, then status: Solved, and vice versa
         // No need to check for answers yet ! But included here for data integrity
         answers: {
-            inputs: [1,2,3],
-            expectedOutputs: [1,3,4]
+            inputs: [1, 2, 3],
+            expectedOutputs: [1, 3, 4]
         }
-    },{
+    }, {
         _id: "123saddsahd",
         title: "String Q2",
         description: "This is Description",
@@ -88,10 +96,10 @@ function Home() {
         isSolved: false, // If it is solved, then status: Solved, and vice versa
         // No need to check for answers yet ! But included here for data integrity
         answers: {
-            inputs: [1,2,3],
-            expectedOutputs: [1,3,4]
+            inputs: [1, 2, 3],
+            expectedOutputs: [1, 3, 4]
         }
-    },{
+    }, {
         _id: "123saddsahd",
         title: "Hash Table Q1",
         description: "This is Description",
@@ -101,10 +109,10 @@ function Home() {
         isSolved: true, // If it is solved, then status: Solved, and vice versa
         // No need to check for answers yet ! But included here for data integrity
         answers: {
-            inputs: [1,2,3],
-            expectedOutputs: [1,3,4]
+            inputs: [1, 2, 3],
+            expectedOutputs: [1, 3, 4]
         }
-    },{
+    }, {
         _id: "123saddsahd",
         title: "Hash Table Q2 Hash Table Q2 Hash Table Q2Hash Table Q2",
         description: "This is Description",
@@ -114,8 +122,8 @@ function Home() {
         isSolved: false, // If it is solved, then status: Solved, and vice versa
         // No need to check for answers yet ! But included here for data integrity
         answers: {
-            inputs: [1,2,3],
-            expectedOutputs: [1,3,4]
+            inputs: [1, 2, 3],
+            expectedOutputs: [1, 3, 4]
         }
     }]
 
@@ -125,15 +133,15 @@ function Home() {
     };
 
     const renderQuestions = () => {
-        const types = ["Array", "String", "Hash Table"]; 
+        const types = ["Array", "String", "Hash Table"];
         const result = [];
 
-        for(var i = 0; i < types.length; i++){
+        for (var i = 0; i < types.length; i++) {
             const questionType = types[i];
             const filteredData = sampleData.filter(item => item.type == questionType);
             const grid = (
                 <Grid item xs={12} sm={6} md={4}>
-                    <QuestionCard questionType={questionType} data={filteredData}/>
+                    <QuestionCard questionType={questionType} data={filteredData} />
                 </Grid>
             )
             result.push(grid);
@@ -144,18 +152,18 @@ function Home() {
     return (
         <Container maxWidth="md">
             <Grid container justify="center">
-                <Grid item style={{ background: "red", height: "300px" }} xs={12}>
+                <Grid item style={{height: "300px", textAlign:"center", backgroundColor: "#4BB3DB" }} xs={12}>
                     <h1>App name</h1>
                     <p>Introduction paragaraph</p>
                 </Grid>
             </Grid>
             <Grid container direction="row" justify="center" alignItems="center">
-                <Grid item xs={12} sm={6} style={{textAlign: "center"}}>
+                <Grid item xs={12} sm={6} style={{ textAlign: "center" }}>
                     <FormControl style={{ minWidth: 180, marginLeft: "30px" }}>
-                        <InputLabel id="demo-simple-select-autowidth-label">Difficulty</InputLabel>
+                        <InputLabel id="difficultyLabel">Difficulty</InputLabel>
                         <Select
-                            labelId="demo-simple-select-autowidth-label"
-                            id="demo-simple-select-autowidth"
+                            labelId="difficultyLabel"
+                            id="difficulty"
                             value={difficulty}
                             onChange={handleChange}
                             autoWidth
@@ -167,12 +175,12 @@ function Home() {
                         <FormHelperText>Choose question difficulty</FormHelperText>
                     </FormControl>
                 </Grid>
-                <Grid item xs={12} sm={6} style={{textAlign: "center"}}>
+                <Grid item xs={12} sm={6} style={{ textAlign: "center" }}>
                     <FormControl style={{ minWidth: 180, marginLeft: "30px" }}>
-                        <InputLabel id="demo-simple-select-autowidth-label">Question Type</InputLabel>
+                        <InputLabel id="questionTypeLabel">Question Type</InputLabel>
                         <Select
-                            labelId="demo-simple-select-autowidth-label"
-                            id="demo-simple-select-autowidth"
+                            labelId="questionTypeLabel"
+                            id="questionType"
                             value={questionType}
                             onChange={handleChange}
                             autoWidth
@@ -180,20 +188,29 @@ function Home() {
                             <MenuItem value="">
                                 <em>None</em>
                             </MenuItem>
-                            <MenuItem value={10}>Ten</MenuItem>
-                            <MenuItem value={20}>Twenty</MenuItem>
-                            <MenuItem value={30}>Thirty</MenuItem>
+                            <MenuItem value={"Array"}>Array</MenuItem>
+                            <MenuItem value={"String"}>String</MenuItem>
+                            <MenuItem value={"Hash Table"}>Hash Table</MenuItem>
                         </Select>
                         <FormHelperText>Choose question type</FormHelperText>
                     </FormControl>
                 </Grid>
-                <Grid item xs={12} style={{textAlign: "center"}}>
-                    <Button variant="contained" color="primary">
+                <Grid item xs={12} style={{ textAlign: "center", marginBottom: "10px" }}>
+                    <Button variant="contained" style={{backgroundColor: "#305c8a", color:"white"}}>
                         Reset Filter
                     </Button>
                 </Grid>
+                <Grid item xs={4} style={{ textAlign: "right", marginTop: "10px", backgroundColor: "#305c8a", color: "white"}}>
+                    <p style={{ fontSize: "20px", display: "inline-block"}}>Easy </p><StarIcon style={styles.iconStyle}/>
+                </Grid>
+                <Grid item xs={4} style={{ textAlign: "center", marginTop: "10px", backgroundColor: "#305c8a", color: "white"}}>
+                    <p style={{ fontSize: "20px", display: "inline-block"}}>Medium </p><StarIcon style={styles.iconStyle}/><StarIcon style={styles.iconStyle}/>
+                </Grid>
+                <Grid item xs={4} style={{ textAlign: "left", marginTop: "10px", backgroundColor: "#305c8a", color: "white"}}>
+                    <p style={{ fontSize: "20px", display: "inline-block"}}>Hard </p><StarIcon style={styles.iconStyle}/><StarIcon style={styles.iconStyle}/><StarIcon style={styles.iconStyle}/>
+                </Grid>
             </Grid>
-            <Grid style={{marginTop: "20px"}} container direction="row" spacing={2}>
+            <Grid container direction="row" spacing={2}>
                 {renderQuestions()}
                 {/* <Grid item xs={12} sm={6} md={4}>
                     <QuestionCard />
