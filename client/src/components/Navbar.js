@@ -79,6 +79,10 @@ const useStyles = makeStyles((theme) => ({
     }),
     marginLeft: 0,
   },
+  sideNav: {
+    textDecoration: "none", 
+    color: "#142850"
+  }
 }));
 
 
@@ -137,18 +141,24 @@ export default function ButtonAppBar() {
         </div>
         <Divider />
         <List>
-          <ListItem href="/" button key="home">
-            <ListItemIcon><HomeIcon /></ListItemIcon>
-            <ListItemText primary="Home"/>
-          </ListItem>
-          <ListItem href="/visualization" button key="visualization">
-            <ListItemIcon><DescriptionOutlinedIcon /></ListItemIcon>
-            <ListItemText primary="Visualization"/>
-          </ListItem>
-          <ListItem href="/signin" button key="sign in">
-            <ListItemIcon><AccountBoxIcon /></ListItemIcon>
-            <ListItemText primary="Sign in"/>
-          </ListItem>
+          <a href="/" className={classes.sideNav}>
+            <ListItem button key="home">
+              <ListItemIcon><HomeIcon style={{color: "#142850"}}/></ListItemIcon>
+              <ListItemText primary="Home" />
+            </ListItem>
+          </a>
+          <a href="/visualization" className={classes.sideNav}>
+            <ListItem button key="visualization">
+              <ListItemIcon><DescriptionOutlinedIcon style={{color: "#142850"}}/></ListItemIcon>
+              <ListItemText primary="Visualization" />
+            </ListItem>
+          </a>
+          <a href="/signin" className={classes.sideNav}>
+            <ListItem button key="sign in">
+              <ListItemIcon><AccountBoxIcon style={{color: "#142850"}}/></ListItemIcon>
+              <ListItemText primary="Sign in" />
+            </ListItem>
+          </a>
         </List>
       </Drawer>
     </div>
