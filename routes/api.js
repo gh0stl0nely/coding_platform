@@ -4,6 +4,7 @@ const User = require("../model/User");
 const Question = require("../model/Question");
 const {questionList} = require("../question");
 const passport = require("../auth/passport");
+const jwt = require('jsonwebtoken');
 
 router.post("/code", (req,res) => {
     const userInputs = req.body;
@@ -11,9 +12,10 @@ router.post("/code", (req,res) => {
 });
 
 // This route handles creation of a new user
+// BONUS: Maybe after all is done, make sure to check the database first to make sure there is no
+// duplicate email and usernam :) But it is ok for now. Can write a seperate function for that
 router.post("/signup", async (req,res) => {
     const { username, email, password } = req.body;
-
     const createQuestions = async () => {
         return Promise.all(questionList.map(async (item) => {
             const question = await Question.create(item);
@@ -33,8 +35,45 @@ router.post("/signup", async (req,res) => {
 })
 
 // Log in and authenticate route
-router.post("/login", passport.authenticate("local"), (req,res) => {
-    // After this point we are authenticated? 
+router.post("/login", async (req,res) => {
+    
+    try {
+        const { username, password } = req.body;
+    
+        // Check user in database
+        const user = await User.findOne({username});
+        
+        if(!user){
+            return res.json({
+                msg: "User not found",
+            });
+        }
+
+        if(password == user.password){
+            const token = jwt.sign(user.toJSON(), 'secret');
+            return res.json({
+                success: true,
+                token: token,
+            }); 
+
+        } else {
+            // Wrong password
+            return res.json({
+                msg: "Incorrect credentials",
+            });
+        }
+    } catch(e){
+        throw e;
+    }
+   
+})
+
+router.get("/auth", passport.authenticate('jwt', {session: false}), (req,res) => {
+    console.log("Authenticated!");
+    res.json({
+        isAuthenticated: true,
+        username: req.user.username
+    });
 
 })
 

@@ -67,13 +67,9 @@ export default function SignUp() {
   });
 
   function signUpUser(e){
-    e.preventDefault();
-
-    return axios.post("/api/signup", {
-      username: userInput.username,
-      email: userInput.email,
-      password: userInput.password
-    })
+    // e.preventDefault();
+    
+    return axios.post("/api/signup", userInput)
   }
 
   function handleChange(e){

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,6 +12,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
+import axios from "axios";
+import Alert from '@material-ui/lab/Alert';
 
 const themeColor = createMuiTheme({
   palette: {
@@ -57,6 +59,43 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignIn() {
   const classes = useStyles();
+  const [userInput, setInput] = useState({
+    username: "",
+    password: ""
+  });
+  const [loginStatus, setStatus] = useState({
+    isError: false,
+    msg: ""
+  });
+
+  async function signInUser(e){
+    e.preventDefault();
+    const response = await axios.post("/api/login", userInput);
+    if(response.data.token){
+      localStorage.setItem("jwt",response.data.token);
+      window.location.href = "/";
+    } else {
+      setStatus({
+        isError: true,
+        msg: response.data.msg
+      });
+
+      setInput({
+        username: "",
+        password: ""
+      });
+    }
+  }
+
+  function handleChange(e){
+    const value = e.target.value;
+    const name = e.target.name;
+
+    setInput({
+      ...userInput,
+      [name]: value
+    })
+  }
 
   return (
     <ThemeProvider theme={themeColor}>
@@ -69,7 +108,7 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form onSubmit={signInUser} className={classes.form} noValidate>
           <TextField
             variant="outlined"
             margin="normal"
@@ -80,6 +119,7 @@ export default function SignIn() {
             name="username"
             autoComplete="username"
             autoFocus
+            onChange={handleChange}
           />
           <TextField
             variant="outlined"
@@ -90,12 +130,16 @@ export default function SignIn() {
             label="Password"
             type="password"
             id="password"
+            onChange={handleChange}
             autoComplete="current-password"
           />
           {/* <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           /> */}
+          <Alert style={{display: loginStatus.isError ? "block" : "none"}} variant="filled" severity="error">
+            {loginStatus.msg == "User not found" ? "Credentials don't exist. Please try again." : "Incorrect credentials. Please try again."}
+          </Alert>
           <Button
             type="submit"
             fullWidth

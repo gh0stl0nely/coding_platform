@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import QuestionCard from "../components/QuestionCard";
 import StarIcon from "@material-ui/icons/Star";
+import API from "../utils/auth";
 
 const styles={
     iconStyle: {
@@ -22,22 +23,30 @@ function Home() {
     const [difficulty, setDifficulty] = useState('');
     const [questionType, setQuestionType] = useState('');
     const [questions, setQuestions] = useState([]);
+    const [isAuthenticatedUser, setAuthentication] = useState(false);
+    
+    // Authenticate Token first 
+    // Authenticated: Return the user?
+    // Not authenticated: Hide the question
+    // The only two places we need to authenticate is home page... 
 
     // Upon rendering, each question will have its own _id, so whenever the use clicks on any question, 
     // They will be led to /question/:id, once they are on /question/:id, useEffect on that page will fire
     // And then we will query the database to find that particular question, send back to frontend (see the data model in QuestionDisplayPage),
     // and then we can use that data to setState. 
-    // useEffect(() => {
-    //     // *** YOU DONT NEED TO IMPLEMENT THIS YET, just make sure rendering with sampleData is working first *** 
 
-    //     // This useEffect will be fired whnever user goes to "/"  
+    async function checkAuthentication(){
+        const user = await API.authenticateLogin();
+        if(user.data.isAuthenticated){
+            setAuthentication(true);
+        } else {
+            setAuthentication(false);
+        }
+    }
 
-    //     // Basically it will query the backend, get all the questions and send it back here
-    //     // we will then call setQuestions(questionsFromBackEnd)
-
-    //     return "Data from backend here";
-
-    // }, [])
+    useEffect(() => {
+        checkAuthentication();
+    }, []);
 
     // Use the data is received from the useEffect, we will do the rendering as follow:
     // You can use difficulty to translate to number of star (i.e: Easy == 1 star)
