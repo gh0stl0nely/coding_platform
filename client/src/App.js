@@ -7,38 +7,42 @@ import QuestionPage from "./pages/QuestionDisplayPage";
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import NoMatch from './pages/NoMatch';
+import { UserContextProvider } from "./context/UserAuthentication";
 
 function App() {
   return (
-    <Router>
-      <div>
-        <Navbar />
-        <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route path="/signin">
-            <SignIn />
-          </Route>
-          <Route path="/signup">
-            <SignUp />
-          </Route>
-          <Route path="/visualization">
-            <Visual />
-          </Route>
-          {/* Going forward, once logged in, then /question/id/:id lead to question, 
-          but if not, then just automatically go back to /question -> This can be done in backend with res.redirect(/question or /signup) :) */}
-          <Route path="/question/id/:id" children={<QuestionPage />}>
-          </Route>
-          <Route path="/question">
-            <Home />
-          </Route>
-          <Route path="*">
-            <NoMatch />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
+    <UserContextProvider>
+        <Router>
+          <div>
+            <Navbar />
+            <Switch>
+              <Route exact path="/">
+                <Home />
+              </Route>
+              <Route path="/signin">
+                <SignIn />
+              </Route>
+              <Route path="/signup">
+                <SignUp />
+              </Route>
+              <Route path="/visualization">
+                <Visual />
+              </Route>
+              {/* Going forward, once logged in, then /question/id/:id lead to question, 
+              but if not, then just automatically go back to /question -> This can be done in backend with res.redirect(/question or /signup) :) */}
+              <Route path="/question/id/:id" children={<QuestionPage />}>
+              </Route>
+              <Route path="/question">
+                <Home />
+              </Route>
+              <Route path="*">
+                <NoMatch />
+              </Route>
+            </Switch>
+          </div>
+        </Router>
+    </UserContextProvider>
+
   );
 }
 

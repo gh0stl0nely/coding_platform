@@ -14,6 +14,9 @@ export default {
             } catch(e){
                 throw e;
             }
+        } else {
+            // Token doesn't exist
+            return null;
         }
     }
 }

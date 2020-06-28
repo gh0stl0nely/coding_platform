@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Hidden from '@material-ui/core/Hidden';
@@ -19,6 +19,7 @@ import List from '@material-ui/core/List';
 import HomeIcon from '@material-ui/icons/Home';
 import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
+import {UserContext} from "../context/UserAuthentication";
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -86,7 +87,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function ButtonAppBar() {
+export default function NavBar() {
+  const loginStatus = useContext(UserContext);
+
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -121,7 +124,8 @@ export default function ButtonAppBar() {
           <Hidden smDown>
             <Button href="/" color="inherit">Home</Button>
             <Button href="/visualization" color="inherit">Visualization</Button>
-            <Button href="/signin" color="inherit">Sign In</Button>
+            <Button href={loginStatus.isLoggedin ? "/" : "/signin"} color="inherit">{loginStatus.isLoggedin ? `Hi ${loginStatus.username}` : "Sign in"}</Button>
+            <Button style={{display: loginStatus.isLoggedin ? "block" : "none"}} color="inherit">Logout</Button>
           </Hidden>
         </Toolbar>
       </AppBar>
@@ -153,10 +157,16 @@ export default function ButtonAppBar() {
               <ListItemText primary="Visualization" />
             </ListItem>
           </a>
-          <a href="/signin" className={classes.sideNav}>
+          <a href={loginStatus.isLoggedin ? "/" : "/signin"} className={classes.sideNav}>
             <ListItem button key="sign in">
               <ListItemIcon><AccountBoxIcon style={{color: "#142850"}}/></ListItemIcon>
-              <ListItemText primary="Sign in" />
+              <ListItemText primary={loginStatus.isLoggedin ? `Hi ${loginStatus.username}` : "Sign in"} />
+            </ListItem>
+          </a>
+          <a style={{display: loginStatus.isLoggedin ? "block" : "none"}}  className={classes.sideNav}>
+            <ListItem button key="sign in">
+              <ListItemIcon><AccountBoxIcon style={{color: "#142850"}}/></ListItemIcon>
+              <ListItemText primary="Log out" />
             </ListItem>
           </a>
         </List>

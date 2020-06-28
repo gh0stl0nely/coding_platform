@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Grid from '@material-ui/core/Grid';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -9,7 +9,8 @@ import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import QuestionCard from "../components/QuestionCard";
 import StarIcon from "@material-ui/icons/Star";
-import API from "../utils/auth";
+
+import {UserContext} from "../context/UserAuthentication";
 
 const styles = {
     iconStyle: {
@@ -18,13 +19,14 @@ const styles = {
     }
 }
 
-
 function Home() {
+
+    // If isLoggedin is true, then show question, if not blury them?
+    const { isLoggedin } = useContext(UserContext);
     const [difficulty, setDifficulty] = useState('');
     const [questionType, setQuestionType] = useState('');
     const [questions, setQuestions] = useState([]);
-    const [isAuthenticatedUser, setAuthentication] = useState(false);
-    
+
     // Authenticate Token first 
     // Authenticated: Return the user?
     // Not authenticated: Hide the question
@@ -35,18 +37,6 @@ function Home() {
     // And then we will query the database to find that particular question, send back to frontend (see the data model in QuestionDisplayPage),
     // and then we can use that data to setState. 
 
-    async function checkAuthentication(){
-        const user = await API.authenticateLogin();
-        if(user.data.isAuthenticated){
-            setAuthentication(true);
-        } else {
-            setAuthentication(false);
-        }
-    }
-
-    useEffect(() => {
-        checkAuthentication();
-    }, []);
 
     // Use the data is received from the useEffect, we will do the rendering as follow:
     // You can use difficulty to translate to number of star (i.e: Easy == 1 star)
@@ -220,15 +210,6 @@ function Home() {
             </Grid>
             <Grid container direction="row" spacing={2}>
                 {renderQuestions()}
-                {/* <Grid item xs={12} sm={6} md={4}>
-                    <QuestionCard />
-                </Grid>
-                <Grid item xs={12} sm={6} md={4}>
-                    <QuestionCard />
-                </Grid>
-                <Grid item xs={12} sm={6} md={4}>
-                    <QuestionCard />
-                </Grid> */}
             </Grid>
         </Container>
     )
