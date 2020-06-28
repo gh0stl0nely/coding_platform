@@ -95,7 +95,7 @@ function QuestionPage() {
                             Solution
                         </Button>
                     </div>
-                    <Grid item xs={12} id="questionDiv" style={{ padding: "0px 20px 80px 20px", overflow: "scroll", height: "294px" }}>
+                    <Grid item xs={12} id="questionDiv" style={{ padding: "0px 20px 80px 20px", overflow: "scroll", height: "294px"}}>
                         <p>Question type: <span>{sampleQuestion.type}</span></p>
                         <p>Difficulty: <span>{sampleQuestion.difficulty}</span></p>
                         <p>Status: <span> {solvedState} </span></p>
@@ -109,7 +109,7 @@ function QuestionPage() {
                         <p>Expected Outputs: </p><span>[{sampleQuestion.answers.expectedOutputs.toString()}]</span>
                     </Grid>
                 </Grid>
-                <Grid item xs={12} md={6} style={{ borderStyle: "solid solid none solid", borderColor: "#142850", textAlign: "center" }}>
+                <Grid item xs={12} md={6} style={{ borderStyle: "solid solid none solid", borderColor: "#142850", textAlign: "center"}}>
                     <IconButton aria-label="replay">
                         <ReplayIcon size="small" style={{ color: "#305c8a", fontWeight: "bold" }} />
                     </IconButton>
