@@ -15,7 +15,18 @@ router.post("/code", (req,res) => {
 // BONUS: Maybe after all is done, make sure to check the database first to make sure there is no
 // duplicate email and usernam :) But it is ok for now. Can write a seperate function for that
 router.post("/signup", async (req,res) => {
+ 
     const { username, email, password } = req.body;
+    // CHeck if already exist with the email or username or not
+    const duplicateUser = await User.findOne({$or: [{username}, {email}]});
+    if(duplicateUser){
+        // Found a duplicate user
+        console.log("Found duplicate");
+        return res.json({
+            msg: "User existed"
+        });
+    }
+
     const createQuestions = async () => {
         return Promise.all(questionList.map(async (item) => {
             const question = await Question.create(item);
@@ -32,6 +43,14 @@ router.post("/signup", async (req,res) => {
         lastQuestionID: "",
         questions: questionData
     });
+
+    // Issue JWT Token
+    const token = jwt.sign(user.toJSON(), 'secret');
+    return res.json({
+        msg: "Successfully create a new user",
+        token: token,
+    }); 
+
 })
 
 // Log in and authenticate route
@@ -64,8 +83,7 @@ router.post("/login", async (req,res) => {
         }
     } catch(e){
         throw e;
-    }
-   
+    } 
 })
 
 router.get("/auth", passport.authenticate('jwt', {session: false}), (req,res) => {
@@ -73,7 +91,6 @@ router.get("/auth", passport.authenticate('jwt', {session: false}), (req,res) =>
         isAuthenticated: true,
         username: req.user.username
     });
-
 })
 
 // This is sample route for getting user by ID and populate the list of questions :) 
