@@ -88,7 +88,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function NavBar() {
-  const loginStatus = useContext(UserContext);
+  const {loginStatus, logout} = useContext(UserContext);
 
   const classes = useStyles();
   const theme = useTheme();
@@ -125,7 +125,7 @@ export default function NavBar() {
             <Button href="/" color="inherit">Home</Button>
             <Button href="/visualization" color="inherit">Visualization</Button>
             <Button href={loginStatus.isLoggedin ? "/" : "/signin"} color="inherit">{loginStatus.isLoggedin ? `Hi ${loginStatus.username}` : "Sign in"}</Button>
-            <Button style={{display: loginStatus.isLoggedin ? "block" : "none"}} color="inherit">Logout</Button>
+            <Button onClick={logout} style={{display: loginStatus.isLoggedin ? "block" : "none"}} color="inherit">Logout</Button>
           </Hidden>
         </Toolbar>
       </AppBar>
@@ -163,7 +163,7 @@ export default function NavBar() {
               <ListItemText primary={loginStatus.isLoggedin ? `Hi ${loginStatus.username}` : "Sign in"} />
             </ListItem>
           </a>
-          <a style={{display: loginStatus.isLoggedin ? "block" : "none"}}  className={classes.sideNav}>
+          <a onClick={logout} style={{display: loginStatus.isLoggedin ? "block" : "none"}}  className={classes.sideNav}>
             <ListItem button key="sign in">
               <ListItemIcon><AccountBoxIcon style={{color: "#142850"}}/></ListItemIcon>
               <ListItemText primary="Log out" />
