@@ -1,6 +1,5 @@
 import React from 'react';
 import Container from '@material-ui/core/Container';
-import NotFound from "../image/undraw_page_not_found_su7k.svg";
 
 function NoMatch(){
     return(
