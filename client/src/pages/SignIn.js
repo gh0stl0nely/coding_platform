@@ -63,6 +63,7 @@ export default function SignIn() {
     username: "",
     password: ""
   });
+
   const [loginStatus, setStatus] = useState({
     isError: false,
     msg: ""
@@ -75,6 +76,7 @@ export default function SignIn() {
       localStorage.setItem("jwt",response.data.token);
       window.location.href = "/";
     } else {
+
       setStatus({
         isError: true,
         msg: response.data.msg
@@ -84,6 +86,7 @@ export default function SignIn() {
         username: "",
         password: ""
       });
+
     }
   }
 
@@ -119,6 +122,7 @@ export default function SignIn() {
             name="username"
             autoComplete="username"
             autoFocus
+            value={userInput.username}
             onChange={handleChange}
           />
           <TextField
@@ -131,6 +135,7 @@ export default function SignIn() {
             type="password"
             id="password"
             onChange={handleChange}
+            value={userInput.password}
             autoComplete="current-password"
           />
           {/* <FormControlLabel

@@ -10,6 +10,11 @@ function UserContextProvider(props){
         username: ""
     });
 
+    function logout(){
+        localStorage.removeItem("jwt");
+        window.location.reload();
+    }
+
     async function checkAuthentication(){
         const user = await API.authenticateLogin();
         if(user && user.data.isAuthenticated){
@@ -30,7 +35,7 @@ function UserContextProvider(props){
     }, []);
 
     return (
-        <UserContext.Provider value={loginStatus}>
+        <UserContext.Provider value={{loginStatus, logout}}>
             {props.children}
         </UserContext.Provider>
     )
