@@ -19,6 +19,7 @@ import List from '@material-ui/core/List';
 import HomeIcon from '@material-ui/icons/Home';
 import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import {UserContext} from "../context/UserAuthentication";
 
 const drawerWidth = 240;
@@ -160,12 +161,12 @@ export default function NavBar() {
           <a href={loginStatus.isLoggedin ? "/" : "/signin"} className={classes.sideNav}>
             <ListItem button key="sign in">
               <ListItemIcon><AccountBoxIcon style={{color: "#142850"}}/></ListItemIcon>
-              <ListItemText primary={loginStatus.isLoggedin ? `Hi ${loginStatus.username}` : "Sign in"} />
+              <ListItemText primary={loginStatus.isLoggedin ? `Hi! ${loginStatus.username}` : "Sign in"} />
             </ListItem>
           </a>
           <a style={{display: loginStatus.isLoggedin ? "block" : "none"}}  className={classes.sideNav}>
-            <ListItem button key="sign in">
-              <ListItemIcon><AccountBoxIcon style={{color: "#142850"}}/></ListItemIcon>
+            <ListItem button key="log out">
+              <ListItemIcon><ExitToAppIcon style={{color: "#142850"}}/></ListItemIcon>
               <ListItemText primary="Log out" />
             </ListItem>
           </a>

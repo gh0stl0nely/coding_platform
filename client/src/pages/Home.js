@@ -10,7 +10,7 @@ import Container from '@material-ui/core/Container';
 import QuestionCard from "../components/QuestionCard";
 import StarIcon from "@material-ui/icons/Star";
 
-import {UserContext} from "../context/UserAuthentication";
+import { UserContext } from "../context/UserAuthentication";
 
 const styles = {
     iconStyle: {
@@ -133,6 +133,11 @@ function Home() {
         setQuestionType(event.target.value);
     }
 
+    const resetFilter = () => {
+        setDifficulty("");
+        setQuestionType("");
+    }
+
     const renderQuestions = () => {
         const types = ["Array", "String", "Hash Table"];
         const result = [];
@@ -194,7 +199,7 @@ function Home() {
                     </FormControl>
                 </Grid>
                 <Grid item xs={12} style={{ textAlign: "center", marginBottom: "10px" }}>
-                    <Button variant="contained" color="primary">
+                    <Button variant="contained" color="primary" onClick={resetFilter}>
                         Reset Filter
                     </Button>
                 </Grid>
