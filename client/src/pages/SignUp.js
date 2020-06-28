@@ -12,7 +12,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
+import Alert from '@material-ui/lab/Alert';
 import axios from "axios";
+
 
 const themeColor = createMuiTheme({
   palette: {
@@ -61,13 +63,31 @@ export default function SignUp() {
   const [userInput, setInput] = useState({
     username: "",
     email: "",
-    password: "",
+    password: ""
   });
+  const [isDuplicate, setIsDuplicate] = useState(false);
 
-  function signUpUser(e){
-    // e.preventDefault();
-    
-    return axios.post("/api/signup", userInput)
+  async function signUpUser(e){
+    e.preventDefault();
+    const user = await axios.post("/api/signup", {
+      username: userInput.username.trim(),
+      email: userInput.email.trim(),
+      password: userInput.password
+    });
+
+    // If found duplicate
+    if(user.data.msg == "User existed"){
+      setInput({
+        username: "",
+        email: "",
+        password: ""
+      });
+      setIsDuplicate(true);
+    } else {
+      // If not found duplicate
+      localStorage.setItem('jwt', user.data.token);
+      window.location.href = "/";
+    }
   }
 
   function handleChange(e){
@@ -133,6 +153,11 @@ export default function SignUp() {
                   value={userInput.password}
                   onChange={handleChange}
                 />
+              </Grid>
+              <Grid style={{display: isDuplicate ? "block" : "none"}} item xs={12}>
+                <Alert variant="filled" severity="error">
+                  {isDuplicate ? "User already existed. Please try again with another credentials." : ""}
+                </Alert>
               </Grid>
             </Grid>
             <Button
