@@ -8,6 +8,7 @@ const QuestionSchema = new mongoose.Schema({
     cacheInput: String,
     isSolved: Boolean,
     beginningCode: String,
+    solutionCode: String,
     inputOne: mongoose.Schema.Types.Mixed,
     inputTwo: mongoose.Schema.Types.Mixed,
     outputOne: mongoose.Schema.Types.Mixed,
@@ -15,7 +16,7 @@ const QuestionSchema = new mongoose.Schema({
     answers: {
         inputs: Array,
         expectedOutputs: Array
-    }
+    },
 });
 
 // Question 

@@ -6,6 +6,9 @@ import ReplayIcon from '@material-ui/icons/Replay';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import CodeEditor from "../components/CodeEditor";
+import StarIcon from "@material-ui/icons/Star";
+import API from "../utils/api";
+import { diff } from "react-ace";
 
 const styles = {
     button: {
@@ -13,6 +16,13 @@ const styles = {
         color: "white",
         margin: "10px 5px",
         padding: "5px 10px"
+    },
+    iconStyle: {
+        position: "relative",
+        top: "5px"
+    },
+    textStyle: {
+        fontWeight: "bold"
     }
 }
 
@@ -41,15 +51,20 @@ function QuestionPage() {
     // This is sample of a question data model
     // You can set CodeEditor value={cacheInput} when useEffect is called
     let { id } = useParams();
-    const [codeEditorValue, setCodeEditor] = useState("")
     const [theme, setTheme] = useState("monokai");
     const [btnLabel, setBtnLabel] = useState("Theme Toggle");
-    const [solvedState, setSolvedState] = useState("");
+    const [question, setQuestion] = useState({});
 
     useEffect(() => {
-        setCodeEditor(sampleQuestion.cacheInput);
-        checkSolved();
-    }, [])
+        // Go to backend search for that question by ID... and console log first :)
+        searchAndSetQuestion(id);
+    }, []);
+
+    async function searchAndSetQuestion(id){
+        const response = await API.searchQuestionByID(id);
+        console.log(response.data.question);
+        setQuestion(response.data.question);
+    }
 
     function toggleEditorTheme() {
         if (theme === "xcode") {
@@ -61,15 +76,42 @@ function QuestionPage() {
         }
     }
 
-    function checkSolved() {
-        if (sampleQuestion.isSolved === true) {
-            setSolvedState("Solved");
-        } else {
-            setSolvedState("Not Yet Solved");
+    function renderStar(difficulty){
+        switch(difficulty){
+            case "Easy":
+                return (
+                    <>
+                     <StarIcon style={styles.iconStyle} />
+                    </>
+                )
+            case "Medium":
+                    return (
+                        <>
+                         <StarIcon style={styles.iconStyle} />
+                         <StarIcon style={styles.iconStyle} />
+                        </>
+                    )
+            case "Hard":
+                    return (
+                        <>
+                         <StarIcon style={styles.iconStyle} />
+                         <StarIcon style={styles.iconStyle} />
+                         <StarIcon style={styles.iconStyle} />
+                        </>
+                    )
         }
     }
 
-    const handleShowSolution = (btn) => {
+    function refreshCode(){
+        console.log("We are sending this beginning code down.")
+        setQuestion({
+            ...question,
+            cacheInput: ""
+        })
+
+    }
+
+    function handleShowSolution(btn){
         if (btn === "solution") {
             document.getElementById("solutionDiv").style.display = "block";
             document.getElementById("questionDiv").style.display = "none";
@@ -81,10 +123,10 @@ function QuestionPage() {
 
     return (
         <Container maxWidth="md">
-            <Grid container direction="row" justify="center" key={sampleQuestion._id} data-isSolved={sampleQuestion.isSolved}>
+            <Grid container direction="row" justify="center" key={question._id} data-isSolved={question.isSolved}>
                 <Grid item xs={12} style={{ textAlign: "center" }}>
-                    <h2 style={{ color: "#142850" }}>{sampleQuestion.title}</h2>
-                    <h4>Question Id: {id}</h4>
+                    <h2 style={{ color: "#142850" }}>Title: {question.title}</h2>
+                    <h4>Question Id: {id} (DELETE IN PRODUCTION)</h4>
                 </Grid>
                 <Grid item xs={12} md={6} style={{ borderStyle: "solid solid none solid", borderColor: "#142850" }}>
                     <div style={{ textAlign: "center" }}>
@@ -96,21 +138,23 @@ function QuestionPage() {
                         </Button>
                     </div>
                     <Grid item xs={12} id="questionDiv" style={{ padding: "0px 20px 80px 20px", overflow: "scroll", height: "294px" }}>
-                        <p>Question type: <span>{sampleQuestion.type}</span></p>
-                        <p>Difficulty: <span>{sampleQuestion.difficulty}</span></p>
-                        <p>Status: <span> {solvedState} </span></p>
-                        <p>Question Description</p>
-                        {sampleQuestion.description}
-                        <p>Sample Input: </p><span>{sampleQuestion.sampleInput}</span>
-                        <p>Sample Output: </p><span>{sampleQuestion.sampleOutput}</span>
+                        <p style={styles.textStyle}>Category: <span>{question.type}</span></p>
+                        <p style={styles.textStyle}> Difficulty: <span>{renderStar(question.difficulty)}</span></p>
+                        <p style={styles.textStyle}>Status: <span> {question.isSolved ? "Solved" : "Unsolved"} </span></p>
+                        <p style={styles.textStyle}>Description:</p>
+                        {question.description}
+                        <p style={styles.textStyle}>Input One: </p><span>{JSON.stringify(question.inputOne)}</span>
+                        <p style={styles.textStyle}>Output One: </p><span>{JSON.stringify(question.outputOne)}</span>
+                        <p style={styles.textStyle}>Input Two: </p><span>{JSON.stringify(question.inputTwo)}</span>
+                        <p style={styles.textStyle}>Output Two: </p><span>{JSON.stringify(question.outputTwo)}</span>
                     </Grid>
+                    {/* Solution */}
                     <Grid item xs={12} id="solutionDiv" style={{ padding: "0px 20px 80px 20px", display: "none", overflow: "scroll" }}>
-                        <p>Input: </p><span>[{sampleQuestion.answers.inputs.toString()}]</span>
-                        <p>Expected Outputs: </p><span>[{sampleQuestion.answers.expectedOutputs.toString()}]</span>
+                        <CodeEditor id={"solutionEditor"} isHighLightActiveLine={false} editorTheme={theme} isReadOnly={true} code={question.solutionCode} />
                     </Grid>
                 </Grid>
                 <Grid item xs={12} md={6} style={{ borderStyle: "solid solid none solid", borderColor: "#142850", textAlign: "center" }}>
-                    <IconButton aria-label="replay">
+                    <IconButton onClick={refreshCode} aria-label="replay">
                         <ReplayIcon size="small" style={{ color: "#305c8a", fontWeight: "bold" }} />
                     </IconButton>
                     <Button onClick={toggleEditorTheme} size="small" variant="contained" style={styles.button}>
@@ -123,7 +167,7 @@ function QuestionPage() {
                         Submit Code
                         </Button>
                     <Grid item xs={12}>
-                        <CodeEditor editorTheme={theme} value={codeEditorValue} />
+                        <CodeEditor id={"userEditor"} isHighLightActiveLine={true} editorTheme={theme} isReadOnly={false} code={question.cacheInput == "" ? question.beginningCode : question.cacheInput} />
                     </Grid>
                 </Grid>
                 <Grid item xs={12} style={{ textAlign: "center", height: "200px", border: "black 2px solid" }}>

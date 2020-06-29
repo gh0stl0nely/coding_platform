@@ -9,8 +9,9 @@ import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import QuestionCard from "../components/QuestionCard";
 import StarIcon from "@material-ui/icons/Star";
-
+import Helper from "../utils/helper";
 import { UserContext } from "../context/UserAuthentication";
+import LastQuestionButton from "../components/LastQuestionButton";
 
 const styles = {
     iconStyle: {
@@ -19,32 +20,7 @@ const styles = {
     }
 }
 
-function Home() {
-
-    // If isLoggedin is true, then show question, if not blury them?
-    const { isLoggedin } = useContext(UserContext);
-    const [difficulty, setDifficulty] = useState('');
-    const [questionType, setQuestionType] = useState('');
-    const [questions, setQuestions] = useState([]);
-
-    // Authenticate Token first 
-    // Authenticated: Return the user?
-    // Not authenticated: Hide the question
-    // The only two places we need to authenticate is home page... 
-
-    // Upon rendering, each question will have its own _id, so whenever the use clicks on any question, 
-    // They will be led to /question/:id, once they are on /question/:id, useEffect on that page will fire
-    // And then we will query the database to find that particular question, send back to frontend (see the data model in QuestionDisplayPage),
-    // and then we can use that data to setState. 
-
-
-    // Use the data is received from the useEffect, we will do the rendering as follow:
-    // You can use difficulty to translate to number of star (i.e: Easy == 1 star)
-    // You can use title as title of question 
-    // You can use type to filter and group questions (type = question type)
-    // You can use isSolved to whether to have a "Tick" on that question or not
-    // Ignore the rest of the field for now. 
-    const sampleData = [{
+var sampleData = [{
         _id: "123saddsahd1",
         title: "Array Q1",
         description: "This is Description",
@@ -125,6 +101,26 @@ function Home() {
         }
     }]
 
+function Home() {
+
+    // If isLoggedin is true, then show question, if not blury them?
+    const { loginStatus } = useContext(UserContext);
+    const [difficulty, setDifficulty] = useState('');
+    const [questionType, setQuestionType] = useState('');
+
+    // If they are logged in, we know that loginStatus.questions is NOT null.
+    const questionsToRender = loginStatus.questions.length > 0 ? loginStatus.questions : sampleData;
+    // It is good now. But we need to make sure when we lick on the question
+    
+    // ******** WILL IT SHOW THE DATA ?????? **** CORRECTLY ?? NEXT STEP HERE
+
+    // Use the data is received from the useEffect, we will do the rendering as follow:
+    // You can use difficulty to translate to number of star (i.e: Easy == 1 star)
+    // You can use title as title of question 
+    // You can use type to filter and group questions (type = question type)
+    // You can use isSolved to whether to have a "Tick" on that question or not
+    // Ignore the rest of the field for now. 
+
     const handleChangeDifficulty = (event) => {
         setDifficulty(event.target.value);
     };
@@ -138,20 +134,21 @@ function Home() {
         setQuestionType("");
     }
 
+    // Once done, we can substitute sampleData with questions
     const renderQuestions = () => {
-        const types = ["Array", "String", "Hash Table"];
-        const result = [];
+        let result;
 
-        for (var i = 0; i < types.length; i++) {
-            const questionType = types[i];
-            const filteredData = sampleData.filter(item => item.type == questionType);
-            const grid = (
-                <Grid item xs={12} sm={6} md={4}>
-                    <QuestionCard questionType={questionType} data={filteredData} />
-                </Grid>
-            )
-            result.push(grid);
+        if(difficulty != '' && questionType != ''){
+            result = Helper.renderQuestionWithBothOptions(questionsToRender, difficulty, questionType);
+        } else if(difficulty == '' && questionType != ''){
+            result = Helper.renderQuestionsWithQuestionTypeOnly(questionsToRender, questionType);
+        } else if(difficulty != '' && questionType == ''){
+            result = Helper.renderQuestionsWithDifficultyOptionOnly(questionsToRender, difficulty);
+        } else {
+            // Render all questions because no filters were chosen
+            result = Helper.renderQuestionsWithoutFilter(questionsToRender);
         }
+
         return result;
     }
 
@@ -162,6 +159,9 @@ function Home() {
                     <h1>App name</h1>
                     <p>Introduction paragaraph</p>
                 </Grid>
+            </Grid>
+            <Grid style={{marginTop: "20px", paddingTop: "20px"}} container justify="center">
+                <LastQuestionButton />
             </Grid>
             <Grid container direction="row" justify="center" alignItems="center" style={{ marginTop: "30px" }}>
                 <Grid item xs={12} sm={6} style={{ textAlign: "center" }}>

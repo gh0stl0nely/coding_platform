@@ -6,11 +6,17 @@ exports.questionList = [{
     difficulty: "Easy",
     type: "Array",
     cacheInput: "",
+    isSolved: false,
     beginningCode: `
-    // Please write inside this function
-    function smallerThanCurrent(nums){
-
-    }`,
+// Please write inside this function
+function smallerThanCurrent(nums){
+    
+}`,
+    solutionCode: `
+function smallerThanCurrent(nums){
+    [INSERT SOLUTION HERE]
+}    
+`,
     inputOne: [1,1,1],
     inputTwo: [8,1,2,2,3],
     outputOne: [0,0,0],
@@ -27,11 +33,17 @@ exports.questionList = [{
     difficulty: "Easy",
     type: "String",
     cacheInput: "",
+    isSolved: false,
     beginningCode: `
-    // Please write inside this function
-    function isValidPalindrome(str){
+// Please write inside this function
+function isValidPalindrome(str){
 
-    }`,
+}`,
+    solutionCode: `
+function isValidPalindrome(str){
+    [INSERT SOLUTION HERE]
+}    
+`,
     inputOne: "racecar",
     inputTwo: "hello",
     outputOne: true,
@@ -46,11 +58,17 @@ exports.questionList = [{
     difficulty: "Easy",
     type: "Hash Table",
     cacheInput: "",
+    isSolved: false,
     beginningCode: `
-    // Please write inside this function
-    function uniqueOccurence(){
-        
-    }`,
+// Please write inside this function
+function uniqueOccurence(){
+
+}`,
+    solutionCode: `
+function isValidPalindrome(str){
+    [INSERT SOLUTION HERE]
+}    
+`,
     inputOne: [1,1,0,0,0,9,9,9,9],
     inputTwo: [1,1,3,2,3,2],
     outputOne: true,

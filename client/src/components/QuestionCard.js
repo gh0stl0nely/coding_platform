@@ -50,7 +50,7 @@ export default function QuestionCard(props) {
           {props.questionType}
         </Typography>
       </CardContent>
-      <Divider />
+      <Divider style={{backgroundColor: "white"}}/>
       {props.data.map(item => {
         return (
           <>
@@ -62,7 +62,7 @@ export default function QuestionCard(props) {
               {renderStars(item.difficulty)}
             </Typography>
           </CardContent> 
-          <Divider />
+          <Divider style={{backgroundColor: "white"}}/>
         </>
         )
       })}

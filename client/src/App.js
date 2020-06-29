@@ -28,9 +28,8 @@ function App() {
               <Route path="/visualization">
                 <Visual />
               </Route>
-              {/* Going forward, once logged in, then /question/id/:id lead to question, 
-              but if not, then just automatically go back to /question -> This can be done in backend with res.redirect(/question or /signup) :) */}
-              <Route path="/question/id/:id" children={<QuestionPage />}>
+              <Route path="/question/id/:id" >
+                <QuestionPage />
               </Route>
               <Route path="/question">
                 <Home />
