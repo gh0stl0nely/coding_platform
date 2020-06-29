@@ -6,7 +6,8 @@ const {questionList} = require("../question");
 const passport = require("../auth/passport");
 const jwt = require('jsonwebtoken');
 
-// Submit code was clicked. We should write a middleware for chec
+// Submit code was clicked. We should write a middleware for executing and validate code
+
 router.post("/submit", (req,res) => {
     const userAnswer = req.body.cacheInput;
     // We are only interested in cacheInput
