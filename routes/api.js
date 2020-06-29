@@ -87,11 +87,50 @@ router.post("/login", async (req,res) => {
 })
 
 router.get("/auth", passport.authenticate('jwt', {session: false}), (req,res) => {
+    console.log(req.user);
+
     res.json({
         isAuthenticated: true,
-        username: req.user.username
+        username: req.user.username,
+        questions: req.user.questions,
+        lastQuestionID: req.user.lastQuestionID
     });
-})
+});
+
+// Called in UseEffect in QuestionDisplayPage to get selected question
+router.post("/question/:id",  async (req,res) => {
+    const id = req.params.id;
+
+    try {
+        const question = await Question.findById(id);
+        console.log("FOUND");
+
+        const { title, description, difficulty, isSolved,
+            type, cacheInput, beginningCode, solutionCode,
+            inputOne, inputTwo, outputOne, outputTwo, } = question;
+
+        return res.json({
+            success: true,
+            question: {
+                title, description, difficulty, isSolved,
+            type, cacheInput, beginningCode, solutionCode,
+            inputOne, inputTwo, outputOne, outputTwo
+            }
+        });
+
+  
+
+    } catch(e){
+        return res.json({
+            success: false,
+            msg: "Question not found"
+        })
+    }
+    
+});
+
+
+// Sample questions
 
 // This is sample route for getting user by ID and populate the list of questions :) 
 // This is probably where the comparison happens !!! 
@@ -113,7 +152,7 @@ router.get("/submit", async (req,res) => {
     const chosenQuestion = questionLists.filter(question => question["_id"] == "5ef3f8330b84527e5e1e8d92");
 
     console.log(chosenQuestion[0].answers); // { inputs: [ 1, 2, 3 ], expectedOutputs: [ 4, 5, 6 ] }
-})
+});
 
 
 module.exports = router;
