@@ -13,7 +13,8 @@ const useStyles = makeStyles({
   root: {
     minWidth: 275,
     backgroundColor: "#35618F",
-    marginTop: "20px"
+    marginTop: "20px",
+    borderRadius: "20px"
   },
   bullet: {
     display: 'inline-block',
@@ -45,7 +46,7 @@ export default function QuestionCard(props) {
   }
 
   return (
-    <Box boxShadow={10}>
+    <Box style={{borderRadius: "20px"}} boxShadow={10}>
       <Card className={classes.root}>
       <CardContent>
         <Typography style={{textAlign: "center", color: "white", fontWeight: "bold"}} variant="h5" component="h2">
