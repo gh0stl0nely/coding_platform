@@ -125,6 +125,7 @@ export default function SignUp() {
                   autoFocus
                   value={userInput.username}
                   onChange={handleChange}
+                  required
                 />
               </Grid>
               <Grid item xs={12}>
@@ -138,6 +139,7 @@ export default function SignUp() {
                   autoComplete="email"
                   value={userInput.email}
                   onChange={handleChange}
+                  required
                 />
               </Grid>
               <Grid item xs={12}>
@@ -152,9 +154,10 @@ export default function SignUp() {
                   autoComplete="current-password"
                   value={userInput.password}
                   onChange={handleChange}
+                  required
                 />
               </Grid>
-              <Grid style={{display: isDuplicate ? "block" : "none"}} item xs={12}>
+              <Grid item style={{display: isDuplicate ? "block" : "none"}} item xs={12}>
                 <Alert variant="filled" severity="error">
                   {isDuplicate ? "User already existed. Please try again with another credentials." : ""}
                 </Alert>

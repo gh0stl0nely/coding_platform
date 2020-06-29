@@ -145,7 +145,7 @@ function Home() {
     return (
         <Container maxWidth="lg" style={{ marginTop: "20px" }}>
             <Grid container justify="center">
-                <Grid item style={{ height: "300px", textAlign: "center", backgroundColor: "#80A7E3" }} xs={12}>
+                <Grid item style={{ height: "300px", textAlign: "center", backgroundColor: "#80A7E3", borderRadius:"20px" }} xs={12}>
                     <h1>App name</h1>
                     <p>Introduction paragaraph</p>
                 </Grid>
@@ -193,13 +193,13 @@ function Home() {
                         Reset Filter
                     </Button>
                 </Grid>
-                <Grid item xs={4} style={{ textAlign: "center", marginTop: "10px", backgroundColor: "#305c8a", color: "white" }}>
+                <Grid item xs={4} style={{ textAlign: "center", marginTop: "10px", backgroundColor: "#305c8a", color: "white", borderRadius: "15px 0px 0px 15px" }}>
                     <p style={{ fontSize: "20px", marginTop: "10px" }}>Easy </p><StarIcon style={styles.iconStyle} />
                 </Grid>
                 <Grid item xs={4} style={{ textAlign: "center", marginTop: "10px", backgroundColor: "#305c8a", color: "white" }}>
                     <p style={{ fontSize: "20px", marginTop: "10px" }}>Medium </p><StarIcon style={styles.iconStyle} /><StarIcon style={styles.iconStyle} />
                 </Grid>
-                <Grid item xs={4} style={{ textAlign: "center", marginTop: "10px", backgroundColor: "#305c8a", color: "white" }}>
+                <Grid item xs={4} style={{ textAlign: "center", marginTop: "10px", backgroundColor: "#305c8a", color: "white", borderRadius: "0px 15px 15px 0px" }}>
                     <p style={{ fontSize: "20px", marginTop: "10px" }}>Hard </p><StarIcon style={styles.iconStyle} /><StarIcon style={styles.iconStyle} /><StarIcon style={styles.iconStyle} />
                 </Grid>
             </Grid>

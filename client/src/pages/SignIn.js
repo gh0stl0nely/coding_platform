@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -69,11 +69,11 @@ export default function SignIn() {
     msg: ""
   });
 
-  async function signInUser(e){
+  async function signInUser(e) {
     e.preventDefault();
     const response = await axios.post("/api/login", userInput);
-    if(response.data.token){
-      localStorage.setItem("jwt",response.data.token);
+    if (response.data.token) {
+      localStorage.setItem("jwt", response.data.token);
       window.location.href = "/";
     } else {
 
@@ -90,7 +90,7 @@ export default function SignIn() {
     }
   }
 
-  function handleChange(e){
+  function handleChange(e) {
     const value = e.target.value;
     const name = e.target.name;
 
@@ -103,76 +103,80 @@ export default function SignIn() {
   return (
     <ThemeProvider theme={themeColor}>
       <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign in
         </Typography>
-        <form onSubmit={signInUser} className={classes.form} noValidate>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="username"
-            label="User Name"
-            name="username"
-            autoComplete="username"
-            autoFocus
-            value={userInput.username}
-            onChange={handleChange}
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            onChange={handleChange}
-            value={userInput.password}
-            autoComplete="current-password"
-          />
-          {/* <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          /> */}
-          <Alert style={{display: loginStatus.isError ? "block" : "none"}} variant="filled" severity="error">
-            {loginStatus.msg == "User not found" ? "Credentials don't exist. Please try again." : "Incorrect credentials. Please try again."}
-          </Alert>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Sign In
+          <form onSubmit={signInUser} className={classes.form} noValidate>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="username"
+                  label="User Name"
+                  name="username"
+                  autoComplete="username"
+                  autoFocus
+                  value={userInput.username}
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  onChange={handleChange}
+                  value={userInput.password}
+                  autoComplete="current-password"
+                />
+              </Grid>
+              <Grid item style={{ display: loginStatus.isError ? "block" : "none" }} item xs={12}>
+                <Alert variant="filled" severity="error">
+                  {loginStatus.msg == "User not found" ? "Credentials don't exist. Please try again." : "Incorrect credentials. Please try again."}
+                </Alert>
+              </Grid>
+            </Grid>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Sign In
           </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
+            <Grid container>
+              <Grid item xs>
+                <Link href="#" variant="body2">
+                  Forgot password?
               </Link>
+              </Grid>
+              <Grid item>
+                <Link href="/signup" variant="body2">
+                  {"Don't have an account? Sign Up"}
+                </Link>
+              </Grid>
             </Grid>
-            <Grid item>
-              <Link href="/signup" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
-          </Grid>
-        </form>
-      </div>
-      <Box mt={8}>
-        <Copyright />
-      </Box>
-    </Container>
+          </form>
+        </div>
+        <Box mt={8}>
+          <Copyright />
+        </Box>
+      </Container>
     </ThemeProvider>
-    
+
   );
 }

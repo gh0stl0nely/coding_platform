@@ -7,12 +7,14 @@ import Link from '@material-ui/core/Link';
 import Divider from '@material-ui/core/Divider';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import GradeIcon from '@material-ui/icons/Grade';
+import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles({
   root: {
     minWidth: 275,
     backgroundColor: "#35618F",
-    marginTop: "20px"
+    marginTop: "20px",
+    borderRadius: "20px"
   },
   bullet: {
     display: 'inline-block',
@@ -44,7 +46,8 @@ export default function QuestionCard(props) {
   }
 
   return (
-    <Card className={classes.root}>
+    <Box style={{borderRadius: "20px"}} boxShadow={10}>
+      <Card className={classes.root}>
       <CardContent>
         <Typography style={{textAlign: "center", color: "white", fontWeight: "bold"}} variant="h5" component="h2">
           {props.questionType}
@@ -67,5 +70,7 @@ export default function QuestionCard(props) {
         )
       })}
     </Card>
+    </Box>
+    
   );
 }
