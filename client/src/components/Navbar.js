@@ -161,7 +161,7 @@ export default function NavBar() {
           <a href={loginStatus.isLoggedin ? "/" : "/signin"} className={classes.sideNav}>
             <ListItem button key="sign in">
               <ListItemIcon><AccountBoxIcon style={{color: "#142850"}}/></ListItemIcon>
-              <ListItemText primary={loginStatus.isLoggedin ? `Hi! ${loginStatus.username}` : "Sign in"} />
+              <ListItemText primary={loginStatus.isLoggedin ? `Hi ${loginStatus.username}` : "Sign in"} />
             </ListItem>
           </a>
           <a onClick={logout} style={{display: loginStatus.isLoggedin ? "block" : "none"}}  className={classes.sideNav}>
