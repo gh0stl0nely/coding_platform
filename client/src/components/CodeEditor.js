@@ -1,24 +1,17 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
 import AceEditor from "react-ace";
-import axios from "axios";
  
 import "ace-builds/src-noconflict/mode-java";
 import "ace-builds/src-noconflict/theme-xcode";
 import "ace-builds/src-noconflict/theme-monokai";
+import "ace-builds/src-min-noconflict/ext-language_tools";
 
 const options = {
     enableLiveAutocompletion: true,
-    enableBasicAutocompletion: true
+    enableBasicAutocompletion: true,
 }
 
 function CodeEditor(props){
-    // // Save changes as we go?
-    // function handleChange(newValue){
-    //     setCode(newValue);
-    //     // axios.post("/api/code", {
-    //     //     data: code
-    //     // });
-    // }
 
     return (
         <AceEditor
@@ -26,7 +19,8 @@ function CodeEditor(props){
             theme={props.editorTheme}
             value={props.code}
             readOnly={props.isReadOnly}
-            // onChange={handleChange}
+            debounceChangePeriod={1500}
+            onChange={props.saveCode}
             name="UNIQUE_ID_OF_DIV"
             editorProps={{ $blockScrolling: true }}
             setOptions={options}

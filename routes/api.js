@@ -6,9 +6,18 @@ const {questionList} = require("../question");
 const passport = require("../auth/passport");
 const jwt = require('jsonwebtoken');
 
-router.post("/code", (req,res) => {
-    const userInputs = req.body;
-    console.log(userInputs);
+// Submit code was clicked. We should write a middleware for chec
+router.post("/submit", (req,res) => {
+    const userAnswer = req.body.cacheInput;
+    // We are only interested in cacheInput
+    // console.log(userAnswer);
+});
+
+// Route for saving cacheInput
+router.post("/save", async (req, res) => {
+    const { _id, cacheInput } = req.body;
+    return await Question.findByIdAndUpdate(_id, {cacheInput});
+    // No need to sendback the updatedQuestion because frontend was already updated first!
 });
 
 // This route handles creation of a new user
@@ -87,7 +96,7 @@ router.post("/login", async (req,res) => {
 })
 
 router.get("/auth", passport.authenticate('jwt', {session: false}), (req,res) => {
-    console.log(req.user);
+    // console.log(req.user);
 
     res.json({
         isAuthenticated: true,
@@ -105,14 +114,14 @@ router.post("/question/:id",  async (req,res) => {
         const question = await Question.findById(id);
         console.log("FOUND");
 
-        const { title, description, difficulty, isSolved,
+        const { _id, title, description, difficulty, isSolved,
             type, cacheInput, beginningCode, solutionCode,
             inputOne, inputTwo, outputOne, outputTwo, } = question;
 
         return res.json({
             success: true,
             question: {
-                title, description, difficulty, isSolved,
+                _id, title, description, difficulty, isSolved,
             type, cacheInput, beginningCode, solutionCode,
             inputOne, inputTwo, outputOne, outputTwo
             }
@@ -138,21 +147,21 @@ router.post("/question/:id",  async (req,res) => {
 // This should a post (Because this is when they submit!)
 // post("/submit")
 
-router.get("/submit", async (req,res) => {
-    // Find the user and populate questions
-    // const userId = req. <= From passport.js
-    // const userFunction = req.body.fn; <= Get from id="editor?" as A STRING
-    // const questionId = req.body.qid; <= Maybe from the button click? 
+// router.get("/submit", async (req,res) => {
+//     // Find the user and populate questions
+//     // const userId = req. <= From passport.js
+//     // const userFunction = req.body.fn; <= Get from id="editor?" as A STRING
+//     // const questionId = req.body.qid; <= Maybe from the button click? 
 
-    const user = await User.findById("5ef3f8330b84527e5e1e8d93").populate("questions").exec();
+//     const user = await User.findById("5ef3f8330b84527e5e1e8d93").populate("questions").exec();
 
-    // Get the questions, find the question they are working on by looking for the question ID (by filtering)
+//     // Get the questions, find the question they are working on by looking for the question ID (by filtering)
     
-    const questionLists = user.questions;
-    const chosenQuestion = questionLists.filter(question => question["_id"] == "5ef3f8330b84527e5e1e8d92");
+//     const questionLists = user.questions;
+//     const chosenQuestion = questionLists.filter(question => question["_id"] == "5ef3f8330b84527e5e1e8d92");
 
-    console.log(chosenQuestion[0].answers); // { inputs: [ 1, 2, 3 ], expectedOutputs: [ 4, 5, 6 ] }
-});
+//     console.log(chosenQuestion[0].answers); // { inputs: [ 1, 2, 3 ], expectedOutputs: [ 4, 5, 6 ] }
+// });
 
 
 module.exports = router;

@@ -23,6 +23,10 @@ export default {
     searchQuestionByID: async function(id){
         const question = await axios.post(`/api/question/${id}`);
         return question;
+    },
+
+    saveUserInput: async function(input){
+        await axios.post("/api/save", input);
     }
 
 }

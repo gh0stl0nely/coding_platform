@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import Grid from '@material-ui/core/Grid';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -7,7 +7,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
-import QuestionCard from "../components/QuestionCard";
+// import QuestionCard from "../components/QuestionCard";
 import StarIcon from "@material-ui/icons/Star";
 import Helper from "../utils/helper";
 import { UserContext } from "../context/UserAuthentication";
@@ -110,16 +110,6 @@ function Home() {
 
     // If they are logged in, we know that loginStatus.questions is NOT null.
     const questionsToRender = loginStatus.questions.length > 0 ? loginStatus.questions : sampleData;
-    // It is good now. But we need to make sure when we lick on the question
-    
-    // ******** WILL IT SHOW THE DATA ?????? **** CORRECTLY ?? NEXT STEP HERE
-
-    // Use the data is received from the useEffect, we will do the rendering as follow:
-    // You can use difficulty to translate to number of star (i.e: Easy == 1 star)
-    // You can use title as title of question 
-    // You can use type to filter and group questions (type = question type)
-    // You can use isSolved to whether to have a "Tick" on that question or not
-    // Ignore the rest of the field for now. 
 
     const handleChangeDifficulty = (event) => {
         setDifficulty(event.target.value);

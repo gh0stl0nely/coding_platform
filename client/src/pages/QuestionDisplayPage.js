@@ -8,7 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import CodeEditor from "../components/CodeEditor";
 import StarIcon from "@material-ui/icons/Star";
 import API from "../utils/api";
-import { diff } from "react-ace";
+import axios from "axios";
 
 const styles = {
     button: {
@@ -26,26 +26,26 @@ const styles = {
     }
 }
 
-const sampleQuestion = {
-    _id: "123saddsahd",
-    title: "This is Title", // Use this for title
-    description: "This is description", // Use this for description
-    sampleInput: 3, // Use 
-    sampleOutput: 5,
-    difficulty: "Hard",
-    type: "Array",
-    cacheInput: `function(){
-        for(var i = 0; i < 3; i++){
-            console.log(i);
-        }
-    }`, // This goes to the editor value 
-    isSolved: true, // If it is solved, then status: Solved, and vice versa
-    // No need to check for answers yet ! But included here for data integrity
-    answers: {
-        inputs: [1, 2, 3],
-        expectedOutputs: [1, 3, 4]
-    }
-}
+// const sampleQuestion = {
+//     _id: "123saddsahd",
+//     title: "This is Title", // Use this for title
+//     description: "This is description", // Use this for description
+//     sampleInput: 3, // Use 
+//     sampleOutput: 5,
+//     difficulty: "Hard",
+//     type: "Array",
+//     cacheInput: `function(){
+//         for(var i = 0; i < 3; i++){
+//             console.log(i);
+//         }
+//     }`, // This goes to the editor value 
+//     isSolved: true, // If it is solved, then status: Solved, and vice versa
+//     // No need to check for answers yet ! But included here for data integrity
+//     answers: {
+//         inputs: [1, 2, 3],
+//         expectedOutputs: [1, 3, 4]
+//     }
+// }
 
 function QuestionPage() {
     // This is sample of a question data model
@@ -53,6 +53,7 @@ function QuestionPage() {
     let { id } = useParams();
     const [theme, setTheme] = useState("monokai");
     const [btnLabel, setBtnLabel] = useState("Theme Toggle");
+    // Question also contains user input
     const [question, setQuestion] = useState({});
 
     useEffect(() => {
@@ -60,10 +61,30 @@ function QuestionPage() {
         searchAndSetQuestion(id);
     }, []);
 
+    // When cacheInput changes, this means that save cache Input in frontend first, then save backend 
+    useEffect(() => {
+        API.saveUserInput(question);
+    }, [question]); 
+
     async function searchAndSetQuestion(id){
         const response = await API.searchQuestionByID(id);
-        console.log(response.data.question);
         setQuestion(response.data.question);
+    }
+
+    async function submitCode(){
+        // save code first
+        const response = await axios.post("/api/submit", question);
+        console.log(response);
+    };
+
+     // This is auto save. So we save on front end first, and then save in the backend.
+    function saveCode(newValue){
+        setQuestion({
+            ...question,
+            cacheInput: newValue
+        });
+
+        // AND THEN USE EFFECT 2nd! BUT NOT WORKING RN
     }
 
     function toggleEditorTheme() {
@@ -103,12 +124,10 @@ function QuestionPage() {
     }
 
     function refreshCode(){
-        console.log("We are sending this beginning code down.")
         setQuestion({
             ...question,
             cacheInput: ""
-        })
-
+        });
     }
 
     function handleShowSolution(btn){
@@ -163,11 +182,11 @@ function QuestionPage() {
                     <Button size="small" variant="contained" style={styles.button}>
                         Run
                         </Button>
-                    <Button size="small" variant="contained" style={styles.button}>
+                    <Button onClick={submitCode} size="small" variant="contained" style={styles.button}>
                         Submit Code
                         </Button>
                     <Grid item xs={12}>
-                        <CodeEditor id={"userEditor"} isHighLightActiveLine={true} editorTheme={theme} isReadOnly={false} code={question.cacheInput == "" ? question.beginningCode : question.cacheInput} />
+                        <CodeEditor id={"userEditor"} saveCode={saveCode} isHighLightActiveLine={true} editorTheme={theme} isReadOnly={false} code={question.cacheInput == "" ? question.beginningCode : question.cacheInput} />
                     </Grid>
                 </Grid>
                 <Grid item xs={12} style={{ textAlign: "center", height: "200px", border: "black 2px solid" }}>
