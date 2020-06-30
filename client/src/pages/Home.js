@@ -143,7 +143,7 @@ function Home() {
     }
 
     return (
-        <Container maxWidth="lg" style={{ marginTop: "20px" }}>
+        <Container style={{ marginTop: "80px" }}>
             <Grid container justify="center">
                 <Grid item style={{ height: "300px", textAlign: "center", backgroundColor: "#80A7E3", borderRadius:"20px" }} xs={12}>
                     <h1>App name</h1>

@@ -5,7 +5,7 @@ import Chips from "../components/Chips";
 
 function VisualPage() {
     return (
-        <Container maxWidth="md">
+        <Container maxWidth="md" style={{ marginTop: "50px" }}>
             <Grid container style={{ padding: "20px 0px" }} justify="center" alignItems="center">
                 <p>chips go here</p>
                 <Chips name="tag" />

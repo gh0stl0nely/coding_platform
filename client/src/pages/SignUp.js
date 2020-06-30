@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -40,7 +40,7 @@ function Copyright() {
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(12),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -65,38 +65,49 @@ export default function SignUp() {
     email: "",
     password: ""
   });
+  const [emailError, setEmailError] = useState(false);
   const [isDuplicate, setIsDuplicate] = useState(false);
 
-  async function signUpUser(e){
-    e.preventDefault();
-    const user = await axios.post("/api/signup", {
-      username: userInput.username.trim(),
-      email: userInput.email.trim(),
-      password: userInput.password
-    });
+  function isValidEmail(email){
+     return  /(.+)@(.+){2,}\.(.+){2,}/.test(email) ? true : false;
+  }
 
-    // If found duplicate
-    if(user.data.msg == "User existed"){
-      setInput({
-        username: "",
-        email: "",
-        password: ""
+  async function signUpUser(e) {
+    e.preventDefault();
+
+    if (isValidEmail(userInput.email.trim())) {
+      const user = await axios.post("/api/signup", {
+        username: userInput.username.trim(),
+        email: userInput.email.trim(),
+        password: userInput.password
       });
-      setIsDuplicate(true);
+
+      // If found duplicate
+      if (user.data.msg == "User existed") {
+        setInput({
+          username: "",
+          email: "",
+          password: ""
+        });
+        setIsDuplicate(true);
+      } else {
+        // If not found duplicate
+        localStorage.setItem('jwt', user.data.token);
+        window.location.href = "/";
+      }
+
     } else {
-      // If not found duplicate
-      localStorage.setItem('jwt', user.data.token);
-      window.location.href = "/";
+      setEmailError({ email: true });
     }
   }
 
-  function handleChange(e){
+  function handleChange(e) {
     const value = e.target.value;
     const name = e.target.name;
 
     setInput({
       ...userInput,
-      [name] : value
+      [name]: value
     })
   }
 
@@ -118,7 +129,6 @@ export default function SignUp() {
                   autoComplete="username"
                   name="username"
                   variant="outlined"
-                  required
                   fullWidth
                   id="username"
                   label="User Name"
@@ -131,7 +141,6 @@ export default function SignUp() {
               <Grid item xs={12}>
                 <TextField
                   variant="outlined"
-                  required
                   fullWidth
                   id="email"
                   label="Email"
@@ -140,6 +149,7 @@ export default function SignUp() {
                   value={userInput.email}
                   onChange={handleChange}
                   required
+                  error={emailError}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -157,7 +167,7 @@ export default function SignUp() {
                   required
                 />
               </Grid>
-              <Grid item style={{display: isDuplicate ? "block" : "none"}} item xs={12}>
+              <Grid item style={{ display: isDuplicate ? "block" : "none" }} item xs={12}>
                 <Alert variant="filled" severity="error">
                   {isDuplicate ? "User already existed. Please try again with another credentials." : ""}
                 </Alert>
