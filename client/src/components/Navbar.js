@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Hidden from '@material-ui/core/Hidden';
@@ -20,7 +20,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import {UserContext} from "../context/UserAuthentication";
+import { UserContext } from "../context/UserAuthentication";
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -82,14 +82,14 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 0,
   },
   sideNav: {
-    textDecoration: "none", 
+    textDecoration: "none",
     color: "#142850"
   }
 }));
 
 
 export default function NavBar() {
-  const {loginStatus, logout} = useContext(UserContext);
+  const { loginStatus, logout } = useContext(UserContext);
 
   const classes = useStyles();
   const theme = useTheme();
@@ -106,7 +106,7 @@ export default function NavBar() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static" style={{ backgroundColor: "#142850" }}>
+      <AppBar position="absolute" style={{backgroundColor: "#142850"}} className={clsx(classes.appBar, open && classes.appBarShift)}>
         <Toolbar>
           <Hidden mdUp>
             <IconButton
@@ -119,14 +119,14 @@ export default function NavBar() {
               <MenuIcon />
             </IconButton>
           </Hidden>
-          <Typography variant="h6" className={classes.title}>
+          <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
             App Name/Logo
           </Typography>
           <Hidden smDown>
             <Button href="/" color="inherit">Home</Button>
             <Button href="/visualization" color="inherit">Visualization</Button>
             <Button href={loginStatus.isLoggedin ? "/" : "/signin"} color="inherit">{loginStatus.isLoggedin ? `Hi ${loginStatus.username}` : "Sign in"}</Button>
-            <Button onClick={logout} style={{display: loginStatus.isLoggedin ? "block" : "none"}} color="inherit">Logout</Button>
+            <Button onClick={logout} style={{ display: loginStatus.isLoggedin ? "block" : "none" }} color="inherit">Logout</Button>
           </Hidden>
         </Toolbar>
       </AppBar>
@@ -148,25 +148,25 @@ export default function NavBar() {
         <List>
           <a href="/" className={classes.sideNav}>
             <ListItem button key="home">
-              <ListItemIcon><HomeIcon style={{color: "#142850"}}/></ListItemIcon>
+              <ListItemIcon><HomeIcon style={{ color: "#142850" }} /></ListItemIcon>
               <ListItemText primary="Home" />
             </ListItem>
           </a>
           <a href="/visualization" className={classes.sideNav}>
             <ListItem button key="visualization">
-              <ListItemIcon><DescriptionOutlinedIcon style={{color: "#142850"}}/></ListItemIcon>
+              <ListItemIcon><DescriptionOutlinedIcon style={{ color: "#142850" }} /></ListItemIcon>
               <ListItemText primary="Visualization" />
             </ListItem>
           </a>
           <a href={loginStatus.isLoggedin ? "/" : "/signin"} className={classes.sideNav}>
             <ListItem button key="sign in">
-              <ListItemIcon><AccountBoxIcon style={{color: "#142850"}}/></ListItemIcon>
+              <ListItemIcon><AccountBoxIcon style={{ color: "#142850" }} /></ListItemIcon>
               <ListItemText primary={loginStatus.isLoggedin ? `Hi ${loginStatus.username}` : "Sign in"} />
             </ListItem>
           </a>
-          <a onClick={logout} style={{display: loginStatus.isLoggedin ? "block" : "none"}}  className={classes.sideNav}>
-          <ListItem button key="log out">
-              <ListItemIcon><ExitToAppIcon style={{color: "#142850"}}/></ListItemIcon>
+          <a onClick={logout} style={{ display: loginStatus.isLoggedin ? "block" : "none" }} className={classes.sideNav}>
+            <ListItem button key="log out">
+              <ListItemIcon><ExitToAppIcon style={{ color: "#142850" }} /></ListItemIcon>
               <ListItemText primary="Log out" />
             </ListItem>
           </a>

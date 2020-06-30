@@ -122,7 +122,7 @@ function QuestionPage() {
     }
 
     return (
-        <Container maxWidth="md">
+        <Container maxWidth="md" style={{marginTop: "80px"}}>
             <Grid container direction="row" justify="center" key={question._id} data-isSolved={question.isSolved}>
                 <Grid item xs={12} style={{ textAlign: "center" }}>
                     <h2 style={{ color: "#142850" }}>Title: {question.title}</h2>
