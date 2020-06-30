@@ -17,7 +17,7 @@ router.post("/submit", (req,res) => {
 router.post("/save", async (req, res) => {
     const { _id, cacheInput } = req.body;
     return await Question.findByIdAndUpdate(_id, {cacheInput});
-    // No need to sendback the updatedQuestion because frontend was already updated first!
+    // No need to sendback the updatedQuestion because frontend was already updated!
 });
 
 // This route handles creation of a new user and handle duplication
@@ -38,7 +38,7 @@ router.post("/signup", async (req,res) => {
         return Promise.all(questionList.map(async (item) => {
             const question = await Question.create(item);
             return question;
-        }))
+        }));
     }
 
     const questionData = await createQuestions();
