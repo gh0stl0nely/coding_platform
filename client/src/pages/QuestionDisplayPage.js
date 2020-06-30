@@ -58,7 +58,7 @@ function QuestionPage() {
 
     useEffect(() => {
         // Go to backend search for that question by ID... and console log first :)
-        searchAndSetQuestion(id);
+        renderChosenQuestion(id);
     }, []);
 
     // When cacheInput changes, this means that save cache Input in frontend first, then save backend 
@@ -66,10 +66,14 @@ function QuestionPage() {
         API.saveUserInput(question);
     }, [question]); 
 
-    async function searchAndSetQuestion(id){
-        const response = await API.searchQuestionByID(id);
+    // We cache the username in localstorage (can delete after it runs if needed)
+    // Use the cached username and id from url query to update the lastQuestionID for the particular user
+
+    async function renderChosenQuestion(id){
+        const username = localStorage.getItem("username");
+        const response = await API.updateAndGetLastQuestion(username,id);
         setQuestion(response.data.question);
-    }
+    };
 
     async function submitCode(){
         // save code first
@@ -83,9 +87,7 @@ function QuestionPage() {
             ...question,
             cacheInput: newValue
         });
-
-        // AND THEN USE EFFECT 2nd! BUT NOT WORKING RN
-    }
+    };
 
     function toggleEditorTheme() {
         if (theme === "xcode") {
@@ -95,7 +97,7 @@ function QuestionPage() {
             setTheme("xcode");
             setBtnLabel("Dark");
         }
-    }
+    };
 
     function renderStar(difficulty){
         switch(difficulty){
@@ -121,14 +123,14 @@ function QuestionPage() {
                         </>
                     )
         }
-    }
+    };
 
     function refreshCode(){
         setQuestion({
             ...question,
             cacheInput: ""
         });
-    }
+    };
 
     function handleShowSolution(btn){
         if (btn === "solution") {
@@ -138,7 +140,7 @@ function QuestionPage() {
             document.getElementById("solutionDiv").style.display = "none";
             document.getElementById("questionDiv").style.display = "block";
         }
-    }
+    };
 
     return (
         <Container maxWidth="md">

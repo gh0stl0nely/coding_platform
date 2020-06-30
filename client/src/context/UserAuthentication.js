@@ -12,10 +12,22 @@ function UserContextProvider(props){
         lastQuestionID: ""
     });
 
+ 
+
+    useEffect(() => {
+        checkAuthentication();
+    },[]);
+
     function logout(){
         localStorage.removeItem("jwt");
+        localStorage.removeItem("username");
         window.location.href = "/";
-    }
+    };
+
+    function goToQuestion(id){
+        window.location.href = `/question/id/${id}`;
+        localStorage.setItem("username", loginStatus.username);
+    };
 
     async function checkAuthentication(){
         const user = await API.authenticateLogin();
@@ -35,13 +47,8 @@ function UserContextProvider(props){
             });
         }
     }
-
-    useEffect(() => {
-        checkAuthentication();
-    }, []);
-
     return (
-        <UserContext.Provider value={{loginStatus, logout}}>
+        <UserContext.Provider value={{loginStatus, logout, goToQuestion}}>
             {props.children}
         </UserContext.Provider>
     )

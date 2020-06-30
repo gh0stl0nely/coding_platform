@@ -7,23 +7,20 @@ const passport = require("../auth/passport");
 const jwt = require('jsonwebtoken');
 
 // Submit code was clicked. We should write a middleware for executing and validate code
-
 router.post("/submit", (req,res) => {
     const userAnswer = req.body.cacheInput;
     // We are only interested in cacheInput
     // console.log(userAnswer);
 });
 
-// Route for saving cacheInput
+// Route for saving cacheInput automatically
 router.post("/save", async (req, res) => {
     const { _id, cacheInput } = req.body;
     return await Question.findByIdAndUpdate(_id, {cacheInput});
     // No need to sendback the updatedQuestion because frontend was already updated first!
 });
 
-// This route handles creation of a new user
-// BONUS: Maybe after all is done, make sure to check the database first to make sure there is no
-// duplicate email and usernam :) But it is ok for now. Can write a seperate function for that
+// This route handles creation of a new user and handle duplication
 router.post("/signup", async (req,res) => {
  
     const { username, email, password } = req.body;
@@ -97,9 +94,7 @@ router.post("/login", async (req,res) => {
 })
 
 router.get("/auth", passport.authenticate('jwt', {session: false}), (req,res) => {
-    // console.log(req.user);
-
-    res.json({
+    return res.json({
         isAuthenticated: true,
         username: req.user.username,
         questions: req.user.questions,
@@ -108,16 +103,16 @@ router.get("/auth", passport.authenticate('jwt', {session: false}), (req,res) =>
 });
 
 // Called in UseEffect in QuestionDisplayPage to get selected question
-router.post("/question/:id",  async (req,res) => {
-    const id = req.params.id;
+router.post("/question",  async (req,res) => {
+    // id represents the ID of the user last clicked on
+    const { username, id } = req.body;
 
     try {
-        const question = await Question.findById(id);
-        console.log("FOUND");
-
+        const user = await User.findOneAndUpdate({username}, {lastQuestionID: id}).populate('questions').exec();
+        const selectedQuestion = user.questions.filter(question => question["_id"] == id)[0];
         const { _id, title, description, difficulty, isSolved,
             type, cacheInput, beginningCode, solutionCode,
-            inputOne, inputTwo, outputOne, outputTwo, } = question;
+            inputOne, inputTwo, outputOne, outputTwo, } = selectedQuestion;
 
         return res.json({
             success: true,
@@ -127,42 +122,13 @@ router.post("/question/:id",  async (req,res) => {
             inputOne, inputTwo, outputOne, outputTwo
             }
         });
-
-  
-
     } catch(e){
         return res.json({
             success: false,
-            msg: "Question not found"
-        })
+            msg: "User with the specified name not found"
+        });
     }
     
 });
-
-
-// Sample questions
-
-// This is sample route for getting user by ID and populate the list of questions :) 
-// This is probably where the comparison happens !!! 
-
-// This should a post (Because this is when they submit!)
-// post("/submit")
-
-// router.get("/submit", async (req,res) => {
-//     // Find the user and populate questions
-//     // const userId = req. <= From passport.js
-//     // const userFunction = req.body.fn; <= Get from id="editor?" as A STRING
-//     // const questionId = req.body.qid; <= Maybe from the button click? 
-
-//     const user = await User.findById("5ef3f8330b84527e5e1e8d93").populate("questions").exec();
-
-//     // Get the questions, find the question they are working on by looking for the question ID (by filtering)
-    
-//     const questionLists = user.questions;
-//     const chosenQuestion = questionLists.filter(question => question["_id"] == "5ef3f8330b84527e5e1e8d92");
-
-//     console.log(chosenQuestion[0].answers); // { inputs: [ 1, 2, 3 ], expectedOutputs: [ 4, 5, 6 ] }
-// });
-
 
 module.exports = router;

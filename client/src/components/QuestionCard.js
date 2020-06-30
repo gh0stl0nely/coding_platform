@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -8,6 +8,7 @@ import Divider from '@material-ui/core/Divider';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import GradeIcon from '@material-ui/icons/Grade';
 import Box from '@material-ui/core/Box';
+import {UserContext} from "../context/UserAuthentication";
 
 const useStyles = makeStyles({
   root: {
@@ -29,6 +30,7 @@ const useStyles = makeStyles({
 
 export default function QuestionCard(props) {
   const classes = useStyles();
+  const { goToQuestion } = useContext(UserContext);
 
   function renderTick(isSolved){
     return isSolved ? <CheckCircleIcon style={{position: "relative", top: "5px"}}/> : "";
@@ -38,11 +40,6 @@ export default function QuestionCard(props) {
     return difficulty == "Easy" ? <div><GradeIcon /></div> : 
     (difficulty == "Medium" ? <div><GradeIcon /><GradeIcon /></div>: 
     <div><GradeIcon /><GradeIcon /><GradeIcon /></div>);
-  }
-
-  function goToQuestion(id){  
-    // Can use a debouncer here. Also send an axios request to backend. If exists, then we can
-    window.location.href = `/question/id/${id}`;
   }
 
   return (
