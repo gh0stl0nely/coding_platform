@@ -21,6 +21,7 @@ import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { UserContext } from "../context/UserAuthentication";
+import GroupAddIcon from '@material-ui/icons/GroupAdd';
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -127,6 +128,7 @@ export default function NavBar() {
             <Button href="/" color="inherit">Home</Button>
             <Button href="/visualization" color="inherit">Algorithm Visualizer</Button>
             <Button href={loginStatus.isLoggedin ? "/" : "/signin"} color="inherit">{loginStatus.isLoggedin ? `Hi ${loginStatus.username}` : "Sign in"}</Button>
+            <Button href="/signup" style={{display: loginStatus.isLoggedin ? "none" : "block"}} color="inherit">Sign Up</Button>
             <Button onClick={logout} style={{ display: loginStatus.isLoggedin ? "block" : "none" }} color="inherit">Logout</Button>
           </Hidden>
         </Toolbar>
@@ -163,6 +165,12 @@ export default function NavBar() {
             <ListItem button key="sign in">
               <ListItemIcon><AccountBoxIcon style={{ color: "#142850" }} /></ListItemIcon>
               <ListItemText primary={loginStatus.isLoggedin ? `Hi ${loginStatus.username}` : "Sign in"} />
+            </ListItem>
+          </a>
+          <a href="/signup" style={{ display: loginStatus.isLoggedin ? "none" : "block" }} className={classes.sideNav}>
+            <ListItem button key="Sign up">
+              <ListItemIcon><GroupAddIcon style={{ color: "#142850" }} /></ListItemIcon>
+              <ListItemText primary="Sign up" />
             </ListItem>
           </a>
           <a onClick={logout} style={{ display: loginStatus.isLoggedin ? "block" : "none" }} className={classes.sideNav}>

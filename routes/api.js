@@ -9,7 +9,10 @@ const jwt = require('jsonwebtoken');
 // Submit code was clicked. We should write a middleware for executing and validate code
 router.post("/submit", (req,res) => {
     const { question, username} = req.body;
-    console.log(question);
+    console.log(question.cacheInput);
+    res.json({
+        "msg": "Got"
+    })
 });
 
 // Route for saving cacheInput automatically
@@ -95,6 +98,7 @@ router.post("/login", async (req,res) => {
 router.get("/auth", passport.authenticate('jwt', {session: false, failureRedirect: "/api/notAuth"}), (req,res) => {
     // console.log('flash msg:', req.flash('signUpMessage'));
     return res.json({
+        uid: req.user["_id"],
         isAuthenticated: true,
         username: req.user.username,
         questions: req.user.questions,
@@ -112,11 +116,12 @@ router.get("/notAuth", (req,res) => {
 // Called in UseEffect in QuestionDisplayPage to get selected question
 router.post("/question",  async (req,res) => {
     // id represents the ID of the user last clicked on
-    const { username, id } = req.body;
+    const { userID, questionID } = req.body;
 
-    try {
-        const user = await User.findOneAndUpdate({username}, {lastQuestionID: id}).populate('questions').exec();
-        const selectedQuestion = user.questions.filter(question => question["_id"] == id)[0];
+    try {   
+        const user = await User.findByIdAndUpdate(userID, {lastQuestionID: questionID}).populate('questions').exec();
+        const selectedQuestion = user.questions.filter(question => question["_id"] == questionID)[0];
+ 
         const { _id, title, description, difficulty, isSolved,
             type, cacheInput, beginningCode, solutionCode,
             inputOne, inputTwo, outputOne, outputTwo, } = selectedQuestion;

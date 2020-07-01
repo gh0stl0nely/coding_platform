@@ -69,7 +69,7 @@ function Home() {
             <Grid container justify="center">
                 <Grid item style={{ height: "250px",textAlign: "center", backgroundColor: "#DBE9FF", borderRadius: "20px", marginTop: "10px" }} xs={12} md={6}>
                     <h1 className="animate__animated animate__flipInX" style={{fontFamily: 'Lobster', fontSize: "40px", color:"#142850"}}>Programmeow<img src="https://i.ibb.co/7nwZ7mM/cat-paw-removebg-preview.png" width="50" alt="black cat paw" /></h1>
-                    <p className="animate__animated animate__lightSpeedInLeft">An online platform that helps you tackle coding interview</p>
+                    <p className="animate__animated animate__lightSpeedInLeft">Your Go-to platform for preparing coding interview</p>
                 </Grid>
                 <Grid className="animate__animated animate__backInDown" item style={{ textAlign: "center"}} xs={12} md={6} spacing={2}>
                 <Box style={{borderRadius: "10px", padding:"20px 10px 10px 10px", marginLeft: "10px", marginTop: "10px"}} boxShadow={3}>

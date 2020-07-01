@@ -28,27 +28,6 @@ const styles = {
     }
 }
 
-// const sampleQuestion = {
-//     _id: "123saddsahd",
-//     title: "This is Title", // Use this for title
-//     description: "This is description", // Use this for description
-//     sampleInput: 3, // Use 
-//     sampleOutput: 5,
-//     difficulty: "Hard",
-//     type: "Array",
-//     cacheInput: `function(){
-//         for(var i = 0; i < 3; i++){
-//             console.log(i);
-//         }
-//     }`, // This goes to the editor value 
-//     isSolved: true, // If it is solved, then status: Solved, and vice versa
-//     // No need to check for answers yet ! But included here for data integrity
-//     answers: {
-//         inputs: [1, 2, 3],
-//         expectedOutputs: [1, 3, 4]
-//     }
-// }
-
 function QuestionPage() {
     // This is sample of a question data model
     // ID represents the question of the ID ! 
@@ -75,24 +54,26 @@ function QuestionPage() {
     // Validate the token first, if it is not validated, that means token has been tampered
     // If that is the case, we will just redirect to "/"
     async function checkValidToken(){
-        const res = await API.authenticateLogin();
-        const isValidToken = res.data.isAuthenticated;
-
+        const response = await API.authenticateLogin();
+        const isValidToken = response.data.isAuthenticated;
+  
         if(!isValidToken){
-            return window.location.href = "/";
+            window.location.href = "/";
+            return false;
+        } else {
+            return response.data;
         }
     }
 
     async function renderChosenQuestion(id){
-        checkValidToken();
-        const username = localStorage.getItem("username");
-        const response = await API.updateAndGetLastQuestion(username,id);
-        // Remove from local storage so that user cannot temper with it
-        localStorage.removeItem("username");
+        const userData = await checkValidToken(); // If token is valid, return the user data
+        const response = await API.updateAndGetLastQuestion(userData.uid,id);
+        console.log(response.data);
         setQuestion(response.data.question);
     };
 
     async function submitCode(){
+        // Should start spinning here
         checkValidToken();        
         const username = loginStatus.username;
         const submission = await axios.post("/api/submit", {
@@ -177,7 +158,7 @@ function QuestionPage() {
             <Grid container direction="row" justify="center" key={question._id} data-isSolved={question.isSolved}>
                 <Grid item xs={12} style={{ textAlign: "center" }}>
                     <h2 style={{ color: "#142850" }}>Title: {question.title}</h2>
-                    <h4>Question Id: {id} (DELETE IN PRODUCTION)</h4>
+                    {/* <h4>Question Id: {id} (DELETE IN PRODUCTION)</h4> */}
                 </Grid>
                 <Grid item xs={12} md={6} style={{ border:"10px",borderStyle: "solid solid none solid", borderColor: "#142850", backgroundColor: "#27496d" }}>
                     <div style={{ textAlign: "center" }}>

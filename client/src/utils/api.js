@@ -25,9 +25,10 @@ export default {
         }
     },
 
-    updateAndGetLastQuestion: async function(username,id){
-        const question = await axios.post(`/api/question`, {username,id});
-        return question;
+    updateAndGetLastQuestion: async function(userID,questionID){
+        console.log(userID)
+        const questionToDisplay = await axios.post(`/api/question`, {userID,questionID});
+        return questionToDisplay;
     },
 
     saveUserInput: async function(input){
