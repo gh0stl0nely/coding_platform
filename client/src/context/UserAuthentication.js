@@ -12,11 +12,11 @@ function UserContextProvider(props){
         lastQuestionID: ""
     });
 
- 
-
     useEffect(() => {
         checkAuthentication();
     },[]);
+
+    console.log(loginStatus);
 
     function logout(){
         localStorage.removeItem("jwt");
@@ -38,6 +38,7 @@ function UserContextProvider(props){
                 questions: user.data.questions,
                 lastQuestionID: user.data.lastQuestionID
             });
+
         } else {
             setLoginStatus({
                 isLoggedin: false,
@@ -45,6 +46,13 @@ function UserContextProvider(props){
                 questions: [],
                 lastQuestionID: ""
             });
+
+            // Since we deleted jwt and username. Just make sure that when the hacker
+            // Clicks on any question, 
+           
+            // This is a sign that someone tempers with the web token, we need to remove username and jwt right away
+            localStorage.removeItem("jwt");
+            localStorage.removeItem("username");
         }
     }
     return (

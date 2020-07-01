@@ -8,9 +8,8 @@ const jwt = require('jsonwebtoken');
 
 // Submit code was clicked. We should write a middleware for executing and validate code
 router.post("/submit", (req,res) => {
-    const userAnswer = req.body.cacheInput;
-    // We are only interested in cacheInput
-    // console.log(userAnswer);
+    const { question, username} = req.body;
+    console.log(question);
 });
 
 // Route for saving cacheInput automatically
@@ -22,7 +21,6 @@ router.post("/save", async (req, res) => {
 
 // This route handles creation of a new user and handle duplication
 router.post("/signup", async (req,res) => {
- 
     const { username, email, password } = req.body;
     // CHeck if already exist with the email or username or not
     const duplicateUser = await User.findOne({$or: [{username}, {email}]});
@@ -60,7 +58,7 @@ router.post("/signup", async (req,res) => {
 
 })
 
-// Log in and authenticate route
+// Log in route
 router.post("/login", async (req,res) => {
     
     try {
@@ -75,30 +73,39 @@ router.post("/login", async (req,res) => {
             });
         }
 
+        // If user exists and password matches, then we will issue a token
         if(password == user.password){
             const token = jwt.sign(user.toJSON(), 'secret');
             return res.json({
                 success: true,
                 token: token,
             }); 
-
         } else {
             // Wrong password
             return res.json({
                 msg: "Incorrect credentials",
             });
         }
+
     } catch(e){
         throw e;
     } 
 })
 
-router.get("/auth", passport.authenticate('jwt', {session: false}), (req,res) => {
+router.get("/auth", passport.authenticate('jwt', {session: false, failureRedirect: "/api/notAuth"}), (req,res) => {
+    // console.log('flash msg:', req.flash('signUpMessage'));
     return res.json({
         isAuthenticated: true,
         username: req.user.username,
         questions: req.user.questions,
         lastQuestionID: req.user.lastQuestionID
+    });
+});
+
+// Custom redirect and message if user is not authenticated
+router.get("/notAuth", (req,res) => {
+    return res.json({
+        isAuthenticated: false,
     });
 });
 
