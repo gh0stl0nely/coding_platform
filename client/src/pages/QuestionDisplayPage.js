@@ -13,7 +13,7 @@ import axios from "axios";
 
 const styles = {
     button: {
-        backgroundColor: "#305c8a",
+        backgroundColor: "#00909e",
         color: "white",
         margin: "10px 5px",
         padding: "5px 10px"
@@ -23,7 +23,8 @@ const styles = {
         top: "5px"
     },
     textStyle: {
-        fontWeight: "bold"
+        fontWeight: "bold",
+        color: "white"
     }
 }
 
@@ -66,7 +67,7 @@ function QuestionPage() {
     // When cacheInput changes, this means that save cache Input in frontend first, then save backend 
     useEffect(() => {
         API.saveUserInput(question);
-    }, [question]); 
+    }, [question]);
 
     // This function always run when the user enters this questionDisplayPage
     // If the token is not valid, they will be forwarded back to sign in page.
@@ -126,29 +127,29 @@ function QuestionPage() {
         }
     };
 
-    function renderStar(difficulty){
-        switch(difficulty){
+    function renderStar(difficulty) {
+        switch (difficulty) {
             case "Easy":
                 return (
                     <>
-                     <StarIcon style={styles.iconStyle} />
+                        <StarIcon style={styles.iconStyle} />
                     </>
                 )
             case "Medium":
-                    return (
-                        <>
-                         <StarIcon style={styles.iconStyle} />
-                         <StarIcon style={styles.iconStyle} />
-                        </>
-                    )
+                return (
+                    <>
+                        <StarIcon style={styles.iconStyle} />
+                        <StarIcon style={styles.iconStyle} />
+                    </>
+                )
             case "Hard":
-                    return (
-                        <>
-                         <StarIcon style={styles.iconStyle} />
-                         <StarIcon style={styles.iconStyle} />
-                         <StarIcon style={styles.iconStyle} />
-                        </>
-                    )
+                return (
+                    <>
+                        <StarIcon style={styles.iconStyle} />
+                        <StarIcon style={styles.iconStyle} />
+                        <StarIcon style={styles.iconStyle} />
+                    </>
+                )
         }
     };
 
@@ -161,7 +162,7 @@ function QuestionPage() {
         });
     };
 
-    function handleShowSolution(btn){
+    function handleShowSolution(btn) {
         if (btn === "solution") {
             document.getElementById("solutionDiv").style.display = "block";
             document.getElementById("questionDiv").style.display = "none";
@@ -172,13 +173,13 @@ function QuestionPage() {
     };
 
     return (
-        <Container maxWidth="md" style={{marginTop: "80px"}}>
+        <Container maxWidth="md" style={{ marginTop: "80px" }}>
             <Grid container direction="row" justify="center" key={question._id} data-isSolved={question.isSolved}>
                 <Grid item xs={12} style={{ textAlign: "center" }}>
                     <h2 style={{ color: "#142850" }}>Title: {question.title}</h2>
                     <h4>Question Id: {id} (DELETE IN PRODUCTION)</h4>
                 </Grid>
-                <Grid item xs={12} md={6} style={{ borderStyle: "solid solid none solid", borderColor: "#142850" }}>
+                <Grid item xs={12} md={6} style={{ border:"10px",borderStyle: "solid solid none solid", borderColor: "#142850", backgroundColor: "#27496d" }}>
                     <div style={{ textAlign: "center" }}>
                         <Button size="small" variant="contained" style={styles.button} onClick={() => { handleShowSolution("question") }}>
                             Question
@@ -187,25 +188,25 @@ function QuestionPage() {
                             Solution
                         </Button>
                     </div>
-                    <Grid item xs={12} id="questionDiv" style={{ padding: "0px 20px 80px 20px", overflow: "scroll", height: "294px" }}>
-                        <p style={styles.textStyle}>Category: <span>{question.type}</span></p>
-                        <p style={styles.textStyle}> Difficulty: <span>{renderStar(question.difficulty)}</span></p>
-                        <p style={styles.textStyle}>Status: <span> {question.isSolved ? "Solved" : "Unsolved"} </span></p>
+                    <Grid item xs={12} id="questionDiv" style={{ padding: "0px 20px 80px 20px", overflow: "scroll", height: "294px", backgroundColor: "#27496d" }}>
+                        <p style={styles.textStyle}>Category: <span style={{color: "white"}}>{question.type}</span></p>
+                        <p style={styles.textStyle}> Difficulty: <span style={{color: "white"}}>{renderStar(question.difficulty)}</span></p>
+                        <p style={styles.textStyle}>Status: <span style={{color: "white"}}> {question.isSolved ? "Solved" : "Unsolved"} </span></p>
                         <p style={styles.textStyle}>Description:</p>
-                        {question.description}
-                        <p style={styles.textStyle}>Input One: </p><span>{JSON.stringify(question.inputOne)}</span>
-                        <p style={styles.textStyle}>Output One: </p><span>{JSON.stringify(question.outputOne)}</span>
-                        <p style={styles.textStyle}>Input Two: </p><span>{JSON.stringify(question.inputTwo)}</span>
-                        <p style={styles.textStyle}>Output Two: </p><span>{JSON.stringify(question.outputTwo)}</span>
+                        <p style={{color: "white", lineHeight: "20px"}}>{question.description}</p>
+                        <p style={styles.textStyle}>Input One: </p><span style={{color: "white"}}>{JSON.stringify(question.inputOne)}</span>
+                        <p style={styles.textStyle}>Output One: </p><span style={{color: "white"}}>{JSON.stringify(question.outputOne)}</span>
+                        <p style={styles.textStyle}>Input Two: </p><span style={{color: "white"}}>{JSON.stringify(question.inputTwo)}</span>
+                        <p style={styles.textStyle}>Output Two: </p><span style={{color: "white"}}>{JSON.stringify(question.outputTwo)}</span>
                     </Grid>
                     {/* Solution */}
-                    <Grid item xs={12} id="solutionDiv" style={{ padding: "0px 20px 80px 20px", display: "none", overflow: "scroll" }}>
+                    <Grid item xs={12} id="solutionDiv" style={{ padding: "0px 20px 20px 20px", display: "none", overflow: "scroll", backgroundColor: "#27496d" }}>
                         <CodeEditor id={"solutionEditor"} isHighLightActiveLine={false} editorTheme={theme} isReadOnly={true} code={question.solutionCode} />
                     </Grid>
                 </Grid>
-                <Grid item xs={12} md={6} style={{ borderStyle: "solid solid none solid", borderColor: "#142850", textAlign: "center" }}>
+                <Grid item xs={12} md={6} style={{ border:"10px",borderStyle: "solid solid none solid", borderColor: "#142850", textAlign: "center", backgroundColor: "#27496d" }}>
                     <IconButton onClick={refreshCode} aria-label="replay">
-                        <ReplayIcon size="small" style={{ color: "#305c8a", fontWeight: "bold" }} />
+                        <ReplayIcon size="small" style={{ color: "white", fontWeight: "bold" }} />
                     </IconButton>
                     <Button onClick={toggleEditorTheme} size="small" variant="contained" style={styles.button}>
                         {btnLabel}
@@ -220,7 +221,7 @@ function QuestionPage() {
                         <CodeEditor id={"userEditor"} saveCode={saveCode} isHighLightActiveLine={true} editorTheme={theme} isReadOnly={false} code={question.cacheInput == "" ? question.beginningCode : question.cacheInput} />
                     </Grid>
                 </Grid>
-                <Grid item xs={12} style={{ textAlign: "center", height: "200px", border: "black 2px solid" }}>
+                <Grid item xs={12} style={{ textAlign: "center", height: "200px", border: "#142850 10px solid", backgroundColor: "#27496d" }}>
                     <p>console log goes here</p>
                 </Grid>
             </Grid>

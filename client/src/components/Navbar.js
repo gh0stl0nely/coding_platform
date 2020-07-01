@@ -119,6 +119,7 @@ export default function NavBar() {
               <MenuIcon />
             </IconButton>
           </Hidden>
+          <img src="https://i.ibb.co/GVtGPXP/logo.png" width="40" alter="logo of the app" style={{marginRight: "10px"}}/>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
             App Name/Logo
           </Typography>
