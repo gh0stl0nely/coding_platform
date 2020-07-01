@@ -11,7 +11,7 @@ import StarIcon from "@material-ui/icons/Star";
 import Helper from "../utils/helper";
 import { UserContext } from "../context/UserAuthentication";
 import LastQuestionButton from "../components/LastQuestionButton";
-import {questionList} from "../utils/question";
+import { questionList } from "../utils/question";
 
 const styles = {
     iconStyle: {
@@ -20,87 +20,6 @@ const styles = {
     }
 }
 
-var sampleData = [{
-    _id: "123saddsahd1",
-    title: "Array Q1",
-    description: "This is Description",
-    difficulty: "Hard",
-    type: "Array",
-    cacheInput: "Cache Input", // This goes to the editor value 
-    isSolved: true, // If it is solved, then status: Solved, and vice versa
-    // No need to check for answers yet ! But included here for data integrity
-    answers: {
-        inputs: [1, 2, 3],
-        expectedOutputs: [1, 3, 4]
-    }
-}, {
-    _id: "123saddsahd",
-    title: "Array Q2",
-    description: "This is Description",
-    difficulty: "Easy",
-    type: "Array",
-    cacheInput: "Cache Input", // This goes to the editor value 
-    isSolved: false, // If it is solved, then status: Solved, and vice versa
-    // No need to check for answers yet ! But included here for data integrity
-    answers: {
-        inputs: [1, 2, 3],
-        expectedOutputs: [1, 3, 4]
-    }
-},
-{
-    _id: "123saddsahd",
-    title: "String Q1",
-    description: "This is Description",
-    difficulty: "Medium",
-    type: "String",
-    cacheInput: "Cache Input", // This goes to the editor value 
-    isSolved: true, // If it is solved, then status: Solved, and vice versa
-    // No need to check for answers yet ! But included here for data integrity
-    answers: {
-        inputs: [1, 2, 3],
-        expectedOutputs: [1, 3, 4]
-    }
-}, {
-    _id: "123saddsahd",
-    title: "String Q2",
-    description: "This is Description",
-    difficulty: "Easy",
-    type: "String",
-    cacheInput: "Cache Input", // This goes to the editor value 
-    isSolved: false, // If it is solved, then status: Solved, and vice versa
-    // No need to check for answers yet ! But included here for data integrity
-    answers: {
-        inputs: [1, 2, 3],
-        expectedOutputs: [1, 3, 4]
-    }
-}, {
-    _id: "123saddsahd",
-    title: "Hash Table Q1",
-    description: "This is Description",
-    difficulty: "Hard",
-    type: "Hash Table",
-    cacheInput: "Cache Input", // This goes to the editor value 
-    isSolved: true, // If it is solved, then status: Solved, and vice versa
-    // No need to check for answers yet ! But included here for data integrity
-    answers: {
-        inputs: [1, 2, 3],
-        expectedOutputs: [1, 3, 4]
-    }
-}, {
-    _id: "123saddsahd",
-    title: "Hash Table Q2 Hash Table Q2 Hash Table Q2Hash Table Q2",
-    description: "This is Description",
-    difficulty: "Medium",
-    type: "Hash Table",
-    cacheInput: "Cache Input", // This goes to the editor value 
-    isSolved: false, // If it is solved, then status: Solved, and vice versa
-    // No need to check for answers yet ! But included here for data integrity
-    answers: {
-        inputs: [1, 2, 3],
-        expectedOutputs: [1, 3, 4]
-    }
-}]
-
 function Home() {
 
     // If isLoggedin is true, then show question, if not blury them?
@@ -108,9 +27,9 @@ function Home() {
     const [difficulty, setDifficulty] = useState('');
     const [questionType, setQuestionType] = useState('');
 
-    // If they are logged in, we know that loginStatus.questions is NOT null.
+
     const questionsToRender = loginStatus.questions.length > 0 ? loginStatus.questions : questionList;
-    console.log(questionsToRender);
+
     const handleChangeDifficulty = (event) => {
         setDifficulty(event.target.value);
     };
