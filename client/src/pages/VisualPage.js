@@ -2,6 +2,8 @@ import React from 'react';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Chips from "../components/Chips";
+import Box from '@material-ui/core/Box';
+import Copyright from "../components/Copyright";
 
 function VisualPage() {
     return (
@@ -19,6 +21,9 @@ function VisualPage() {
                     <p>Contents go here: explaination, videoes</p>
                 </Grid>
             </Grid>
+            <Box mt={8}>
+          <Copyright />
+        </Box>
         </Container>
     )
 }
