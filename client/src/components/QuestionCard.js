@@ -8,6 +8,8 @@ import Divider from '@material-ui/core/Divider';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import GradeIcon from '@material-ui/icons/Grade';
 import Box from '@material-ui/core/Box';
+import Zoom from '@material-ui/core/Zoom';
+import Tooltip from '@material-ui/core/Tooltip';
 import {UserContext} from "../context/UserAuthentication";
 
 const useStyles = makeStyles({
@@ -40,6 +42,22 @@ export default function QuestionCard(props) {
     return difficulty == "Easy" ? <div><GradeIcon /></div> : 
     (difficulty == "Medium" ? <div><GradeIcon /><GradeIcon /></div>: 
     <div><GradeIcon /><GradeIcon /><GradeIcon /></div>);
+  };
+
+  function renderQuestionLink(item){
+    if(item["_id"]){
+      return (
+        <Tooltip title={item.isSolved ? "I'm solved, yay!" : "Give me a try!"} TransitionComponent={Zoom} arrow>
+          <Link onClick={() => goToQuestion(item["_id"])} style={{cursor: "pointer", color: "white", fontSize: "18px"}}>{item.title} {renderTick(item.isSolved)}</Link>
+        </Tooltip>
+      )
+    } else {
+      return (
+        <Tooltip title="Sign in to access me :)" TransitionComponent={Zoom} arrow>
+          <Link onClick={() => window.location.href = "/signin"} style={{cursor: "not-allowed", color: "white", fontSize: "18px"}}>{item.title} {renderTick(item.isSolved)}</Link>
+        </Tooltip>
+      )
+    }
   }
 
   return (
@@ -55,8 +73,8 @@ export default function QuestionCard(props) {
         return (
           <>
           <CardContent style={{paddingBottom: "0px"}}>
-            <Typography>
-            <Link onClick={() => goToQuestion(item["_id"])} style={{cursor: "pointer", color: "white", fontSize: "18px"}}>{item.title} {renderTick(item.isSolved)}</Link>
+            <Typography>  
+              {renderQuestionLink(item)}
             </Typography>
             <Typography className={classes.pos} color="textSecondary">
               {renderStars(item.difficulty)}

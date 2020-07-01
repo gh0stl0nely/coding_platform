@@ -7,11 +7,11 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
-// import QuestionCard from "../components/QuestionCard";
 import StarIcon from "@material-ui/icons/Star";
 import Helper from "../utils/helper";
 import { UserContext } from "../context/UserAuthentication";
 import LastQuestionButton from "../components/LastQuestionButton";
+import {questionList} from "../utils/question";
 
 const styles = {
     iconStyle: {
@@ -109,8 +109,8 @@ function Home() {
     const [questionType, setQuestionType] = useState('');
 
     // If they are logged in, we know that loginStatus.questions is NOT null.
-    const questionsToRender = loginStatus.questions.length > 0 ? loginStatus.questions : sampleData;
-
+    const questionsToRender = loginStatus.questions.length > 0 ? loginStatus.questions : questionList;
+    console.log(questionsToRender);
     const handleChangeDifficulty = (event) => {
         setDifficulty(event.target.value);
     };
