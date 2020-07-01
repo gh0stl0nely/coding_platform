@@ -1,17 +1,21 @@
 import axios from "axios";
 
 export default {
+
+    // This function is called whenever navigates to another page to check authentication
+    // In UserContext 
+    // Use the token stored in local storage, if token exists, sends it as a header to authorization endpoint
+    // If token is invalid, we will return {msg: "User not found!", isAuthenticated: false}
     authenticateLogin : async function(){
         const token = localStorage.getItem("jwt");
         if(token){
             try {
-                const response = await axios.get("/api/auth", {
+                const user = await axios.get("/api/auth", {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
                 });
-                // console.log(response);
-                return response;
+                return user;
             } catch(e){
                 throw e;
             }

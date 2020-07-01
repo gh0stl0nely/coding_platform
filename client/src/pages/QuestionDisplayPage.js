@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import ReplayIcon from '@material-ui/icons/Replay';
@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import CodeEditor from "../components/CodeEditor";
 import StarIcon from "@material-ui/icons/Star";
+import {UserContext} from "../context/UserAuthentication";
 import API from "../utils/api";
 import axios from "axios";
 
@@ -49,8 +50,9 @@ const styles = {
 
 function QuestionPage() {
     // This is sample of a question data model
-    // You can set CodeEditor value={cacheInput} when useEffect is called
-    let { id } = useParams();
+    // ID represents the question of the ID ! 
+    const { id } = useParams();
+    const { loginStatus }  = useContext(UserContext);
     const [theme, setTheme] = useState("monokai");
     const [btnLabel, setBtnLabel] = useState("Theme Toggle");
     // Question also contains user input
@@ -66,23 +68,47 @@ function QuestionPage() {
         API.saveUserInput(question);
     }, [question]); 
 
-    // We cache the username in localstorage (can delete after it runs if needed)
-    // Use the cached username and id from url query to update the lastQuestionID for the particular user
+    // This function always run when the user enters this questionDisplayPage
+    // If the token is not valid, they will be forwarded back to sign in page.
+    // We want to make sure they are not tampering with the token
+    // Validate the token first, if it is not validated, that means token has been tampered
+    // If that is the case, we will just redirect to "/"
+    async function checkValidToken(){
+        const res = await API.authenticateLogin();
+        const isValidToken = res.data.isAuthenticated;
+
+        if(!isValidToken){
+            return window.location.href = "/";
+        }
+    }
 
     async function renderChosenQuestion(id){
+        checkValidToken();
         const username = localStorage.getItem("username");
         const response = await API.updateAndGetLastQuestion(username,id);
+        // Remove from local storage so that user cannot temper with it
+        localStorage.removeItem("username");
         setQuestion(response.data.question);
     };
 
     async function submitCode(){
-        // save code first
-        const response = await axios.post("/api/submit", question);
-        console.log(response);
+        checkValidToken();        
+        const username = loginStatus.username;
+        const submission = await axios.post("/api/submit", {
+            username,
+            question
+        });
     };
 
+    // (BONUS)
+    async function runCode(){
+        checkValidToken();    
+    }
+
      // This is auto save. So we save on front end first, and then save in the backend.
-    function saveCode(newValue){
+    async function saveCode(newValue){
+        checkValidToken();
+
         setQuestion({
             ...question,
             cacheInput: newValue
@@ -126,6 +152,8 @@ function QuestionPage() {
     };
 
     function refreshCode(){
+        checkValidToken();
+
         setQuestion({
             ...question,
             cacheInput: ""

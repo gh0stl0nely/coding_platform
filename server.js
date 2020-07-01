@@ -10,17 +10,6 @@ const passport = require("./auth/passport");
 app.use(express.urlencoded({"extended": true}));
 app.use(express.json());
 app.use(cors());
-
-// Configure session since Express does not create it automatically for us
-const option = {
-  secret: 'keyboard cat',
-  resave: false,
-  saveUninitialized: true,
-  cookie: { }
-}
-//  if NODE_ENV is production then option.cookie.secure == true and set true
-
-// Application -> Cookies -> connect.sid => This is the cookie that has the ID
 app.use(passport.initialize());
 
 mongoose.connect("mongodb://localhost/platform", {
