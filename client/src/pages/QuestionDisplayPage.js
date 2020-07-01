@@ -103,7 +103,8 @@ function QuestionPage() {
 
     // (BONUS)
     async function runCode(){
-        checkValidToken();    
+        checkValidToken();   
+        // Enter code for running and console logging 
     }
 
      // This is auto save. So we save on front end first, and then save in the backend.
