@@ -106,7 +106,7 @@ export default function NavBar() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="absolute" style={{backgroundColor: "#142850"}} className={clsx(classes.appBar, open && classes.appBarShift)}>
+      <AppBar position="absolute" style={{ backgroundColor: "#142850" }} className={clsx(classes.appBar, open && classes.appBarShift)}>
         <Toolbar>
           <Hidden mdUp>
             <IconButton
@@ -119,13 +119,13 @@ export default function NavBar() {
               <MenuIcon />
             </IconButton>
           </Hidden>
-          <img src="https://i.ibb.co/GVtGPXP/logo.png" width="40" alter="logo of the app" style={{marginRight: "10px"}}/>
+          <img src="https://i.ibb.co/GVtGPXP/logo.png" width="40" alter="logo of the app" style={{ marginRight: "10px" }} />
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            App Name/Logo
+            Programmeow
           </Typography>
           <Hidden smDown>
             <Button href="/" color="inherit">Home</Button>
-            <Button href="/visualization" color="inherit">Visualization</Button>
+            <Button href="/visualization" color="inherit">Algorithm Visualizer</Button>
             <Button href={loginStatus.isLoggedin ? "/" : "/signin"} color="inherit">{loginStatus.isLoggedin ? `Hi ${loginStatus.username}` : "Sign in"}</Button>
             <Button onClick={logout} style={{ display: loginStatus.isLoggedin ? "block" : "none" }} color="inherit">Logout</Button>
           </Hidden>
@@ -156,7 +156,7 @@ export default function NavBar() {
           <a href="/visualization" className={classes.sideNav}>
             <ListItem button key="visualization">
               <ListItemIcon><DescriptionOutlinedIcon style={{ color: "#142850" }} /></ListItemIcon>
-              <ListItemText primary="Visualization" />
+              <ListItemText primary="Algorithm Visualizer" />
             </ListItem>
           </a>
           <a href={loginStatus.isLoggedin ? "/" : "/signin"} className={classes.sideNav}>
