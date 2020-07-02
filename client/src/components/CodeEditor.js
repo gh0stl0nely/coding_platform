@@ -3,7 +3,7 @@ import AceEditor from "react-ace";
  
 import "ace-builds/src-noconflict/mode-java";
 import "ace-builds/src-noconflict/theme-xcode";
-import "ace-builds/src-noconflict/theme-monokai";
+import "ace-builds/src-noconflict/theme-twilight";
 import "ace-builds/src-min-noconflict/ext-language_tools";
 
 const options = {

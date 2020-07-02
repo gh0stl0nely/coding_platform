@@ -33,7 +33,7 @@ function QuestionPage() {
     // ID represents the question of the ID ! 
     const { id } = useParams();
     const { loginStatus }  = useContext(UserContext);
-    const [theme, setTheme] = useState("monokai");
+    const [theme, setTheme] = useState("twilight");
     const [btnLabel, setBtnLabel] = useState("Theme Toggle");
     // Question also contains user input
     const [question, setQuestion] = useState({});
@@ -100,7 +100,7 @@ function QuestionPage() {
 
     function toggleEditorTheme() {
         if (theme === "xcode") {
-            setTheme("monokai");
+            setTheme("twilight");
             setBtnLabel("Light");
         } else {
             setTheme("xcode");
