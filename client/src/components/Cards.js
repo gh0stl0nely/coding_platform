@@ -4,6 +4,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
+import ScrollAnimation from 'react-animate-on-scroll';
 
 const useStyles = makeStyles({
     root: {
@@ -26,7 +27,8 @@ export default function SimpleCard() {
             </Grid>
 
             <Grid item xs={12} md={3}>
-                <Box className="animate__animated" boxShadow={5} style={{ borderRadius: "10px" }}>
+            <ScrollAnimation animateIn="animate__flipInX">
+                <Box boxShadow={5} style={{ borderRadius: "10px" }}>
                     <Card className={classes.root}>
                         <CardContent>
                             <div style={{ paddingTop: "35px", paddingBottom: "35px" }}>
@@ -37,8 +39,11 @@ export default function SimpleCard() {
                         </CardContent>
                     </Card>
                 </Box>
+            </ScrollAnimation>
+                
             </Grid>
             <Grid item xs={12} md={3}>
+            <ScrollAnimation animateIn="animate__flipInX animate__delay-2s">
                 <Box boxShadow={5} style={{ borderRadius: "10px" }}>
                     <Card className={classes.root}>
                         <CardContent>
@@ -50,8 +55,10 @@ export default function SimpleCard() {
                         </CardContent>
                     </Card>
                 </Box>
+            </ScrollAnimation>
             </Grid>
             <Grid item xs={12} md={3}>
+            <ScrollAnimation animateIn="animate__flipInX animate__delay-3s">
                 <Box boxShadow={5} style={{ borderRadius: "10px" }}>
                     <Card className={classes.root}>
                         <CardContent>
@@ -63,6 +70,7 @@ export default function SimpleCard() {
                         </CardContent>
                     </Card>
                 </Box>
+            </ScrollAnimation>        
             </Grid>
         </Grid>
     );
