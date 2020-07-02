@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import ForwardIcon from '@material-ui/icons/Forward';
-// import QuestionCard from "../components/QuestionCard";
+import ScrollAnimation from 'react-animate-on-scroll';
 import StarIcon from "@material-ui/icons/Star";
 import Copyright from "../components/Copyright";
 import Helper from "../utils/helper";
@@ -133,15 +133,21 @@ function Home() {
             <Grid container direction="row" spacing={2}>
                 {renderQuestions()}
             </Grid>
-
             <Cards />
-            <Grid container style={{ textAlign: "center", paddingBottom: "30px", backgroundColor: "#1D4D80" }}>
+            <Grid container style={{ paddingBottom: "30px", backgroundColor: "#1D4D80", textAlign:"center" }}>
+            <ScrollAnimation animateIn="animate__backInDown" style={{margin: "0 auto"}}>
                 <p style={{ fontFamily: 'Lobster', fontSize: "35px", margin: "30px auto 0px auto", color: "white" }}>Ready to ace your coding interview?</p>
+            </ScrollAnimation>
                 <Grid item xs={12}>
-                    <ForwardIcon style={{ fontSize: "80px", position: "relative", top: "35px", right: "20px", color: "red" }} />
+                    <ScrollAnimation animateIn="animate__flash" style={{ display: "inline-block" }}>
+                        <ForwardIcon style={{ fontSize: "60px", position: "relative", top: "25px", right: "10px", color: "#FE4444"}} />
+                    </ScrollAnimation>
                     <Button size="large" variant="contained" style={{ backgroundColor: "#142850", color: "white" }}>
                         sign up NOW
                         </Button>
+                    <ScrollAnimation animateIn="animate__flash" style={{ display: "inline-block" }}>
+                        <ForwardIcon style={{ fontSize: "60px", position: "relative", top: "25px", left: "10px", color: "#FE4444", transform: "scaleX(-1)" }} />
+                    </ScrollAnimation>
                 </Grid>
             </Grid>
             <Box mt={3} mb={3}>
