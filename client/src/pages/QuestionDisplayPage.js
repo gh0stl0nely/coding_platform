@@ -37,6 +37,9 @@ function QuestionPage() {
     const [btnLabel, setBtnLabel] = useState("Theme Toggle");
     // Question also contains user input
     const [question, setQuestion] = useState({});
+    // saveStatus, setSaveStatus = {
+//      
+    // }
 
     useEffect(() => {
         // Go to backend search for that question by ID... and console log first :)
@@ -44,9 +47,9 @@ function QuestionPage() {
     }, []);
 
     // When cacheInput changes, this means that save cache Input in frontend first, then save backend 
-    useEffect(() => {
-        API.saveUserInput(question);
-    }, [question]);
+    // useEffect(() => {
+    //     API.saveUserInput(question);
+    // }, [question]);
 
     // This function always run when the user enters this questionDisplayPage
     // If the token is not valid, they will be forwarded back to sign in page.
@@ -90,7 +93,7 @@ function QuestionPage() {
 
      // This is auto save. So we save on front end first, and then save in the backend.
     async function saveCode(newValue){
-        checkValidToken();
+        // checkValidToken();
 
         setQuestion({
             ...question,

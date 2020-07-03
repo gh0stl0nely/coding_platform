@@ -8,11 +8,12 @@ const jwt = require('jsonwebtoken');
 
 // Submit code was clicked. We should write a middleware for executing and validate code
 router.post("/submit", (req,res) => {
+    // Should also save... 
     const { question, username} = req.body;
     console.log(question.cacheInput);
     res.json({
         "msg": "Got"
-    })
+    });
 });
 
 // Route for saving cacheInput automatically
