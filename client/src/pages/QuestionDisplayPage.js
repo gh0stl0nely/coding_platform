@@ -47,9 +47,9 @@ function QuestionPage() {
     }, []);
 
     // When cacheInput changes, this means that save cache Input in frontend first, then save backend 
-    // useEffect(() => {
-    //     API.saveUserInput(question);
-    // }, [question]);
+    useEffect(() => {
+        API.saveUserInput(question);
+    }, [question]);
 
     // This function always run when the user enters this questionDisplayPage
     // If the token is not valid, they will be forwarded back to sign in page.
@@ -71,7 +71,6 @@ function QuestionPage() {
     async function renderChosenQuestion(id){
         const userData = await checkValidToken(); // If token is valid, return the user data
         const response = await API.updateAndGetLastQuestion(userData.uid,id);
-        console.log(response.data);
         setQuestion(response.data.question);
     };
 

@@ -19,7 +19,7 @@ function CodeEditor(props){
             theme={props.editorTheme}
             value={props.code}
             readOnly={props.isReadOnly}
-            // debounceChangePeriod={1500}
+            debounceChangePeriod={1500}
             onChange={props.saveCode}
             name="UNIQUE_ID_OF_DIV"
             editorProps={{ $blockScrolling: true }}

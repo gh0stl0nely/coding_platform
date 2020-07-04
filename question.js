@@ -15,7 +15,11 @@ function smallerThanCurrent(nums){
     solutionCode: `
 function smallerThanCurrent(nums){
     [INSERT SOLUTION HERE]
-}    
+} 
+
+// Do not edit this line
+module.exports = smallerThanCurrent;
+
 `,
     inputOne: [1,1,1],
     inputTwo: [8,1,2,2,3],
@@ -38,7 +42,11 @@ function smallerThanCurrent(nums){
 // Please write inside this function
 function isValidPalindrome(str){
 
-}`,
+}
+
+// Do not edit this line
+module.exports = isValidPalindrome;
+`,
     solutionCode: `
 function isValidPalindrome(str){
     [INSERT SOLUTION HERE]
@@ -63,7 +71,11 @@ function isValidPalindrome(str){
 // Please write inside this function
 function uniqueOccurence(){
 
-}`,
+}
+
+// Do not edit this line
+module.exports = uniqueOccurence;
+`,
     solutionCode: `
 function isValidPalindrome(str){
     [INSERT SOLUTION HERE]

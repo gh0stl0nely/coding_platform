@@ -2,33 +2,99 @@ const express = require("express");
 const router = express.Router();
 const User = require("../model/User");
 const Question = require("../model/Question");
-const {questionList} = require("../question");
+const { questionList } = require("../question");
 const passport = require("../auth/passport");
 const jwt = require('jsonwebtoken');
+const fs = require("fs");
+const util = require('util');
+const writeFileAsync = util.promisify(fs.writeFile);
+const readFileAsync = util.promisify(fs.readFile);
 
 // Submit code was clicked. We should write a middleware for executing and validate code
-router.post("/submit", (req,res) => {
+router.post("/submit", async (req, res) => {
     // Should also save... 
-    const { question, username} = req.body;
-    console.log(question.cacheInput);
+    const {
+        question,
+        username
+    } = req.body;
+    // console.log(question.cacheInput);
+
+    await writeFileAsync("./userInput-js/user.js", question.cacheInput);
+
+    const getNode = require("./user_files/file");
+
+    var result = [];
+    var logger = [];
+
+    const question = {
+        inputs: ["racecar", "car"],
+        outputs: [true, false]
+    }
+
+    const vm = new NodeVM({
+        console: 'redirect',
+        timeout: 2000,
+    });
+
+    vm.on('console.log', (msg) => {
+        var msg1 = msg;
+        logger.push(msg1);
+    })
+
+    const inputs = question.inputs;
+    const outputs = question.outputs;
+
+    for (var i = 0; i < inputs.length; i++) {
+        try {
+            var myFunction = vm.run(code);
+            assert.deepEqual(myFunction(inputs[i]), outputs[i]);
+            result.push({
+                isPassed: true,
+                msg: "Test Passed"
+            })
+        } catch (e) {
+            result.push({
+                isPassed: false,
+                error: e
+            });
+        }
+    }
+
     res.json({
-        "msg": "Got"
+        msg: "Contained data and message after running test",
+        result,
+        logger
     });
 });
 
 // Route for saving cacheInput automatically
 router.post("/save", async (req, res) => {
-    const { _id, cacheInput } = req.body;
-    return await Question.findByIdAndUpdate(_id, {cacheInput});
+    const {
+        _id,
+        cacheInput
+    } = req.body;
+    return await Question.findByIdAndUpdate(_id, {
+        cacheInput
+    });
     // No need to sendback the updatedQuestion because frontend was already updated!
 });
 
 // This route handles creation of a new user and handle duplication
-router.post("/signup", async (req,res) => {
-    const { username, email, password } = req.body;
+router.post("/signup", async (req, res) => {
+    const {
+        username,
+        email,
+        password
+    } = req.body;
     // CHeck if already exist with the email or username or not
-    const duplicateUser = await User.findOne({$or: [{username}, {email}]});
-    if(duplicateUser){
+    const duplicateUser = await User.findOne({
+        $or: [{
+            username
+        }, {
+            email
+        }]
+    });
+    if (duplicateUser) {
         // Found a duplicate user
         console.log("Found duplicate");
         return res.json({
@@ -58,32 +124,37 @@ router.post("/signup", async (req,res) => {
     return res.json({
         msg: "Successfully create a new user",
         token: token,
-    }); 
+    });
 
 })
 
 // Log in route
-router.post("/login", async (req,res) => {
-    
+router.post("/login", async (req, res) => {
+
     try {
-        const { username, password } = req.body;
-    
+        const {
+            username,
+            password
+        } = req.body;
+
         // Check user in database
-        const user = await User.findOne({username});
-        
-        if(!user){
+        const user = await User.findOne({
+            username
+        });
+
+        if (!user) {
             return res.json({
                 msg: "User not found",
             });
         }
 
         // If user exists and password matches, then we will issue a token
-        if(password == user.password){
+        if (password == user.password) {
             const token = jwt.sign(user.toJSON(), 'secret');
             return res.json({
                 success: true,
                 token: token,
-            }); 
+            });
         } else {
             // Wrong password
             return res.json({
@@ -91,12 +162,15 @@ router.post("/login", async (req,res) => {
             });
         }
 
-    } catch(e){
+    } catch (e) {
         throw e;
-    } 
+    }
 })
 
-router.get("/auth", passport.authenticate('jwt', {session: false, failureRedirect: "/api/notAuth"}), (req,res) => {
+router.get("/auth", passport.authenticate('jwt', {
+    session: false,
+    failureRedirect: "/api/notAuth"
+}), (req, res) => {
     // console.log('flash msg:', req.flash('signUpMessage'));
     return res.json({
         uid: req.user["_id"],
@@ -108,40 +182,67 @@ router.get("/auth", passport.authenticate('jwt', {session: false, failureRedirec
 });
 
 // Custom redirect and message if user is not authenticated
-router.get("/notAuth", (req,res) => {
+router.get("/notAuth", (req, res) => {
     return res.json({
         isAuthenticated: false,
     });
 });
 
 // Called in UseEffect in QuestionDisplayPage to get selected question
-router.post("/question",  async (req,res) => {
+router.post("/question", async (req, res) => {
     // id represents the ID of the user last clicked on
-    const { userID, questionID } = req.body;
+    const {
+        userID,
+        questionID
+    } = req.body;
 
-    try {   
-        const user = await User.findByIdAndUpdate(userID, {lastQuestionID: questionID}).populate('questions').exec();
+    try {
+        const user = await User.findByIdAndUpdate(userID, {
+            lastQuestionID: questionID
+        }).populate('questions').exec();
         const selectedQuestion = user.questions.filter(question => question["_id"] == questionID)[0];
- 
-        const { _id, title, description, difficulty, isSolved,
-            type, cacheInput, beginningCode, solutionCode,
-            inputOne, inputTwo, outputOne, outputTwo, } = selectedQuestion;
+
+        const {
+            _id,
+            title,
+            description,
+            difficulty,
+            isSolved,
+            type,
+            cacheInput,
+            beginningCode,
+            solutionCode,
+            inputOne,
+            inputTwo,
+            outputOne,
+            outputTwo,
+        } = selectedQuestion;
 
         return res.json({
             success: true,
             question: {
-                _id, title, description, difficulty, isSolved,
-            type, cacheInput, beginningCode, solutionCode,
-            inputOne, inputTwo, outputOne, outputTwo
+                _id,
+                title,
+                description,
+                difficulty,
+                isSolved,
+                type,
+                cacheInput,
+                beginningCode,
+                solutionCode,
+                inputOne,
+                inputTwo,
+                outputOne,
+                outputTwo
             }
         });
-    } catch(e){
+    } catch (e) {
         return res.json({
             success: false,
             msg: "User with the specified name not found"
         });
     }
-    
+
 });
 
 module.exports = router;
