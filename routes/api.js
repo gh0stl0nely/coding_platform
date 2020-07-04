@@ -10,8 +10,15 @@ const jwt = require('jsonwebtoken');
 router.post("/submit", (req,res) => {
     const { question, username} = req.body;
     console.log(question.cacheInput);
+    const result = [{
+        test: "One",
+        success: true
+    }, {
+        test: "Two",
+        success: false
+    }]
     res.json({
-        "msg": "Got"
+        result
     })
 });
 
