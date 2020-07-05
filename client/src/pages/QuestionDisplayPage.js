@@ -23,11 +23,12 @@ const styles = {
     iconStyle: {
         position: "relative",
         top: "3px",
-        fontSize: "17px"
+
     },
     textStyle: {
         fontWeight: "bold",
-        color: "white"
+        color: "white",
+        fontSize: "20px"
     }
 }
 
@@ -194,7 +195,7 @@ function QuestionPage() {
         <Container maxWidth="md" style={{ marginTop: "80px" }}>
             <Grid container direction="row" justify="center" key={question._id} data-isSolved={question.isSolved}>
                 <Grid item xs={12} style={{ textAlign: "center" }}>
-                    <h2 style={{ color: "#142850" }}>Title: {question.title}</h2>
+                    <h2 style={{ color: "#142850" }}>Question title: {question.title}</h2>
                     {/* <h4>Question Id: {id} (DELETE IN PRODUCTION)</h4> */}
                 </Grid>
                 <Grid item xs={12} md={6} style={{ border: "10px", borderStyle: "solid solid none solid", borderColor: "#142850", backgroundColor: "#27496d" }}>
@@ -209,13 +210,13 @@ function QuestionPage() {
                     <Grid item xs={12} id="questionDiv" style={{ padding: "0px 20px 80px 20px", overflow: "scroll", height: "294px", backgroundColor: "#27496d" }}>
                         <p style={styles.textStyle}>Category: <span style={{ color: "white" }}>{question.type}</span></p>
                         <p style={styles.textStyle}> Difficulty: <span style={{ color: "white" }}>{renderStar(question.difficulty)}</span></p>
-                        <p style={styles.textStyle}>Status: <span style={{ color: "white" }}> {question.isSolved ? "Solved" : "Unsolved"} </span></p>
+                        <p style={styles.textStyle}>Status: <span style={{ color: "white" }}> {question.isSolved ? <span style={{color: "green"}}>Solved</span> : <span style={{color: "red"}}>Unsolved</span>} </span></p>
                         <p style={styles.textStyle}>Description:</p>
                         <p style={{ color: "white", lineHeight: "20px" }}>{question.description}</p>
-                        <p style={styles.textStyle}>Input One: </p><span style={{ color: "white" }}>{JSON.stringify(question.inputOne)}</span>
-                        <p style={styles.textStyle}>Output One: </p><span style={{ color: "white" }}>{JSON.stringify(question.outputOne)}</span>
-                        <p style={styles.textStyle}>Input Two: </p><span style={{ color: "white" }}>{JSON.stringify(question.inputTwo)}</span>
-                        <p style={styles.textStyle}>Output Two: </p><span style={{ color: "white" }}>{JSON.stringify(question.outputTwo)}</span>
+                        <p style={styles.textStyle}>Sample Input 1: </p><span style={{ color: "white" }}>{JSON.stringify(question.inputOne)}</span>
+                        <p style={styles.textStyle}>Sample Output 1: </p><span style={{ color: "white" }}>{JSON.stringify(question.outputOne)}</span>
+                        <p style={styles.textStyle}>Sample Input 2: </p><span style={{ color: "white" }}>{JSON.stringify(question.inputTwo)}</span>
+                        <p style={styles.textStyle}>Sample Output 2: </p><span style={{ color: "white" }}>{JSON.stringify(question.outputTwo)}</span>
                     </Grid>
                     {/* Solution */}
                     <Grid item xs={12} id="solutionDiv" style={{ padding: "0px 20px 20px 20px", display: "none", overflow: "scroll", backgroundColor: "#27496d" }}>

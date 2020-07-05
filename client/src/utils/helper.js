@@ -133,6 +133,7 @@ function renderLoggingOutputError(result){
 
     return (
         <>
+            <p style={{color: "red"}}>Your code was tested for the first test case and failed.</p>
             <p style={{color: "white"}}>------------ Here are the logged outputs ------------</p>
             {loggingOutputs.map(logOutput => {
                 return (

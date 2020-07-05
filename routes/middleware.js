@@ -92,6 +92,8 @@ module.exports = {
     checkIsQuestionSolved: async function(req,res,next){
         const result = res.locals.result;
         const failedQuestionsCounter = res.locals.failedQuestions;
+        const { question } = req.body;
+        const questionID = question["_id"];
 
         // There are failed questions
         if(failedQuestionsCounter > 0){
@@ -110,7 +112,10 @@ module.exports = {
                 isAllPassed: true,
                 event: "Submit code"
             };
+
+            await Question.findByIdAndUpdate(questionID, {isSolved: true});
         };
+
         next();
     },
 
@@ -125,7 +130,7 @@ module.exports = {
         const questionID = question["_id"];
         const cacheInput = question.cacheInput;
         try  {
-            await Question.findByIdAndUpdate(questionID, {cacheInput, isSolved: true});
+            await Question.findByIdAndUpdate(questionID, {cacheInput});
             next();
         } catch(e){
             // Maybe we should handle error here if it fails?
