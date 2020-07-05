@@ -7,12 +7,13 @@ const passport = require("../auth/passport");
 const jwt = require('jsonwebtoken');
 const { saveUserInput , processUserInput, processLogging, checkIsQuestionSolved } = require("./middleware");
 
-// Submit code was clicked. We should write a middleware for executing and validate code
+// Code submission
 router.post("/question/submit", saveUserInput, processUserInput, checkIsQuestionSolved, (req,res) => {
     const testResults = res.locals.messageToClient;
     return res.json(testResults);
 });
 
+// Code running / logging
 router.post("/question/run", saveUserInput, processLogging, (req,res) => {
     const loggingOutputs = res.locals.logger;
     const message = res.locals.message;
@@ -60,6 +61,7 @@ router.post("/signup", async (req, res) => {
         });
     }
 
+    // Honestly no need to do any of this ... Because we just need to store the user data 
     const createQuestions = async () => {
         return Promise.all(questionList.map(async (item) => {
             const question = await Question.create(item);
@@ -123,13 +125,12 @@ router.post("/login", async (req, res) => {
     } catch (e) {
         throw e;
     }
-})
+});
 
 router.get("/auth", passport.authenticate('jwt', {
     session: false,
     failureRedirect: "/api/notAuth"
 }), (req, res) => {
-    // console.log('flash msg:', req.flash('signUpMessage'));
     return res.json({
         uid: req.user["_id"],
         isAuthenticated: true,
@@ -139,14 +140,14 @@ router.get("/auth", passport.authenticate('jwt', {
     });
 });
 
-// Custom redirect and message if user is not authenticated
+// Redirected to this route if user is not authenticated
 router.get("/notAuth", (req, res) => {
     return res.json({
         isAuthenticated: false,
     });
 });
 
-// Called in UseEffect in QuestionDisplayPage to get selected question
+// Find the correct question by ID to display
 router.post("/question", async (req, res) => {
     // id represents the ID of the user last clicked on
     const {
@@ -158,6 +159,7 @@ router.post("/question", async (req, res) => {
         const user = await User.findByIdAndUpdate(userID, {
             lastQuestionID: questionID
         }).populate('questions').exec();
+
         const selectedQuestion = user.questions.filter(question => question["_id"] == questionID)[0];
 
         return res.json({

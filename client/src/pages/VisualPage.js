@@ -4,6 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import Chips from "../components/Chips";
 import Box from '@material-ui/core/Box';
 import LinearSearch from "../algorithms/LinearSearch";
+import BinarySearch from "../algorithms/BinarySearch";
 import Copyright from "../components/Copyright";
 
 function VisualPage() {
@@ -20,8 +21,12 @@ function VisualPage() {
             <Grid container justify="center" alignItems="center">
             <Grid item xs={12} style={{ textAlign: "center", height: "300px", backgroundColor: "#dae1e7" }}>
                     <LinearSearch />
-                </Grid>
             </Grid>
+            <Grid item xs={12} style={{ textAlign: "center", height: "300px", backgroundColor: "#dae1e7" }}>
+                    <BinarySearch />
+            </Grid>
+            </Grid>
+            
             <Box mt={8}>
           <Copyright />
         </Box>
