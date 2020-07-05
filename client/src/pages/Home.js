@@ -142,7 +142,7 @@ function Home() {
                     <ScrollAnimation animateIn="animate__flash" style={{ display: "inline-block" }}>
                         <ForwardIcon style={{ fontSize: "60px", position: "relative", top: "25px", right: "10px", color: "#FE4444"}} />
                     </ScrollAnimation>
-                    <Button size="large" variant="contained" style={{ backgroundColor: "#142850", color: "white" }}>
+                    <Button onClick={() => window.location.href = "/signup"} size="large" variant="contained" style={{ backgroundColor: "#142850", color: "white" }}>
                         sign up NOW
                         </Button>
                     <ScrollAnimation animateIn="animate__flash" style={{ display: "inline-block" }}>

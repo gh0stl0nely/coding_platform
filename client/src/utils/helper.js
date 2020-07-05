@@ -64,4 +64,83 @@ export default {
         return result;
         
     },
+
+    // Render partial or no test passed scenario
+    renderLoggingOutput(result){
+        const { message } = result;            
+        return message.success ? renderLoggingOutputSuccess(result) : renderLoggingOutputError(result);
+    },
+    
+    renderTestResults: function(result){
+        const testResults = result.data;
+        const { isAllPassed, failedQuestions } = result;
+        // This checks for undefined output because this function also runs when on mount.
+        if(isAllPassed == undefined){
+            return;
+        };
+
+        return isAllPassed ? renderAllTestsPassed(testResults) : renderSomeTestsPassed(testResults, failedQuestions);
+    }
 }
+
+function renderAllTestsPassed(testResultArray){
+        return (
+            <>
+                <p style={{ color: "green" }}>Woohoo! All {testResultArray.length} Tests Passed !</p>
+                {testResultArray.map((test, index) => {
+                    return (
+                        <p style={{ color: "green" }}>Test {index + 1} passed</p>
+                    )
+                })}
+            </> 
+        )
+};
+
+function renderSomeTestsPassed(testResultArray, numberOfFailedQuestions){
+    return (
+        <>
+            <p style={{ color: "red" }}>Argg! {numberOfFailedQuestions} out of {testResultArray.length} Tests Failed...</p>
+            {testResultArray.map((test, index) => {
+                return test.success ? (
+                    <p style={{ color: "green" }}>Test {index + 1} passed</p>
+                ) : (
+                    <p style={{ color: "red" }}>Test {index + 1} failed</p>
+                )
+            })}
+        </> 
+    )
+};
+
+
+function renderLoggingOutputSuccess(result){
+    const { loggingOutputs } = result;
+
+    return (
+       <>
+           <p style={{color: "green"}}>Your code was tested for the first test case and passed.</p>
+           <p style={{color: "white"}}> ------------ Here are the logged outputs ------------</p>
+           {loggingOutputs.map(logOutput => {
+               return (
+                   <p style={{color: "white"}}>{JSON.stringify(logOutput)}</p>
+               )
+           })}
+       </>
+    )
+};
+
+function renderLoggingOutputError(result){
+    const { loggingOutputs, message } = result;
+
+    return (
+        <>
+            <p style={{color: "white"}}>------------ Here are the logged outputs ------------</p>
+            {loggingOutputs.map(logOutput => {
+                return (
+                    <p style={{color: "white"}}>{JSON.stringify(logOutput)}</p>
+                )
+            })}
+            <p style={{color: "red"}}>------------ Error message ------------</p>
+            <p style={{color: "red"}}>{JSON.stringify(message.error)}</p>
+        </>
+    )
+};

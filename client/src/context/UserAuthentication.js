@@ -16,8 +16,6 @@ function UserContextProvider(props){
         checkAuthentication();
     },[]);
 
-    console.log(loginStatus);
-
     function logout(){
         localStorage.removeItem("jwt");
         localStorage.removeItem("username");
@@ -33,6 +31,7 @@ function UserContextProvider(props){
         const user = await API.authenticateLogin();
         if(user && user.data.isAuthenticated){
             setLoginStatus({
+                uid: user.data.uid,
                 isLoggedin: true,
                 username: user.data.username,
                 questions: user.data.questions,

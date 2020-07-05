@@ -11,6 +11,7 @@ import { UserContext } from "../context/UserAuthentication";
 import API from "../utils/api";
 import axios from "axios";
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Helper from "../utils/helper";
 
 const styles = {
     button: {
@@ -39,6 +40,8 @@ function QuestionPage() {
     const [btnLabel, setBtnLabel] = useState("Theme Toggle");
     // Question also contains user input
     const [question, setQuestion] = useState({});
+
+    // Represent the submission and logging status of user codes
     const [result, setResult] = useState([]);
 
     useEffect(() => {
@@ -47,9 +50,9 @@ function QuestionPage() {
     }, []);
 
     // When cacheInput changes, this means that save cache Input in frontend first, then save backend 
-    useEffect(() => {
-        API.saveUserInput(question);
-    }, [question]);
+    // useEffect(() => {
+    //     API.saveUserInput(question);
+    // }, [question]);
 
     // This function always run when the user enters this questionDisplayPage
     // If the token is not valid, they will be forwarded back to sign in page.
@@ -71,49 +74,58 @@ function QuestionPage() {
     async function renderChosenQuestion(id) {
         const userData = await checkValidToken(); // If token is valid, return the user data
         const response = await API.updateAndGetLastQuestion(userData.uid, id);
-        // console.log(response.data);
         setQuestion(response.data.question);
     };
 
-    function loading() {
+    function loadingSubmit() {
         document.getElementById("codeDiv").style.display = "none";
         document.getElementById("progressDiv").style.display = "block";
 
         setTimeout(function () {
             handleSubmitCode()
         }, 3000);
-    }
+    };
 
-    async function handleSubmitCode() {
+    function loadingRun() {
+        document.getElementById("codeDiv").style.display = "none";
+        document.getElementById("progressDiv").style.display = "block";
+
+        setTimeout(function () {
+            handleRunCode();
+        }, 3000);
+
+    };
+
+    async function handleRunCode() {
         checkValidToken();
-
-        const username = loginStatus.username;
-        const submission = await axios.post("/api/submit", {
-            username,
+        const userID = loginStatus.uid; // Or loginstatus.uid
+        const runOutputs = await axios.post("/api/question/run", {
+            userID,
             question
         });
-
-        setResult(submission.data.result)
-
+        setResult(runOutputs.data)
         document.getElementById("codeDiv").style.display = "block";
         document.getElementById("progressDiv").style.display = "none";
     };
 
-    function renderResult() {
-        const resultToBeRendered = result.map((item,i) => {
-            return !item.success ? <p style={{ color: "red" }}>Test {i+1}: Failed</p> : <p style={{ color: "green" }}>Test {i+1}: Passed</p>
-        });
-        
-        return resultToBeRendered;
-    }
-
-    // (BONUS)
-    async function runCode() {
+    async function handleSubmitCode() {
         checkValidToken();
-        // Enter code for running and console logging 
+        const userID = loginStatus.uid
+        const submission = await axios.post("/api/question/submit", {
+            userID,
+            question
+        });
+        setResult(submission.data);
+        document.getElementById("codeDiv").style.display = "block";
+        document.getElementById("progressDiv").style.display = "none";
+    };
+
+    function renderMessagesInTerminal() {
+        return result.event == "Run code" ? Helper.renderLoggingOutput(result) : Helper.renderTestResults(result);
     }
 
-    // This is auto save. So we save on front end first, and then save in the backend.
+    // Right now saveCode only saves in the frontend... If decides to do autosave, remember 
+    // To set debounce in Codeeditor. Right now it is off.
     async function saveCode(newValue) {
         checkValidToken();
 
@@ -217,11 +229,11 @@ function QuestionPage() {
                     <Button onClick={toggleEditorTheme} size="small" variant="contained" style={styles.button}>
                         {btnLabel}
                     </Button>
-                    <Button size="small" onClick={loading} variant="contained" style={styles.button}>
-                        Run
+                    <Button size="small" onClick={loadingRun} variant="contained" style={styles.button}>
+                        Run / Log
                         </Button>
-                    <Button onClick={loading} size="small" variant="contained" style={styles.button}>
-                        Submit Code
+                    <Button onClick={loadingSubmit} size="small" variant="contained" style={styles.button}>
+                        Submit
                         </Button>
                     <Grid item xs={12}>
                         <CodeEditor id={"userEditor"} saveCode={saveCode} isHighLightActiveLine={true} editorTheme={theme} isReadOnly={false} code={question.cacheInput == "" ? question.beginningCode : question.cacheInput} />
@@ -232,7 +244,7 @@ function QuestionPage() {
                 </Grid>
                 <Grid item xs={12} style={{ textAlign: "center", height: "200px", border: "#142850 10px solid", backgroundColor: "#27496d" }}>
                     <div id="resultDiv">
-                        {renderResult()}
+                        {renderMessagesInTerminal()}
                     </div>
                 </Grid>
             </Grid>
