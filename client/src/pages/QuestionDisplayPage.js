@@ -196,7 +196,6 @@ function QuestionPage() {
             <Grid container direction="row" justify="center" key={question._id} data-isSolved={question.isSolved}>
                 <Grid item xs={12} style={{ textAlign: "center" }}>
                     <h2 style={{ color: "#142850" }}>Question title: {question.title}</h2>
-                    {/* <h4>Question Id: {id} (DELETE IN PRODUCTION)</h4> */}
                 </Grid>
                 <Grid item xs={12} md={6} style={{ border: "10px", borderStyle: "solid solid none solid", borderColor: "#142850", backgroundColor: "#27496d" }}>
                     <div style={{ textAlign: "center" }}>
