@@ -5,79 +5,37 @@ const Question = require("../model/Question");
 const { questionList } = require("../question");
 const passport = require("../auth/passport");
 const jwt = require('jsonwebtoken');
-const fs = require("fs");
-const util = require('util');
-const writeFileAsync = util.promisify(fs.writeFile);
-const readFileAsync = util.promisify(fs.readFile);
+const { saveUserInput , processUserInput, processLogging, checkIsQuestionSolved } = require("./middleware");
 
 // Submit code was clicked. We should write a middleware for executing and validate code
-router.post("/submit", async (req, res) => {
-    // Should also save... 
-    const {
-        question,
-        username
-    } = req.body;
-    // console.log(question.cacheInput);
+router.post("/question/submit", saveUserInput, processUserInput, checkIsQuestionSolved, (req,res) => {
+    const testResults = res.locals.messageToClient;
+    return res.json(testResults);
+});
 
-    await writeFileAsync("./userInput-js/user.js", question.cacheInput);
+router.post("/question/run", saveUserInput, processLogging, (req,res) => {
+    const loggingOutputs = res.locals.logger;
+    const message = res.locals.message;
 
-    const getNode = require("./user_files/file");
-
-    var result = [];
-    var logger = [];
-
-    const question = {
-        inputs: ["racecar", "car"],
-        outputs: [true, false]
-    }
-
-    const vm = new NodeVM({
-        console: 'redirect',
-        timeout: 2000,
-    });
-
-    vm.on('console.log', (msg) => {
-        var msg1 = msg;
-        logger.push(msg1);
-    })
-
-    const inputs = question.inputs;
-    const outputs = question.outputs;
-
-    for (var i = 0; i < inputs.length; i++) {
-        try {
-            var myFunction = vm.run(code);
-            assert.deepEqual(myFunction(inputs[i]), outputs[i]);
-            result.push({
-                isPassed: true,
-                msg: "Test Passed"
-            })
-        } catch (e) {
-            result.push({
-                isPassed: false,
-                error: e
-            });
-        }
-    }
-
-    res.json({
-        msg: "Contained data and message after running test",
-        result,
-        logger
+    return res.json({
+        event: "Run code",
+        loggingOutputs,
+        message
     });
 });
+
 
 // Route for saving cacheInput automatically
-router.post("/save", async (req, res) => {
-    const {
-        _id,
-        cacheInput
-    } = req.body;
-    return await Question.findByIdAndUpdate(_id, {
-        cacheInput
-    });
-    // No need to sendback the updatedQuestion because frontend was already updated!
-});
+// router.post("/question/save", async (req, res) => {
+//     const {
+//         _id,
+//         cacheInput
+//     } = req.body;
+//     return await Question.findByIdAndUpdate(_id, {
+//         cacheInput
+//     });
+//     // No need to sendback the updatedQuestion because frontend was already updated!
+// });
 
 // This route handles creation of a new user and handle duplication
 router.post("/signup", async (req, res) => {
@@ -202,39 +160,9 @@ router.post("/question", async (req, res) => {
         }).populate('questions').exec();
         const selectedQuestion = user.questions.filter(question => question["_id"] == questionID)[0];
 
-        const {
-            _id,
-            title,
-            description,
-            difficulty,
-            isSolved,
-            type,
-            cacheInput,
-            beginningCode,
-            solutionCode,
-            inputOne,
-            inputTwo,
-            outputOne,
-            outputTwo,
-        } = selectedQuestion;
-
         return res.json({
             success: true,
-            question: {
-                _id,
-                title,
-                description,
-                difficulty,
-                isSolved,
-                type,
-                cacheInput,
-                beginningCode,
-                solutionCode,
-                inputOne,
-                inputTwo,
-                outputOne,
-                outputTwo
-            }
+            question: selectedQuestion
         });
     } catch (e) {
         return res.json({
