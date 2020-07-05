@@ -243,7 +243,7 @@ function QuestionPage() {
                 <Grid item xs={12} md={6} id="progressDiv" style={{ border: "10px", borderStyle: "solid solid none solid", borderColor: "#142850", textAlign: "center", backgroundColor: "#27496d", display: "none" }}>
                     <CircularProgress size={90} style={{ color: "#03A9B9", margin: "70px auto" }} />
                 </Grid>
-                <Grid item xs={12} style={{ textAlign: "center", height: "200px", border: "#142850 10px solid", backgroundColor: "#27496d" }}>
+                <Grid item xs={12} style={{ textAlign: "center", height: "200px", border: "#142850 10px solid", backgroundColor: "#27496d", overflow: "scroll" }}>
                     <div id="resultDiv">
                         {renderMessagesInTerminal()}
                     </div>
