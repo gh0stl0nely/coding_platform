@@ -136,7 +136,7 @@ function Home() {
             <Cards />
             <Grid container style={{ paddingBottom: "30px", backgroundColor: "#1D4D80", textAlign:"center" }}>
             <ScrollAnimation animateIn="animate__backInDown" style={{margin: "0 auto"}}>
-                <p style={{ fontFamily: 'Lobster', fontSize: "35px", margin: "30px auto 0px auto", color: "white" }}>Ready to ace your coding interview?</p>
+                <p style={{ fontFamily: 'Vidaloka', fontSize: "35px", margin: "30px auto 0px auto", color: "white" }}>Ready to ace your coding interview?</p>
             </ScrollAnimation>
                 <Grid item xs={12}>
                     <ScrollAnimation animateIn="animate__flash" style={{ display: "inline-block" }}>
