@@ -7,6 +7,34 @@ const passport = require("../auth/passport");
 const jwt = require('jsonwebtoken');
 const { saveUserInput , processUserInput, processLogging, checkIsQuestionSolved } = require("./middleware");
 
+// Find the correct question by ID to display
+router.post("/question", async (req, res) => {
+    // id represents the ID of the user last clicked on
+    const {
+        userID,
+        questionID
+    } = req.body;
+
+    try {
+        const user = await User.findByIdAndUpdate(userID, {
+            lastQuestionID: questionID
+        }).populate('questions').exec();
+
+        const selectedQuestion = user.questions.filter(question => question["_id"] == questionID)[0];
+
+        return res.json({
+            success: true,
+            question: selectedQuestion
+        });
+    } catch (e) {
+        return res.json({
+            success: false,
+            msg: "User with the specified name not found"
+        });
+    }
+
+});
+
 // Code submission
 router.post("/question/submit", saveUserInput, processUserInput, checkIsQuestionSolved, (req,res) => {
     const testResults = res.locals.messageToClient;
@@ -24,19 +52,6 @@ router.post("/question/run", saveUserInput, processLogging, (req,res) => {
         message
     });
 });
-
-
-// Route for saving cacheInput automatically
-// router.post("/question/save", async (req, res) => {
-//     const {
-//         _id,
-//         cacheInput
-//     } = req.body;
-//     return await Question.findByIdAndUpdate(_id, {
-//         cacheInput
-//     });
-//     // No need to sendback the updatedQuestion because frontend was already updated!
-// });
 
 // This route handles creation of a new user and handle duplication
 router.post("/signup", async (req, res) => {
@@ -127,6 +142,7 @@ router.post("/login", async (req, res) => {
     }
 });
 
+// Route for authentication jwt token
 router.get("/auth", passport.authenticate('jwt', {
     session: false,
     failureRedirect: "/api/notAuth"
@@ -145,34 +161,6 @@ router.get("/notAuth", (req, res) => {
     return res.json({
         isAuthenticated: false,
     });
-});
-
-// Find the correct question by ID to display
-router.post("/question", async (req, res) => {
-    // id represents the ID of the user last clicked on
-    const {
-        userID,
-        questionID
-    } = req.body;
-
-    try {
-        const user = await User.findByIdAndUpdate(userID, {
-            lastQuestionID: questionID
-        }).populate('questions').exec();
-
-        const selectedQuestion = user.questions.filter(question => question["_id"] == questionID)[0];
-
-        return res.json({
-            success: true,
-            question: selectedQuestion
-        });
-    } catch (e) {
-        return res.json({
-            success: false,
-            msg: "User with the specified name not found"
-        });
-    }
-
 });
 
 module.exports = router;
