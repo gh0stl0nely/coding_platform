@@ -14,49 +14,74 @@ export default function BinarySearch(){
       var left = 0;
       var right = arr.length - 1 ;
       let mid = Math.floor((left + right) / 2);
-  
-      while(left <= right){
+      
+      var timer = setInterval(() => {
+          if(left > right){
+              let newArray = [...arr];
+              updateFinalArray(newArray);
+              updateSearchStatus(true);
+              clearInterval(timer)
+              return false;
+          }   
           const curr = arr[mid];
+
           if(curr == num){
               arr[mid] = {
                 value: arr[mid],
-                isTarget: true,
-              }
-              let arrayToRender = [...arr];
-              return arrayToRender;
-          } else if(curr < num){
-              // Go right
-              arr[mid] = {
-                value: arr[mid],
-                isTarget: false,
-              }
-              left = mid + 1;
-          } else {
-              // Go left
-              arr[mid] = {
-                value: arr[mid],
-                isTarget: false,
+                color: "green",
               };
+              let newArray = [...arr];
+              updateFinalArray(newArray);
+              updateSearchStatus(true);
+              clearInterval(timer);
+              return true;
+          } else if(curr < num){
+              // Go right, grey out left
+              arr[mid] = {
+                value: arr[mid],
+                color: "red",
+              };
+              // Need to get the index from mid  til left
+              greyOut(arr, left, mid - 1); // 
+              left = mid + 1;
+
+          } else {
+              // Go left, grey out right
+              arr[mid] = {
+                value: arr[mid],
+                color: "red",
+              };
+
+              greyOut(arr, mid + 1, right); // 
               right = mid - 1;
           };
   
           mid = Math.floor((left + right) / 2);
-      };
 
-      let arrayToRender = [...arr];
-      return arrayToRender;
+          let newArray = [...arr];
+          updateFinalArray(newArray);
+
+      }, 1000);
+    }
+    
+    // Grey out the part of array that is not searched
+    function greyOut(array,start,end){
+      while(start <= end){
+        const value = array[start];
+        array[start] = {
+          value : value,
+          color: "grey"
+        };
+
+        start++;
+      }
     }
 
     function handleChoice(e){
       const choseNumber = e.target.value;
       updateSearchStatus(false);
-      const finalArray = binarySearchAlgoritm(initialArray,choseNumber);
-      updateFinalArray(finalArray);
-      
-      setTimeout(() => {
-        updateSearchStatus(true);
-      }, 2000);
-
+      updateFinalArray(initialArray);
+      binarySearchAlgoritm(initialArray,choseNumber);
     }
 
     function renderArray(finalArray){
@@ -65,7 +90,7 @@ export default function BinarySearch(){
           if(!isNaN(item)){
             return <Node value={item} />
           } else {
-            return <Node value={item.value} isTarget={item.isTarget} />
+            return <Node value={item.value} color={item.color} />
           }
         })
       )
@@ -77,7 +102,6 @@ export default function BinarySearch(){
           <TextField
           id="binary-search-input"
           select
-          // label="Select"
           onChange={handleChoice}
           disabled={isFoundAnswer ? false : true}
           helperText="Choose the number you want to search binarily"
