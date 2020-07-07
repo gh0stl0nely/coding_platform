@@ -27,7 +27,9 @@ app.use("/api", api_routes);
 // In production configuration
 if(process.env.NODE_ENV === 'production'){
   app.use(express.static('client/build'));
-  return res.sendFile(path.resolve(__dirname, "client", "build"));
+  app.get("*", (req,res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
 }
 
 // Listening
