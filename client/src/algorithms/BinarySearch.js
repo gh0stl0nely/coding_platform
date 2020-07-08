@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from "react";
-import Node from "../components/Node";
+import React, {useState} from "react";
+import Node from "./Node";
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 

@@ -3,7 +3,6 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 const mongoose = require("mongoose");
 const api_routes = require("./routes/api");
-const auth_routes = require("./routes/auth");
 const cors = require('cors');
 const passport = require("./auth/passport");
 const path = require("path");
@@ -22,7 +21,6 @@ mongoose.connect(DB_PATH, {
 
 // Route Config
 app.use("/api", api_routes);
-// app.use("/auth", auth_routes);
 
 // In production configuration
 if(process.env.NODE_ENV === 'production'){
