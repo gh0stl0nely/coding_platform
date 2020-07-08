@@ -1,59 +1,92 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-
-const styles = {
-    arrayStyle: {
-        height: "25px",
-        width: "25px",
-        padding: "5px",
-        margin: "0px 5px",
-        border: "2px black solid",
-        fontSize: "15px"
-    }
-}
+import Node from "./Node";
+import TextField from '@material-ui/core/TextField';
+import MenuItem from '@material-ui/core/MenuItem';
 
 export default function LinearSearch() {
-    const givenArray = [14, 8, 23, 6, 55, 72, 40];
-    const target = 6;
+    const givenArray = [14, 94, 8, 23, 88, 6, 55, 62, 40, 70, 39];
+    const sortedArray = [...givenArray].sort(function (a, b) { return a - b });
+    const [isFoundAnswer, updateSearchStatus] = useState(true);
+
+    let target;
+
+    const [arrayToRender, updateArray] = useState(givenArray);
 
     function renderArray() {
-        return givenArray.map(i => {
-            return (
-                <span style={styles.arrayStyle}>{i}</span>
-            )
+        return arrayToRender.map(item => {
+            if (!isNaN(item)) {
+                return <Node value={item} />
+            } else {
+                return <Node value={item.value} color={item.color} />
+            }
         })
     };
 
-    function renderTarget() {
-        return (
-            <span style={{ color: "green" }}>{target}</span>
-        )
-    }
+    function startSearch(e) {
+        // const givenArray = [14, 94, 8, 23, 88, 6, 55, 62, 40, 70, 39];
+        // If confused, startSearch IS NOT changing the givenArray. It is similiar to creating another copy of givenArray and change that. 
 
-    function startSearch() {
-        const search = (givenArray.map(i => {
-            if (i !== target) {
-                return (
-                    <span style={{ color: "red", border: "2px red solid" }}>{i}</span>
-                )
+        target = e.target.value;
+        updateArray(givenArray);
+        updateSearchStatus(false);
+        let i = 0;
+        let temp;
+
+        var timer = setInterval(() => {
+            if(i == givenArray.length){
+                clearInterval(timer);
+                return;
+            };
+
+            if(givenArray[i] == target){
+                temp = givenArray[i];
+                givenArray[i] = {
+                    value: temp,
+                    color: "#4FE608",
+                };
+                let newArray = [...givenArray];
+                updateArray(newArray);
+                updateSearchStatus(true);
+                clearInterval(timer);
+                return;
             } else {
-                renderTarget()
-            }
-        }))
-        return search;
+                temp = givenArray[i];
+
+                givenArray[i] = {
+                    value: temp,
+                    color: "#1198F6",
+                };
+
+                let newArray = [...givenArray];
+                updateArray(newArray);
+            };
+            i++;
+        },1000);
     }
 
     return (
         <div>
-            <p>Linear Search</p>
-            <p>Find <span style={styles.arrayStyle}>{target}</span></p>
-            <Button variant="contained" color="primary" onClick={startSearch}>
-                Start
-            </Button>
-            <Grid item xs={12} style={{ textAlign: "center" }}>
+            <p style={{color: "#142850", fontSize: "3vw"}}>Linear Search</p>
+            <TextField
+                id="linear-search-input"
+                select
+                helperText="Choose the number you want to search"
+                onChange={startSearch}
+                disabled={isFoundAnswer ? false : true}
+            >
+                {sortedArray.map((number, index) => (
+                    <MenuItem key={index} value={number}>
+                        {number}
+                    </MenuItem>
+                ))}
+            </TextField>
+            <Grid item xs={12} style={{ textAlign: "center", marginTop:"20px" }}>
+                {renderArray()}
             </Grid>
-            <Grid item xs={12} style={{ textAlign: "center" }}>
+            <Grid item xs={12} style={{ textAlign: "center", marginTop:"30px" }}>
+                <p>Description</p>
             </Grid>
         </div>
     )

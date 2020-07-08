@@ -9,31 +9,33 @@ import BubbleSort from "../algorithms/BubbleSort.js";
 import Copyright from "../components/Copyright";
 
 function VisualPage() {
+    const options = ["linear search", "binary search", "bubble sort"]
+
+    function renderChips() {
+        return options.map(item => {
+            return <Chips name={item} />
+        })
+    }
+
     return (
-        <Container maxWidth="md" style={{ marginTop: "50px" }}>
+        <Container maxWidth="lg" style={{ marginTop: "50px"}}>
             <Grid container style={{ padding: "20px 0px" }} justify="center" alignItems="center">
-                <p>chips go here</p>
-                <Chips name="tag" />
-                <Chips name="tag" />
-                <Chips name="tag" />
-                <Chips name="tag" />
-                <Chips name="tag" />
+                {renderChips()}
             </Grid>
             <Grid container justify="center" alignItems="center">
-            <Grid item xs={12} style={{ textAlign: "center", height: "300px", backgroundColor: "#dae1e7" }}>
+                <Grid item xs={12} style={{ textAlign: "center", backgroundColor: "#dae1e7", paddingBottom: "30px" }}>
                     <LinearSearch />
-            </Grid>
-            <Grid item xs={12} style={{ textAlign: "center", height: "300px", backgroundColor: "#dae1e7" }}>
+                </Grid>
+                <Grid item xs={12} style={{ textAlign: "center", backgroundColor: "#dae1e7", paddingBottom: "30px" }}>
                     <BinarySearch />
-            </Grid>
-            <Grid item xs={12} style={{ textAlign: "center", height: "300px", backgroundColor: "#dae1e7" }}>
+                </Grid>
+                <Grid item xs={12} style={{ textAlign: "center", backgroundColor: "#dae1e7", paddingBottom: "30px" }}>
                     <BubbleSort />
+                </Grid>
             </Grid>
-            </Grid>
-            
             <Box mt={8}>
-          <Copyright />
-        </Box>
+                <Copyright />
+            </Box>
         </Container>
     )
 }
