@@ -6,6 +6,8 @@ import Box from '@material-ui/core/Box';
 import LinearSearch from "../algorithms/LinearSearch";
 import BinarySearch from "../algorithms/BinarySearch.js";
 import BubbleSort from "../algorithms/BubbleSort.js";
+import SelectionSort from "../algorithms/SelectionSort.js";
+import InsertionSort from "../algorithms/InsertionSort.js";
 import Copyright from "../components/Copyright";
 
 function VisualPage() {
@@ -20,15 +22,18 @@ function VisualPage() {
                 <Chips name="tag" />
             </Grid>
             <Grid container justify="center" alignItems="center">
-            <Grid item xs={12} style={{ textAlign: "center", height: "300px", backgroundColor: "#dae1e7" }}>
-                    <LinearSearch />
-            </Grid>
-            <Grid item xs={12} style={{ textAlign: "center", height: "300px", backgroundColor: "#dae1e7" }}>
-                    <BinarySearch />
-            </Grid>
-            <Grid item xs={12} style={{ textAlign: "center", height: "300px", backgroundColor: "#dae1e7" }}>
-                    <BubbleSort />
-            </Grid>
+                {/* <Grid item xs={12} style={{ textAlign: "center", height: "300px", backgroundColor: "#dae1e7" }}>
+                        <LinearSearch />
+                </Grid>
+                <Grid item xs={12} style={{ textAlign: "center", height: "300px", backgroundColor: "#dae1e7" }}>
+                        <BinarySearch />
+                </Grid>
+                <Grid item xs={12} style={{ textAlign: "center", height: "300px", backgroundColor: "#dae1e7" }}>
+                        <BubbleSort />
+                </Grid> */}
+                <Grid item xs={12} style={{ textAlign: "center", height: "300px", backgroundColor: "#dae1e7" }}>
+                        <SelectionSort />
+                </Grid>
             </Grid>
             
             <Box mt={8}>
