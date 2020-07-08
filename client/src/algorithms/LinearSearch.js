@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import Node from "../components/Node";
+import Node from "./Node";
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 
 export default function LinearSearch() {
     const givenArray = [14, 94, 8, 23, 88, 6, 55, 62, 40, 70, 39];
     const sortedArray = [...givenArray].sort(function (a, b) { return a - b });
+    const [isFoundAnswer, updateSearchStatus] = useState(true);
+
     let target;
 
     const [arrayToRender, updateArray] = useState(givenArray);
@@ -28,6 +30,7 @@ export default function LinearSearch() {
 
         target = e.target.value;
         updateArray(givenArray);
+        updateSearchStatus(false);
         let i = 0;
         let temp;
 
@@ -45,6 +48,7 @@ export default function LinearSearch() {
                 };
                 let newArray = [...givenArray];
                 updateArray(newArray);
+                updateSearchStatus(true);
                 clearInterval(timer);
                 return;
             } else {
@@ -70,6 +74,7 @@ export default function LinearSearch() {
                 select
                 helperText="Choose the number you want to search"
                 onChange={startSearch}
+                disabled={isFoundAnswer ? false : true}
             >
                 {sortedArray.map((number, index) => (
                     <MenuItem key={index} value={number}>
@@ -79,6 +84,9 @@ export default function LinearSearch() {
             </TextField>
             <Grid item xs={12} style={{ textAlign: "center", marginTop:"20px" }}>
                 {renderArray()}
+            </Grid>
+            <Grid item xs={12} style={{ textAlign: "center", marginTop:"30px" }}>
+                <p>Description</p>
             </Grid>
         </div>
     )

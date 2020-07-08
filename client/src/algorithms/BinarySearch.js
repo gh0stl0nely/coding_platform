@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import Node from "../components/Node";
+import React, {useState} from "react";
+import Node from "./Node";
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 
@@ -115,6 +115,9 @@ export default function BinarySearch() {
       </TextField>
       <div style={{ marginTop: "20px" }}>
         {renderArray(arrayToRender)}
+      </div>
+      <div style={{ marginTop: "30px" }}>
+      <p>Description</p>
       </div>
     </div>
   )
