@@ -29,37 +29,20 @@ export default function InsertionSort(){
             let prev = current - 1;
 
             if(finalArray[current] < finalArray[prev]){
-                // perform shift into correct order 
-                // prev - 1
-                if(finalArray[current] < finalArray[0]){
-                     // splice current and then shift()
-                     const currentValue = finalArray.splice(current,1);
-                     finalArray.unshift(currentValue);   
-                } else {
-                    // Start from 1st index because 0 index just need to be unshift 
-                    for(let j = 1; j < current; j++){
-                        if(finalArray[current] <= finalArray[j]){
-                            const currentValue = finalArray.splice(current,1);
-                            finalArray.splice(j,0,currentValue);
-                            break;
-                        }
+                for(let j = 0; j < current; j++){
+                    if(finalArray[current] <= finalArray[j]){
+                        const currentValue = finalArray.splice(current,1);
+                        finalArray.splice(j,0,currentValue);
+                        break;
                     }
-
-                    console.log("Are you going to wait")
-                }
+                };
             };
-            console.log("Outside comparison")
 
             let newArray = [...finalArray];
             updateFinalArray(newArray);
 
 
             current++;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
-
-
-
-
-
 
         }, 2000);
 
