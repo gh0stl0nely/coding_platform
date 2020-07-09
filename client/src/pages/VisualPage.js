@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Chips from "../components/Chips";
@@ -11,34 +11,67 @@ import InsertionSort from "../algorithms/InsertionSort.js";
 import Copyright from "../components/Copyright";
 
 function VisualPage() {
-    const options = ["linear search", "binary search", "bubble sort"]
+    const options = ["linear search", "binary search", "bubble sort", "selection sort", "insertion sort"];
+    const allNoneDisplay = {
+        "linear search": "none",
+        "binary search": "none",
+        "bubble sort": "none",
+        "selection sort": "none",
+        "insertion sort": "none"
+    };
 
-    function renderChips() {
+    const [display, updateDisplay] = useState({
+        "linear search": "none",
+        "binary search": "none",
+        "bubble sort": "none",
+        "selection sort": "none",
+        "insertion sort": "none"
+    });
+
+    function renderChipsOptions() {
         return options.map(item => {
-            return <Chips name={item} />
+            return (
+                <Chips label={item} handleFunction={handleChipClick} />
+            )
         })
-    }
+    };
+
+    const handleChipClick = (e) => {
+        const target = e.target.innerHTML;
+        updateDisplay({
+            ...allNoneDisplay,
+            [target] : "block"
+        });
+        // display[target] === "none" ? updateDisplay({ ...display, [target]: "block" }) : updateDisplay({ ...display, [target]: "none" });
+    };
+
+
 
     return (
-        <Container maxWidth="lg" style={{ marginTop: "50px"}}>
-            <Grid container style={{ padding: "20px 0px" }} justify="center" alignItems="center">
-                {renderChips()}
+        <Container maxWidth="lg" style={{ marginTop: "50px" }}>
+            <Grid container style={{ padding: "20px 0px", marginTop: "10px" }} justify="center" alignItems="center">
+                <Grid item xs={12}>
+                    <p>Choose the methods you want to visualize: </p>
+                </Grid>
+                {renderChipsOptions()}
             </Grid>
             <Grid container justify="center" alignItems="center">
-                {/* <Grid item xs={12} style={{ textAlign: "center", height: "300px", backgroundColor: "#dae1e7" }}>
+                <Grid container justify="center" alignItems="center" style={{ backgroundColor: "#dae1e7", minHeight: "300px" }}>
+                    <Grid item xs={12} style={{ textAlign: "center", backgroundColor: "#dae1e7", paddingBottom: "30px", display: display["linear search"] }}>
                         <LinearSearch />
-                </Grid>
-                <Grid item xs={12} style={{ textAlign: "center", height: "300px", backgroundColor: "#dae1e7" }}>
+                    </Grid>
+                    <Grid item xs={12} style={{ textAlign: "center", backgroundColor: "#dae1e7", paddingBottom: "30px", display: display["binary search"] }}>
                         <BinarySearch />
-                </Grid>
-                <Grid item xs={12} style={{ textAlign: "center", height: "300px", backgroundColor: "#dae1e7" }}>
+                    </Grid>
+                    <Grid item xs={12} style={{ textAlign: "center", backgroundColor: "#dae1e7", paddingBottom: "30px", display: display["bubble sort"] }}>
                         <BubbleSort />
-                </Grid>
-                <Grid item xs={12} style={{ textAlign: "center", height: "300px", backgroundColor: "#dae1e7" }}>
+                    </Grid>
+                    <Grid item xs={12} style={{ textAlign: "center", backgroundColor: "#dae1e7", paddingBottom: "30px", display: display["selection sort"] }}>
                         <SelectionSort />
-                </Grid> */}
-                <Grid item xs={12} style={{ textAlign: "center", height: "300px", backgroundColor: "#dae1e7" }}>
+                    </Grid>
+                    <Grid item xs={12} style={{ textAlign: "center", backgroundColor: "#dae1e7", paddingBottom: "30px", display: display["insertion sort"] }}>
                         <InsertionSort />
+                    </Grid>
                 </Grid>
             </Grid>
             <Box mt={8}>
