@@ -11,15 +11,18 @@ import InsertionSort from "../algorithms/InsertionSort.js";
 import Copyright from "../components/Copyright";
 
 function VisualPage() {
+    const options = ["linear search", "binary search", "bubble sort"]
+
+    function renderChips() {
+        return options.map(item => {
+            return <Chips name={item} />
+        })
+    }
+
     return (
-        <Container maxWidth="md" style={{ marginTop: "50px" }}>
+        <Container maxWidth="lg" style={{ marginTop: "50px"}}>
             <Grid container style={{ padding: "20px 0px" }} justify="center" alignItems="center">
-                <p>chips go here</p>
-                <Chips name="tag" />
-                <Chips name="tag" />
-                <Chips name="tag" />
-                <Chips name="tag" />
-                <Chips name="tag" />
+                {renderChips()}
             </Grid>
             <Grid container justify="center" alignItems="center">
                 {/* <Grid item xs={12} style={{ textAlign: "center", height: "300px", backgroundColor: "#dae1e7" }}>
@@ -30,15 +33,17 @@ function VisualPage() {
                 </Grid>
                 <Grid item xs={12} style={{ textAlign: "center", height: "300px", backgroundColor: "#dae1e7" }}>
                         <BubbleSort />
-                </Grid> */}
+                </Grid>
                 <Grid item xs={12} style={{ textAlign: "center", height: "300px", backgroundColor: "#dae1e7" }}>
                         <SelectionSort />
+                </Grid> */}
+                <Grid item xs={12} style={{ textAlign: "center", height: "300px", backgroundColor: "#dae1e7" }}>
+                        <InsertionSort />
                 </Grid>
             </Grid>
-            
             <Box mt={8}>
-          <Copyright />
-        </Box>
+                <Copyright />
+            </Box>
         </Container>
     )
 }

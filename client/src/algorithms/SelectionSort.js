@@ -15,14 +15,63 @@ export default function SelectionSort(){
         updateIsGeneratedNewArray(false);
         let current = 0;
         let i = 1;
-        let smallest = finalArray[current];
         let temp;
+        let currentValue;
+        let iValue;
         // Start Selection Sort
         var timer = setInterval(() => {
-          
+
+          if(current == finalArray.length - 1){
+            // Sorted
+            let newArray = [...finalArray];
+            updateFinalArray(newArray); 
+            updateSearchStatus(true);
+            clearInterval(timer);
+            return;
+          } 
+
+          // You are going to increment current when it is length  
+          // if current == length then we done 
+          if(finalArray[current] > finalArray[i]){
+            temp = finalArray[current];
+            finalArray[current] = finalArray[i];
+            finalArray[i] = temp;
+          }
+
+          visualize(finalArray,current,i);
+
+          i++;
+
+          if(i == finalArray.length){
+            current++;
+            i = current + 1;
+          };
+
         }, 1000);
 
     };
+
+    function visualize(finalArray,current,i){
+      
+      let iValue = finalArray[i];
+      finalArray[i] = {
+        value: finalArray[i],
+        color: "green"
+      };
+
+      let currentValue = finalArray[current];
+      finalArray[current] = {
+        value: finalArray[current],
+        color: "green"
+      };
+
+      let newArray = [...finalArray];
+      updateFinalArray(newArray);
+
+      // Back to normal
+      finalArray[i] = iValue;
+      finalArray[current] = currentValue;
+    }
 
     function generateRandomNumber(){
         return Math.floor(Math.random() * 100);

@@ -4,72 +4,70 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import Node from "./Node";
 
-export default function BubbleSort(){   
+export default function InsertionSort(){   
     const [finalArray, updateFinalArray] = useState([generateRandomNumber(),generateRandomNumber(),generateRandomNumber(),generateRandomNumber(),generateRandomNumber()]);
     const [isFoundAnswer, updateSearchStatus] = useState(true);
     const [isGeneratedNewArray , updateIsGeneratedNewArray] = useState(false);
     const [chosenArrayLength, setChosenArrayLength] = useState(5);
 
-    function bubbleSort(){
+    function insertionSort(){
         updateSearchStatus(false);
         updateIsGeneratedNewArray(false);
         
-        let swap = true;
-        let i = 0;
-        let j = 1;
-        let tempI;
-        let tempJ;
+        let current = 1;
         let temp;
-
-        // Start Bubble sort
+    
+        // Start Insertion sort
         var timer = setInterval(() => {
-
-            if(finalArray[i] > finalArray[j]){
-                temp = finalArray[i];
-                finalArray[i] = finalArray[j];
-                finalArray[j] = temp;
-                swap = true;
+            // Out of bound which mean it is sorted
+            if(current == finalArray.length){
+                updateSearchStatus(true);
+                clearInterval(timer);
+                return;
             };
 
-            // Convert into object to visualize :)  
-            tempI = finalArray[i];
-            finalArray[i] = {
-                value: finalArray[i],
-                color: "green"
-            }
+            let prev = current - 1;
 
-            tempJ = finalArray[j];
-            finalArray[j] = {
-                value: tempJ,
-                color: "green"
-            }
-
-            let updatedArray = [...finalArray];
-            updateFinalArray(updatedArray); // To show color 
-            
-            // After visualizing, set back to regular number instead of object
-            finalArray[i] = tempI;
-            finalArray[j] = tempJ;
-
-            i++;
-            j++;
-
-            if(j == finalArray.length){
-                if(swap){
-                    i = 0;
-                    j = 1;
-                    swap = false;
+            if(finalArray[current] < finalArray[prev]){
+                // perform shift into correct order 
+                // prev - 1
+                if(finalArray[current] < finalArray[0]){
+                     // splice current and then shift()
+                     const currentValue = finalArray.splice(current,1);
+                     finalArray.unshift(currentValue);   
                 } else {
-                    let sortedArray = [...finalArray];
-                    updateFinalArray(sortedArray);
-                    updateSearchStatus(true);
-                    clearInterval(timer);
-                    return;
+                    // Start from 1st index because 0 index just need to be unshift 
+                    for(let j = 1; j < current; j++){
+                        if(finalArray[current] <= finalArray[j]){
+                            const currentValue = finalArray.splice(current,1);
+                            finalArray.splice(j,0,currentValue);
+                            break;
+                        }
+                    }
+
+                    console.log("Are you going to wait")
                 }
-            }        
-        }, 1000);
+            };
+            console.log("Outside comparison")
+
+            let newArray = [...finalArray];
+            updateFinalArray(newArray);
+
+
+            current++;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+
+
+
+
+
+
+        }, 2000);
 
     };
+
+    function visualize(){
+
+    }
 
     function generateRandomNumber(){
         return Math.floor(Math.random() * 100);
@@ -125,8 +123,8 @@ export default function BubbleSort(){
             </Button>
           </div>
           <div style={{marginTop: "25px"}}>
-            <Button id="start-bubble-sort-btn" onClick={bubbleSort} variant="contained" disabled={isGeneratedNewArray ? false : true} color="secondary">
-                Bubble Sort
+            <Button id="start-bubble-sort-btn" onClick={insertionSort} variant="contained" disabled={isGeneratedNewArray ? false : true} color="secondary">
+                Insertion Sort
             </Button>
           </div>
           <div style={{marginTop: "30px"}}>
