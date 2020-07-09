@@ -10,62 +10,95 @@ export default function InsertionSort(){
     const [isGeneratedNewArray , updateIsGeneratedNewArray] = useState(false);
     const [chosenArrayLength, setChosenArrayLength] = useState(5);
 
-    function insertionSort(){
-        updateSearchStatus(false);
-        updateIsGeneratedNewArray(false);
-        
-        let current = 1;
-        let temp;
-    
+    function insertionSort(current){
         // Start Insertion sort
-        var timer = setInterval(() => {
+        setTimeout(() => {
             // Out of bound which mean it is sorted
             if(current == finalArray.length){
                 updateSearchStatus(true);
-                clearInterval(timer);
+                const newArray = [...finalArray];
+                updateFinalArray(newArray);
                 return;
             };
 
-            let prev = current - 1;
+            // visualizeInitial current index here
+            visualizeCurrentPosition(current);
+            //
+            [3,3,3,0] // Still keep both of them red?
+            // Then highlight the first
+            // and then add to 
+            let prev = current - 1; // previous index
+            setTimeout(() => {
+                if(finalArray[current] < finalArray[prev]){
+                    // perform shift into correct order 
+                    // prev - 1
+                    // Keep the color of previous and only changes the position + color of current
+                    if(finalArray[current] < finalArray[0]){
+                         // splice current and then shift()
+                         visualizeFirstAndCurrentPosition(current);
 
-            if(finalArray[current] < finalArray[prev]){
-                // perform shift into correct order 
-                // prev - 1
-                if(finalArray[current] < finalArray[0]){
-                     // splice current and then shift()
-                     const currentValue = finalArray.splice(current,1);
-                     finalArray.unshift(currentValue);   
-                } else {
-                    // Start from 1st index because 0 index just need to be unshift 
-                    for(let j = 1; j < current; j++){
-                        if(finalArray[current] <= finalArray[j]){
-                            const currentValue = finalArray.splice(current,1);
-                            finalArray.splice(j,0,currentValue);
-                            break;
+                        //  updateFinalArray()
+                         const innerTimer = setTimeout
+                         const currentValue = finalArray.splice(current,1);
+                         finalArray.unshift(currentValue);   
+                         // 
+                    } else {
+                        // Start from 1st index because 0 index just need to be unshift 
+                        for(let j = 1; j < current; j++){
+                            if(finalArray[current] <= finalArray[j]){
+                                const currentValue = finalArray.splice(current,1);
+                                finalArray.splice(j,0,currentValue);
+                                current++;         
+                                break;
+                            }
                         }
+    
                     }
+                };
 
-                    console.log("Are you going to wait")
-                }
-            };
-            console.log("Outside comparison")
+            }, 1000);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
 
-            let newArray = [...finalArray];
-            updateFinalArray(newArray);
-
-
-            current++;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
-
-
-
-
-
-
-        }, 2000);
+        }, 1500);
 
     };
 
     function visualize(){
+
+    };
+    
+    function visualizeCurrentPosition(current){
+        let currentValue = finalArray[current];
+        let prevValue = finalArray[current - 1];
+
+        if(currentValue < prevValue){
+            finalArray[current] = {
+                value: currentValue,
+                color: "red"
+            };
+            finalArray[current - 1] = {
+                value: prevValue,
+                color: "red"
+            };
+        } else {
+            finalArray[current] = {
+                value: currentValue,
+                color: "green"
+            };
+            finalArray[current - 1] = {
+                value: prevValue,
+                color: "green"
+            };
+        }
+
+        let newArray = [...finalArray];
+        updateFinalArray(newArray);
+        finalArray[current] = currentValue;
+        finalArray[current - 1] = prevValue;
+        console.log(finalArray[current]);
+        console.log(finalArray);
+    };
+
+    function visualizeFirstAndCurrentPosition(current){
 
     }
 
@@ -123,7 +156,7 @@ export default function InsertionSort(){
             </Button>
           </div>
           <div style={{marginTop: "25px"}}>
-            <Button id="start-bubble-sort-btn" onClick={insertionSort} variant="contained" disabled={isGeneratedNewArray ? false : true} color="secondary">
+            <Button id="start-bubble-sort-btn" onClick={() =>  {updateSearchStatus(false); updateIsGeneratedNewArray(false); insertionSort(1)}} variant="contained" disabled={isGeneratedNewArray ? false : true} color="secondary">
                 Insertion Sort
             </Button>
           </div>
