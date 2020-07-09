@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Chips from "../components/Chips";
@@ -9,27 +9,46 @@ import BubbleSort from "../algorithms/BubbleSort.js";
 import Copyright from "../components/Copyright";
 
 function VisualPage() {
-    const options = ["linear search", "binary search", "bubble sort"]
+    const options = ["linear search", "binary search", "bubble sort"];
 
-    function renderChips() {
+    const [display, updateDisplay] = useState({
+        "linear search": "none",
+        "binary search": "none",
+        "bubble sort": "none",
+    });
+
+    function renderChipsOptions() {
         return options.map(item => {
-            return <Chips name={item} />
+            return (
+                <Chips label={item} handleFunction={handleChipClick} />
+            )
         })
     }
 
+    const handleChipClick = (e) => {
+        const target = e.target.innerHTML;
+
+        display[target] === "none" ? updateDisplay({ ...display, [target]: "block" }) : updateDisplay({ ...display, [target]: "none" });
+    };
+
+
+
     return (
-        <Container maxWidth="lg" style={{ marginTop: "50px"}}>
-            <Grid container style={{ padding: "20px 0px" }} justify="center" alignItems="center">
-                {renderChips()}
+        <Container maxWidth="lg" style={{ marginTop: "50px" }}>
+            <Grid container style={{ padding: "20px 0px", marginTop: "10px" }} justify="center" alignItems="center">
+                <Grid item xs={12}>
+                    <p>Choose the methods you want to visualize: </p>
+                </Grid>
+                {renderChipsOptions()}
             </Grid>
-            <Grid container justify="center" alignItems="center">
-                <Grid item xs={12} style={{ textAlign: "center", backgroundColor: "#dae1e7", paddingBottom: "30px" }}>
+            <Grid container justify="center" alignItems="center" style={{ backgroundColor: "#dae1e7", minHeight: "300px" }}>
+                <Grid item xs={12} style={{ textAlign: "center", backgroundColor: "#dae1e7", paddingBottom: "30px", display: display["linear search"] }}>
                     <LinearSearch />
                 </Grid>
-                <Grid item xs={12} style={{ textAlign: "center", backgroundColor: "#dae1e7", paddingBottom: "30px" }}>
+                <Grid item xs={12} style={{ textAlign: "center", backgroundColor: "#dae1e7", paddingBottom: "30px", display: display["binary search"] }}>
                     <BinarySearch />
                 </Grid>
-                <Grid item xs={12} style={{ textAlign: "center", backgroundColor: "#dae1e7", paddingBottom: "30px" }}>
+                <Grid item xs={12} style={{ textAlign: "center", backgroundColor: "#dae1e7", paddingBottom: "30px", display: display["bubble sort"] }}>
                     <BubbleSort />
                 </Grid>
             </Grid>
