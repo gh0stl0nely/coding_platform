@@ -1,10 +1,10 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import Node from "./Node";
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 
 export default function BinarySearch() {
-  let initialArray = [-1, 0, 1, 22 , 35, 39, 42, 45, 52, 58, 67, 69, 72, 77, 98, 105];
+  let initialArray = [-1, 0, 1, 22, 35, 39, 42, 45, 52, 58, 67, 69, 72, 77, 98, 105];
   const [arrayToRender, updateFinalArray] = useState(initialArray);
   // When first render, the answer is found
   const [isFoundAnswer, updateSearchStatus] = useState(true);
@@ -99,7 +99,7 @@ export default function BinarySearch() {
 
   return (
     <div>
-      <p style={{color: "#142850", fontSize: "3vw"}}>Binary Search</p>
+      <p style={{ color: "#142850", fontSize: "3vw", fontFamily: 'Vidaloka' }}>Binary Search</p>
       <TextField
         id="binary-search-input"
         select
@@ -117,7 +117,12 @@ export default function BinarySearch() {
         {renderArray(arrayToRender)}
       </div>
       <div style={{ marginTop: "30px" }}>
-      <p>Description</p>
+        <p style={{ fontWeight: "bold" }}>Space complexity: </p>
+        <p style={{ fontWeight: "bold" }}>Time complexity: </p>
+      </div>
+      <div style={{ marginTop: "30px" }}>
+        <p style={{ fontWeight: "bold" }}>Explaination</p>
+        <p>lalalalalalala</p>
       </div>
     </div>
   )
