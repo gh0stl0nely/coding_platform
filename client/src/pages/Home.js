@@ -127,6 +127,8 @@ function Home() {
                             <MenuItem value={"Array"}>Array</MenuItem>
                             <MenuItem value={"String"}>String</MenuItem>
                             <MenuItem value={"Hash Table"}>Hash Table</MenuItem>
+                            <MenuItem value={"Recursion"}>Recursion</MenuItem>
+                            <MenuItem value={"Divide and Conquer"}>Divide and Conquer</MenuItem>
                         </Select>
                         <FormHelperText>Choose question type</FormHelperText>
                     </FormControl>

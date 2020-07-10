@@ -6,7 +6,7 @@ exports.questionList = [{
     difficulty: "Easy",
     type: "Array",
     cacheInput: "",
-    isSolved: true,
+    isSolved: false,
     beginningCode: `
 // Please write inside this function
 function smallerThanCurrent(nums){
@@ -62,7 +62,7 @@ function isValidPalindrome(str){
     title: "Maximum Sum of Subarray",
     description: `Given an integer array (nums), find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.`,
     difficulty: "Easy",
-    type: "Array",
+    type: "Divide and Conquer",
     cacheInput: "",
     isSolved: false,
     beginningCode: `
@@ -115,7 +115,7 @@ var fib = function(N) {
         expectedOutputs: [3, 8, 21]
     }
 }, {
-    title: "Reverse a String using Recursion",
+    title: "Reverse a String Recursively",
     description: `Given a random string, write a function to reverse the string.`,
     difficulty: "Easy",
     type: "Recursion",
@@ -172,9 +172,9 @@ function isValidPalindrome(str){
     }
 }, {
     title: "Find the Majority Number",
-    description: `Given an array of length n, finde the number that appears more than half times of the length.`,
+    description: `Given an array of length n, find the number that appears more than half times of the length.`,
     difficulty: "Medium",
-    type: "Array",
+    type: "Divide and Conquer",
     cacheInput: "",
     isSolved: false,
     beginningCode: `

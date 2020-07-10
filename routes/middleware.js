@@ -23,9 +23,18 @@ module.exports = {
         });
 
         for (var i = 0; i < inputs.length; i++) {
+
             try {
                 const userFunction = vm.run(userCode);
-                assert.deepEqual(userFunction(inputs[i]), outputs[i]);
+
+                if(!Array.isArray(inputs[i]) && typeof inputs[i] === 'object'){
+                    let params = Object.values(inputs[i]);
+                    // We need to destructure the values of each param into the function
+                    assert.deepEqual(userFunction(...params), outputs[i]);
+                } else {
+                    assert.deepEqual(userFunction(inputToTest), outputs[i]);
+                }
+
                 result.push({
                     testNumber: i,
                     success: true
@@ -69,7 +78,15 @@ module.exports = {
 
         try {
             const userFunction = vm.run(userCode);
-            assert.deepEqual(userFunction(sampleInput), sampleOutput);
+
+            if(!Array.isArray(sampleInput) && typeof sampleInput === 'object'){
+                let params = Object.values(sampleInput);
+                // We need to destructure the values of each param into the function
+                assert.deepEqual(userFunction(...params), sampleOutput);
+            } else {
+                assert.deepEqual(userFunction(sampleInput), sampleOutput);
+            }
+
             message["success"] = true;
         } catch (e) {
             message["success"] = false;

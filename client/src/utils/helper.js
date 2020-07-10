@@ -4,7 +4,7 @@ import QuestionCard from "../components/QuestionCard";
 
 export default {
     renderQuestionsWithDifficultyOptionOnly : function(data, difficulty){
-        const allQuestionTypes = ["Array", "String", "Hash Table"];
+        const allQuestionTypes = ["Array", "String", "Hash Table", "Recursion", "Divide and Conquer"];
         const result = [];
 
         for (var i = 0; i < allQuestionTypes.length; i++) {
@@ -47,7 +47,7 @@ export default {
 
     // Render all question
     renderQuestionsWithoutFilter : function(data){
-        const allQuestionTypes = ["Array", "String", "Hash Table"];
+        const allQuestionTypes = ["Array", "String", "Hash Table", "Recursion", "Divide and Conquer"];
         const result = [];
 
         for (var i = 0; i < allQuestionTypes.length; i++) {

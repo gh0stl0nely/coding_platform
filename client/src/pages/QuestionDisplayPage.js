@@ -51,11 +51,6 @@ function QuestionPage() {
         renderChosenQuestion(id);
     }, []);
 
-    // When cacheInput changes, this means that save cache Input in frontend first, then save backend 
-    // useEffect(() => {
-    //     API.saveUserInput(question);
-    // }, [question]);
-
     // This function always run when the user enters this questionDisplayPage
     // If the token is not valid, they will be forwarded back to sign in page.
     // We want to make sure they are not tampering with the token
@@ -192,6 +187,21 @@ function QuestionPage() {
         }
     };
 
+    function renderInput(input){
+        if(!Array.isArray(input) && typeof input === 'object' && input !== null){
+            const values = Object.values(input);
+            const resultingString = values.map((value, index) => {
+                return (index != values.length -1) ? `Args ${index + 1} = ${JSON.stringify(value)} , ` :  `Args ${index + 1} = ${JSON.stringify(value)}`
+            }).join("");
+
+            return resultingString;
+        }
+
+        // console.log("Not object")
+        return JSON.stringify(input);
+  
+    }
+
     return (
         <Container maxWidth="md" style={{ marginTop: "80px" }}>
             <Grid container direction="row" justify="center" key={question._id} data-isSolved={question.isSolved}>
@@ -213,9 +223,9 @@ function QuestionPage() {
                         <p style={styles.textStyle}>Status: <span style={{ color: "white", textDecoration: "none"  }}> {question.isSolved ? <span style={{color: "green"}}>Solved</span> : <span style={{color: "red"}}>Unsolved</span>} </span></p>
                         <p style={styles.textStyle}>Description:</p>
                         <p style={{ color: "white", lineHeight: "20px" }}>{question.description}</p>
-                        <p style={styles.textStyle}>Sample Input 1: </p><span style={{ color: "white" }}>{JSON.stringify(question.inputOne)}</span>
+                        <p style={styles.textStyle}>Sample Input 1: </p><span style={{ color: "white" }}>{renderInput(question.inputOne)}</span>
                         <p style={styles.textStyle}>Sample Output 1: </p><span style={{ color: "white" }}>{JSON.stringify(question.outputOne)}</span>
-                        <p style={styles.textStyle}>Sample Input 2: </p><span style={{ color: "white" }}>{JSON.stringify(question.inputTwo)}</span>
+                        <p style={styles.textStyle}>Sample Input 2: </p><span style={{ color: "white" }}>{renderInput(question.inputTwo)}</span>
                         <p style={styles.textStyle}>Sample Output 2: </p><span style={{ color: "white" }}>{JSON.stringify(question.outputTwo)}</span>
                     </Grid>
                     {/* Solution */}
