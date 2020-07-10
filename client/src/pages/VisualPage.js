@@ -56,10 +56,9 @@ function VisualPage() {
                 {renderChipsOptions()}
             </Grid>
             <Grid container justify="center" alignItems="center">
-                <Grid container justify="center" alignItems="center" style={{ backgroundColor: "#dae1e7", minHeight: "300px" }}>
-                    <Grid item xs={12} style={{ textAlign: "center", backgroundColor: "#dae1e7", paddingBottom: "30px", display: display["linear search"] }}>
+                <Grid item xs={12} style={{ textAlign: "center", height: "300px", backgroundColor: "#dae1e7" }}>
                         <LinearSearch />
-                    </Grid>
+                </Grid>
                     <Grid item xs={12} style={{ textAlign: "center", backgroundColor: "#dae1e7", paddingBottom: "30px", display: display["binary search"] }}>
                         <BinarySearch />
                     </Grid>
@@ -69,10 +68,9 @@ function VisualPage() {
                     <Grid item xs={12} style={{ textAlign: "center", backgroundColor: "#dae1e7", paddingBottom: "30px", display: display["selection sort"] }}>
                         <SelectionSort />
                     </Grid>
-                    <Grid item xs={12} style={{ textAlign: "center", backgroundColor: "#dae1e7", paddingBottom: "30px", display: display["insertion sort"] }}>
+                    <Grid item xs={12} style={{ textAlign: "center", height: "300px", backgroundColor: "#dae1e7" }}>
                         <InsertionSort />
                     </Grid>
-                </Grid>
             </Grid>
             <Box mt={8}>
                 <Copyright />
