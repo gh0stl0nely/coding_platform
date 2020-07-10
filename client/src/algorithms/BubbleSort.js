@@ -31,7 +31,7 @@ export default function BubbleSort() {
                 swap = true;
             };
 
-            visualize(finalArray,i,j);
+            visualize(finalArray, i, j);
 
             i++;
             j++;
@@ -53,26 +53,26 @@ export default function BubbleSort() {
 
     };
 
-    function visualize(finalArray,i,j){
-            // Convert into object to visualize :)  
-            let tempI = finalArray[i];
-            finalArray[i] = {
-                value: finalArray[i],
-                color: "green"
-            }
+    function visualize(finalArray, i, j) {
+        // Convert into object to visualize :)  
+        let tempI = finalArray[i];
+        finalArray[i] = {
+            value: finalArray[i],
+            color: "green"
+        }
 
-            let tempJ = finalArray[j];
-            finalArray[j] = {
-                value: finalArray[j],
-                color: "green"
-            }
+        let tempJ = finalArray[j];
+        finalArray[j] = {
+            value: finalArray[j],
+            color: "green"
+        }
 
-            let updatedArray = [...finalArray];
-            updateFinalArray(updatedArray); // To show color 
+        let updatedArray = [...finalArray];
+        updateFinalArray(updatedArray); // To show color 
 
-            // After visualizing, set back to regular number instead of object
-            finalArray[i] = tempI;
-            finalArray[j] = tempJ;
+        // After visualizing, set back to regular number instead of object
+        finalArray[i] = tempI;
+        finalArray[j] = tempJ;
     }
 
     function generateRandomNumber() {
@@ -109,7 +109,7 @@ export default function BubbleSort() {
 
     return (
         <div>
-            <p style={{ color: "#142850", fontSize: "3vw" }}>Bubble Sort</p>
+            <p style={{ color: "#142850", fontSize: "3vw", fontFamily: 'Vidaloka' }}>Bubble Sort</p>
             <TextField
                 id="array-length-selection"
                 select
@@ -138,7 +138,8 @@ export default function BubbleSort() {
                 {renderFinalArray()}
             </div>
             <div style={{ marginTop: "30px" }}>
-                <p>Description</p>
+                <p style={{ fontWeight: "bold" }}>Explaination</p>
+                <p>lalalalalalala</p>
             </div>
         </div>
     )

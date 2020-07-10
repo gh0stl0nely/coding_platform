@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
@@ -9,14 +9,14 @@ export default function InsertionSort(){
 
     const [finalArray, updateFinalArray] = useState([generateRandomNumber(),generateRandomNumber(),generateRandomNumber(),generateRandomNumber(),generateRandomNumber()]);
     const [isFoundAnswer, updateSearchStatus] = useState(true);
-    const [isGeneratedNewArray , updateIsGeneratedNewArray] = useState(false);
+    const [isGeneratedNewArray, updateIsGeneratedNewArray] = useState(false);
     const [chosenArrayLength, setChosenArrayLength] = useState(5);
 
     function insertionSort(current){
         // Start Insertion sort
         const timer = setTimeout(() => {
             // Out of bound which mean it is sorted
-            if(current == finalArray.length){
+            if (current == finalArray.length) {
                 updateSearchStatus(true);
                 const newArray = [...finalArray];
                 updateFinalArray(newArray);
@@ -117,18 +117,18 @@ export default function InsertionSort(){
         finalArray[current - 1] = prevValue;
     };
 
-    function generateRandomNumber(){
+    function generateRandomNumber() {
         return Math.floor(Math.random() * 100);
     };
 
-    function handleChoice(e){
+    function handleChoice(e) {
         const value = e.target.value;
         setChosenArrayLength(value);
     };
 
-    function generateRandomArray(){
+    function generateRandomArray() {
         let generatedArray = [];
-        for(let i = 0; i < chosenArrayLength; i++){
+        for (let i = 0; i < chosenArrayLength; i++) {
             const randomNumber = generateRandomNumber();
             generatedArray.push(randomNumber);
         };
@@ -137,20 +137,21 @@ export default function InsertionSort(){
         updateIsGeneratedNewArray(true);
     };
 
-    function renderFinalArray(){
+    function renderFinalArray() {
         return (
             finalArray.map(item => {
-                if(!isNaN(item)){
-                    return <Node value={item}/>
+                if (!isNaN(item)) {
+                    return <Node value={item} />
                 } else {
-                    return <Node value={item.value} color={item.color}/>
+                    return <Node value={item.value} color={item.color} />
                 }
             })
         )
     };
-    
+
     return (
         <div>
+            <p style={{ color: "#142850", fontSize: "3vw", fontFamily: 'Vidaloka' }}>Insertion Sort</p>
             <TextField
           id="array-length-selection"
           select

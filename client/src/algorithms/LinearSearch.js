@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
 import Node from "./Node";
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -35,12 +34,12 @@ export default function LinearSearch() {
         let temp;
 
         var timer = setInterval(() => {
-            if(i == givenArray.length){
+            if (i == givenArray.length) {
                 clearInterval(timer);
                 return;
             };
 
-            if(givenArray[i] == target){
+            if (givenArray[i] == target) {
                 temp = givenArray[i];
                 givenArray[i] = {
                     value: temp,
@@ -63,12 +62,12 @@ export default function LinearSearch() {
                 updateArray(newArray);
             };
             i++;
-        },1000);
+        }, 1000);
     }
 
     return (
         <div>
-            <p style={{color: "#142850", fontSize: "3vw"}}>Linear Search</p>
+            <p style={{ color: "#142850", fontSize: "3vw", fontFamily: 'Vidaloka' }}>Linear Search</p>
             <TextField
                 id="linear-search-input"
                 select
@@ -82,11 +81,16 @@ export default function LinearSearch() {
                     </MenuItem>
                 ))}
             </TextField>
-            <Grid item xs={12} style={{ textAlign: "center", marginTop:"20px" }}>
+            <Grid item xs={12} style={{ textAlign: "center", marginTop: "20px" }}>
                 {renderArray()}
             </Grid>
-            <Grid item xs={12} style={{ textAlign: "center", marginTop:"30px" }}>
-                <p>Description</p>
+            <Grid item xs={12} style={{ textAlign: "center", marginTop: "30px" }}>
+                <p style={{ fontWeight: "bold" }}>Space complexity: </p>
+                <p style={{ fontWeight: "bold" }}>Time complexity: </p>
+            </Grid>
+            <Grid item xs={12} style={{ textAlign: "center", marginTop: "30px" }}>
+                <p style={{ fontWeight: "bold" }}>Explaination</p>
+                <p>Search down the list one by one until the target is found</p>
             </Grid>
         </div>
     )
