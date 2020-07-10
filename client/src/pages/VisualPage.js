@@ -72,7 +72,6 @@ function VisualPage() {
                     <Grid item xs={12} style={{ textAlign: "center", backgroundColor: "#E8EFF5", paddingBottom: "30px", display: display["insertion sort"], border: "5px solid #27496d", borderRadius: "20px" }}>
                         <InsertionSort />
                     </Grid>
-                </Grid>
             </Grid>
             <Box mt={8}>
                 <Copyright />
