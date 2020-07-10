@@ -25,7 +25,7 @@ function VisualPage() {
                 {renderChips()}
             </Grid>
             <Grid container justify="center" alignItems="center">
-                {/* <Grid item xs={12} style={{ textAlign: "center", height: "300px", backgroundColor: "#dae1e7" }}>
+                <Grid item xs={12} style={{ textAlign: "center", height: "300px", backgroundColor: "#dae1e7" }}>
                         <LinearSearch />
                 </Grid>
                 <Grid item xs={12} style={{ textAlign: "center", height: "300px", backgroundColor: "#dae1e7" }}>
@@ -36,7 +36,7 @@ function VisualPage() {
                 </Grid>
                 <Grid item xs={12} style={{ textAlign: "center", height: "300px", backgroundColor: "#dae1e7" }}>
                         <SelectionSort />
-                </Grid> */}
+                </Grid>
                 <Grid item xs={12} style={{ textAlign: "center", height: "300px", backgroundColor: "#dae1e7" }}>
                         <InsertionSort />
                 </Grid>
