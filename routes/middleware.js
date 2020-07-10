@@ -1,7 +1,7 @@
 const fs = require("fs");
 const util = require('util');
-const writeFileAsync = util.promisify(fs.writeFile);
-const path = require("path");
+// const writeFileAsync = util.promisify(fs.writeFile);
+// const path = require("path");
 const { NodeVM } = require("vm2");
 const assert = require("chai").assert;
 const Question = require("../model/Question");
@@ -44,12 +44,6 @@ module.exports = {
         res.locals.failedQuestions = failedQuestionCounter;
         // Pass to checkIsQuestionSolved middle
         next();
-        // try {
-        //     const filePath = path.join(__dirname, "..", "input_directory", "Javascript", "username.js");
-        //     // await writeFileAsync(filePath, question.cacheInput);
-        // } catch(e){
-        //     console.log(e);
-        // }
 
     },
 
