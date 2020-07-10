@@ -11,8 +11,9 @@ import InsertionSort from "../algorithms/InsertionSort.js";
 import Copyright from "../components/Copyright";
 
 function VisualPage() {
-    const options = ["linear search", "binary search", "bubble sort", "selection sort", "insertion sort"];
-    const allNoneDisplay = {
+    const options = ["Linear Search", "Binary Search", "Bubble Sort", "Selection Sort", "Insertion Sort"];
+    
+    const allDisplayNone = {
         "linear search": "none",
         "binary search": "none",
         "bubble sort": "none",
@@ -37,12 +38,11 @@ function VisualPage() {
     };
 
     const handleChipClick = (e) => {
-        const target = e.target.innerHTML;
+        const target = e.target.innerHTML.toLowerCase();
         updateDisplay({
-            ...allNoneDisplay,
+            ...allDisplayNone,
             [target] : "block"
         });
-        // display[target] === "none" ? updateDisplay({ ...display, [target]: "block" }) : updateDisplay({ ...display, [target]: "none" });
     };
 
 
@@ -50,25 +50,26 @@ function VisualPage() {
     return (
         <Container maxWidth="lg" style={{ marginTop: "50px" }}>
             <Grid container style={{ padding: "20px 0px", marginTop: "10px" }} justify="center" alignItems="center">
-                <Grid item xs={12}>
-                    <p>Choose the methods you want to visualize: </p>
+                <Grid item xs={12} style={{textAlign: "center"}}>
+                    <p style={{fontSize: "20px"}}>Choose the algorithm methods you want to visualize </p>
                 </Grid>
                 {renderChipsOptions()}
             </Grid>
             <Grid container justify="center" alignItems="center">
-                <Grid item xs={12} style={{ textAlign: "center", height: "300px", backgroundColor: "#dae1e7" }}>
+                <Grid container justify="center" alignItems="center" style={{ backgroundColor: "#E8EFF5", minHeight: "300px",borderRadius: "20px" }}>
+                    <Grid item xs={12} style={{ textAlign: "center", backgroundColor: "#E8EFF5", paddingBottom: "30px", display: display["linear search"], border: "5px solid #27496d", borderRadius: "20px" }}>
                         <LinearSearch />
-                </Grid>
-                    <Grid item xs={12} style={{ textAlign: "center", backgroundColor: "#dae1e7", paddingBottom: "30px", display: display["binary search"] }}>
+                    </Grid>
+                    <Grid item xs={12} style={{ textAlign: "center", backgroundColor: "#E8EFF5", paddingBottom: "30px", display: display["binary search"], border: "5px solid #27496d", borderRadius: "20px" }}>
                         <BinarySearch />
                     </Grid>
-                    <Grid item xs={12} style={{ textAlign: "center", backgroundColor: "#dae1e7", paddingBottom: "30px", display: display["bubble sort"] }}>
+                    <Grid item xs={12} style={{ textAlign: "center", backgroundColor: "#E8EFF5", paddingBottom: "30px", display: display["bubble sort"], border: "5px solid #27496d", borderRadius: "20px" }}>
                         <BubbleSort />
                     </Grid>
-                    <Grid item xs={12} style={{ textAlign: "center", backgroundColor: "#dae1e7", paddingBottom: "30px", display: display["selection sort"] }}>
+                    <Grid item xs={12} style={{ textAlign: "center", backgroundColor: "#E8EFF5", paddingBottom: "30px", display: display["selection sort"], border: "5px solid #27496d", borderRadius: "20px" }}>
                         <SelectionSort />
                     </Grid>
-                    <Grid item xs={12} style={{ textAlign: "center", height: "300px", backgroundColor: "#dae1e7" }}>
+                    <Grid item xs={12} style={{ textAlign: "center", backgroundColor: "#E8EFF5", paddingBottom: "30px", display: display["insertion sort"], border: "5px solid #27496d", borderRadius: "20px" }}>
                         <InsertionSort />
                     </Grid>
             </Grid>
