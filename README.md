@@ -1,14 +1,15 @@
 # Description
 
-Programmeow is an web application platform to help programmers prepare for their upcoming technical interviews.
+Programmeow is an web application platform to help programmers prepare for their upcoming technical interviews. The platform provides practise questions of various data structures, visualization and explaination of algorithm methods. The users can create accounts to track their progress.
 
 Demo -> [Here]()
 
 ## User Story
 
 ```
-As a user
-[Insert Text]
+As a programmer preparing for coding interview
+I want an online platform that provides me with curated list of coding questions
+So that I can prepare for my technical interview
 
 ```
 
