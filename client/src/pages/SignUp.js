@@ -83,7 +83,7 @@ export default function SignUp() {
       } else {
         // If not found duplicate
         localStorage.setItem('jwt', user.data.token);
-        window.location.href = "/";
+        window.location.href = "/signin";
       }
 
     } else {

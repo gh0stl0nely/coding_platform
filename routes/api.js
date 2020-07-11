@@ -68,9 +68,9 @@ router.post("/signup", async (req, res) => {
             email
         }]
     });
+
     if (duplicateUser) {
         // Found a duplicate user
-        console.log("Found duplicate");
         return res.json({
             msg: "User existed"
         });
@@ -95,7 +95,9 @@ router.post("/signup", async (req, res) => {
     });
 
     // Issue JWT Token
+
     const token = jwt.sign(user.toJSON(), 'secret');
+    console.log(token);
     return res.json({
         msg: "Successfully create a new user",
         token: token,
@@ -122,7 +124,7 @@ router.post("/login", async (req, res) => {
                 msg: "User not found",
             });
         }
-
+        
         // If user exists and password matches, then we will issue a token
         if (password == user.password) {
             const token = jwt.sign(user.toJSON(), 'secret');
@@ -146,7 +148,7 @@ router.post("/login", async (req, res) => {
 router.get("/auth", passport.authenticate('jwt', {
     session: false,
     failureRedirect: "/api/notAuth"
-}), (req, res) => {
+}), (req, res) => {    
     return res.json({
         uid: req.user["_id"],
         isAuthenticated: true,

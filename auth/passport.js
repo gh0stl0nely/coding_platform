@@ -15,7 +15,6 @@ jwtOptions.secretOrKey = 'secret';
 
 let strategy = new JwtStrategy(jwtOptions, async function(jwt_payload, done) { 
     let user = await User.findOne({_id: jwt_payload["_id"]}).populate("questions").exec(); 
-
     if(!user){
         done(null,false, {msg: "User not found!", isAuthenticated: false});
     } else {

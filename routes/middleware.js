@@ -23,7 +23,7 @@ module.exports = {
         });
 
         for (var i = 0; i < inputs.length; i++) {
-
+            // console.log(userFunction(inputToTest));
             try {
                 const userFunction = vm.run(userCode);
 
@@ -32,7 +32,8 @@ module.exports = {
                     // We need to destructure the values of each param into the function
                     assert.deepEqual(userFunction(...params), outputs[i]);
                 } else {
-                    assert.deepEqual(userFunction(inputToTest), outputs[i]);
+                    assert.deepEqual(userFunction(inputs[i]), outputs[i]);
+
                 }
 
                 result.push({
@@ -48,6 +49,7 @@ module.exports = {
                 failedQuestionCounter++;
             }
         };
+
         // Check result if all success is true then we will search for username and will change isSolved to solve
         res.locals.result = result;
         res.locals.failedQuestions = failedQuestionCounter;
