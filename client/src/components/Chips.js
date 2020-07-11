@@ -1,12 +1,12 @@
 import React from 'react';
-import Chip from '@material-ui/core/Chip';
-import DoneIcon from '@material-ui/icons/Done';
 
 const styles = {
   chips: {
-    padding: "10px 5px",
+    padding: "10px 20px",
+    borderRadius: "20px",
     backgroundColor: "#00909e",
-    margin: "10px"
+    margin: "10px",
+    color: "white"
   }
 }
 
@@ -14,14 +14,7 @@ export default function Chips(props) {
 
   return (
     <div>
-      <Chip
-        label={props.label}
-        clickable
-        onClick={props.handleFunction}
-        icon={<DoneIcon />}
-        color="primary"
-        style={styles.chips}
-      />
+      <span style={styles.chips} onClick={props.handleFunction}>{props.name}</span>
     </div>
   );
 }
