@@ -3,7 +3,7 @@ exports.questionList = [{
     description: `Given the array (nums), 
     for each nums[i] find out how many numbers in the array are smaller than it. You have to count the number of valid j's such that j != i and nums[j] < nums[i].`,
     difficulty: "Easy",
-    type: "Array",
+    questionType: "Array",
     cacheInput: "",
     isSolved: false,
     beginningCode: `
@@ -50,7 +50,7 @@ function smallerThanCurrent(nums){
     Note: A capitalized letter is not the same as non-capitalized letter. (i.e: N is NOT equal to n)
     `,
     difficulty: "Easy",
-    type: "String",
+    questionType: "String",
     cacheInput: "",
     isSolved: false,
     beginningCode: `
@@ -89,7 +89,7 @@ function isValidPalindrome(str){
     title: "Max Subarray Sum",
     description: `Given an integer array (nums), find a contiguous subarray (consecutive numbers) which contains at least one number that sums up to a largest sum and return it.`,
     difficulty: "Medium",
-    type: "Divide and Conquer",
+    questionType: "Divide and Conquer",
     cacheInput: "",
     isSolved: false,
     beginningCode: `
@@ -126,7 +126,7 @@ var maxSubArray = function(nums) {
     title: "Fibonacci Number",
     description: `The Fibonacci numbers, commonly denoted F(n), is a series of numbers that each number is the sum of the two preceding ones, starting from 0 and 1. F(N) = F(N-1)+F(N-2) for N >1. Given N, calculate F(N)`,
     difficulty: "Easy",
-    type: "Recursion",
+    questionType: "Recursion",
     cacheInput: "",
     isSolved: false,
     beginningCode: `
@@ -164,7 +164,7 @@ var fib = function(N) {
     title: "Reverse a String Recursively",
     description: `Given a random string, write a program to reverse the string using Recursion`,
     difficulty: "Easy",
-    type: "Recursion",
+    questionType: "Recursion",
     cacheInput: "",
     isSolved: false,
     beginningCode: `
@@ -207,7 +207,7 @@ function reverseStringRecursive(str) {
     title: "Unique Occurences",
     description: `Given an array of integers (arr), write a program that returns true if and only if the number of occurrences of each value in the array is unique.`,
     difficulty: "Easy",
-    type: "Hash Table",
+    questionType: "Hash Table",
     cacheInput: "",
     isSolved: false,
     beginningCode: `
@@ -254,7 +254,7 @@ function uniqueOccurence(arr){
     title: "The Majority Number",
     description: `Given an array (nums), find the number that appears more than half the length. If the length is 6, find the number that appears 3 or more times.`,
     difficulty: "Medium",
-    type: "Divide and Conquer",
+    questionType: "Divide and Conquer",
     cacheInput: "",
     isSolved: false,
     beginningCode: `
@@ -300,7 +300,7 @@ var findMajority = function(nums) {
     title: "All Repeated Numbers",
     description: `Given an array of integers (nums), write a function that returns all numbers that appeared twice in the array. If no pairs exist, return -1.`,
     difficulty: "Medium",
-    type: "Array",
+    questionType: "Array",
     cacheInput: "",
     isSolved: false,
     beginningCode: `
@@ -348,7 +348,7 @@ var findNumbers = function(nums) {
     title: "Sum Pair",
     description: `Given an array of integers (arr) and a (sum), write a program that returns an array of those two numbers in increasing order whose sum matches the given (sum).`,
     difficulty: "Medium",
-    type: "Array",
+    questionType: "Array",
     cacheInput: "",
     isSolved: false,
     beginningCode: `
@@ -423,7 +423,7 @@ function helper(current,compliment){
     title: "Longest Consecutive Sequence",
     description: `Given an array of integers (nums), write a program to find the length of the longest consecutive sequence (i.e: [1,2,3] or [-2,-1,0] )`,
     difficulty: "Hard",
-    type: "Array",
+    questionType: "Array",
     cacheInput: "",
     isSolved: false,
     beginningCode: `
@@ -470,7 +470,7 @@ var longestConsecutive = function(nums) {
     title: "Pattern Searching",
     description: `Given a string (str) and a pattern (pat), find all occurrences of pattern in the string and return the indexes where they occur as an array.`,
     difficulty: "Hard",
-    type: "String",
+    questionType: "String",
     cacheInput: "",
     isSolved: false,
     beginningCode: `
@@ -528,7 +528,7 @@ var findPattern = function(str, pat) {
     title: "Maximum Vowels",
     description: `Given a string (str) with only lowercase letters and an integer (k), return the maximum number of vowels in the substring with the length (k).`,
     difficulty: "Medium",
-    type: "String",
+    questionType: "String",
     cacheInput: "",
     isSolved: false,
     beginningCode: `

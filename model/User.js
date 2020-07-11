@@ -4,10 +4,13 @@ const UserSchema = new mongoose.Schema({
     username: String,
     email: String,
     password: String,
-    lastQuestionID: String,
+    lastQuestionTitle: String,
     questions: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Question"
+        questionType: String,
+        difficulty: String,
+        title: String,
+        cacheInput: String,
+        isSolved: Boolean,
     }]
 }); 
 

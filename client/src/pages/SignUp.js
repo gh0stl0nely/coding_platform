@@ -81,9 +81,8 @@ export default function SignUp() {
         });
         setIsDuplicate(true);
       } else {
-        // If not found duplicate
         localStorage.setItem('jwt', user.data.token);
-        window.location.href = "/signin";
+        window.location.href = "/";
       }
 
     } else {

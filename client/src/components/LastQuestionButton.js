@@ -7,7 +7,7 @@ export default function LastQuestionButton(){
     // alert(loginStatus.lastQuestionID);
     return (
         <>
-            <Button onClick={() => goToQuestion(loginStatus.lastQuestionID)} style={{display: (loginStatus.isLoggedin && loginStatus.lastQuestionID !== "") ? "block" : "none"}} variant="contained">Continue your progress</Button>
+            <Button onClick={() => goToQuestion(loginStatus.lastQuestionTitle)} style={{display: (loginStatus.isLoggedin && loginStatus.lastQuestionTitle !== "") ? "block" : "none"}} variant="contained">Continue your progress</Button>
         </>
     )
 }

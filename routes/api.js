@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../model/User");
-const Question = require("../model/Question");
 const { questionList } = require("../question");
 const passport = require("../auth/passport");
 const jwt = require('jsonwebtoken');
@@ -9,24 +8,36 @@ const { saveUserInput , processUserInput, processLogging, checkIsQuestionSolved 
 
 // Find the correct question by ID to display
 router.post("/question", async (req, res) => {
-    // id represents the ID of the user last clicked on
     const {
         userID,
-        questionID
+        questionTitle
     } = req.body;
 
     try {
+       
         const user = await User.findByIdAndUpdate(userID, {
-            lastQuestionID: questionID
-        }).populate('questions').exec();
+            lastQuestionTitle: questionTitle
+        });
+        const selectedQuestion = user.questions.filter(question => question["title"] == questionTitle)[0].toJSON();
+        const codeInfo = questionList.filter(question => {
+            return question["title"] == questionTitle
+        })[0];
 
-        const selectedQuestion = user.questions.filter(question => question["_id"] == questionID)[0];
+        selectedQuestion["description"] = codeInfo["description"];
+        selectedQuestion["beginningCode"] = codeInfo["beginningCode"];
+        selectedQuestion["solutionCode"] = codeInfo["solutionCode"];
+        selectedQuestion["inputOne"] = codeInfo["inputOne"];
+        selectedQuestion["inputTwo"] = codeInfo["inputTwo"];
+        selectedQuestion["outputOne"] = codeInfo["outputOne"];
+        selectedQuestion["outputTwo"] = codeInfo["outputTwo"];
 
         return res.json({
             success: true,
             question: selectedQuestion
         });
+
     } catch (e) {
+        console.log("WRONG");
         return res.json({
             success: false,
             msg: "User with the specified name not found"
@@ -76,26 +87,25 @@ router.post("/signup", async (req, res) => {
         });
     }
 
-    // Honestly no need to do any of this ... Because we just need to store the user data 
-    const createQuestions = async () => {
-        return Promise.all(questionList.map(async (item) => {
-            const question = await Question.create(item);
-            return question;
-        }));
-    }
-
-    const questionData = await createQuestions();
+    const questionData = questionList.map(question => {
+        return {
+            questionType: question.questionType,
+            difficulty: question.difficulty,
+            title: question.title,
+            cacheInput: "",
+            isSolved: false
+        }
+    });
 
     const user = await User.create({
         username: username,
         email: email,
         password: password,
-        lastQuestionID: "",
+        lastQuestionTitle: "",
         questions: questionData
     });
 
     // Issue JWT Token
-
     const token = jwt.sign(user.toJSON(), 'secret');    
     return res.json({
         msg: "Successfully create a new user",
@@ -148,12 +158,13 @@ router.get("/auth", passport.authenticate('jwt', {
     session: false,
     failureRedirect: "/api/notAuth"
 }), (req, res) => {    
+
     return res.json({
         uid: req.user["_id"],
         isAuthenticated: true,
         username: req.user.username,
         questions: req.user.questions,
-        lastQuestionID: req.user.lastQuestionID
+        lastQuestionTitle: req.user.lastQuestionTitle
     });
 });
 

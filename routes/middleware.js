@@ -1,18 +1,22 @@
-const fs = require("fs");
-const util = require('util');
-// const writeFileAsync = util.promisify(fs.writeFile);
-// const path = require("path");
+const { questionList } = require("../question");
+const User = require("../model/User");
 const { NodeVM } = require("vm2");
 const assert = require("chai").assert;
-const Question = require("../model/Question");
 
 module.exports = {
     processUserInput: async function(req,res,next){
-        const { question, userID} = req.body;
+        // Question also contains 
+
+        const { userInput } = req.body;
         // So right now we pass the question down is not necessary because we can just access it from question.js...
-        const inputs = question.answers.inputs;
-        const outputs = question.answers.expectedOutputs;
-        const userCode = question.cacheInput; // Pass this template literal into VM to run
+        const selectedQuestion = questionList.filter(question => {
+            return userInput.title == question.title
+        })[0];
+
+        const inputs = selectedQuestion.answers.inputs;
+        const outputs = selectedQuestion.answers.expectedOutputs;
+        const userCode = userInput.cacheInput; // Pass this template literal into VM to run
+
         const result = [];
         let failedQuestionCounter = 0;
 
@@ -32,8 +36,8 @@ module.exports = {
                     // We need to destructure the values of each param into the function
                     assert.deepEqual(userFunction(...params), outputs[i]);
                 } else {
+           
                     assert.deepEqual(userFunction(inputs[i]), outputs[i]);
-
                 }
 
                 result.push({
@@ -54,17 +58,23 @@ module.exports = {
         res.locals.result = result;
         res.locals.failedQuestions = failedQuestionCounter;
         // Pass to checkIsQuestionSolved middle
+        
         next();
 
     },
 
     // This captures all the console 
     processLogging: async function(req,res,next){
-        const { question } = req.body;
+        const { userInput } = req.body;
         // So right now we pass the question down is not necessary because we can just access it from question.js...
-        const sampleInput = question.inputOne;
-        const sampleOutput = question.outputOne;
-        const userCode = question.cacheInput; // Pass this template literal into VM to run
+        const selectedQuestion = questionList.filter(question => {
+            return userInput.title == question.title
+        })[0];
+
+        const sampleInput = selectedQuestion.inputOne;
+        const sampleOutput = selectedQuestion.outputOne;
+        const userCode = userInput.cacheInput; // Pass this template literal into VM to run
+
         const message = {};
         const logger = []; 
 
@@ -105,8 +115,8 @@ module.exports = {
     checkIsQuestionSolved: async function(req,res,next){
         const result = res.locals.result;
         const failedQuestionsCounter = res.locals.failedQuestions;
-        const { question } = req.body;
-        const questionID = question["_id"];
+        const { userInput, userID } = req.body;
+        const questionTitle = userInput["title"];
 
         // There are failed questions
         if(failedQuestionsCounter > 0){
@@ -126,29 +136,42 @@ module.exports = {
                 event: "Submit code"
             };
 
-            await Question.findByIdAndUpdate(questionID, {isSolved: true});
+            // Find user by ID and update isSolved to true
+            const user = await User.findById(userID);
+            
+            const updatedQuestion = user.questions.map(question => {
+                if(question.title == questionTitle){
+                    question.isSolved = true;
+                    return question;
+                } else {
+                    return question;
+                }
+            });
+
+            user.questions = updatedQuestion;
+            await user.save();
         };
 
         next();
     },
 
     saveUserInput: async function(req,res,next){
-        const { question } = req.body;
-        // Later on, when we want to only store user in question.js ?
-        // The thing is that question.js can only store 
-        // If we want, we can create a question.py and open the RIGHT file to search for question
-        // And compare, since that way, we DONT EVEN NEED TO STORE QUESTION IN A DATABASE
+        const { userInput, userID } = req.body;
 
-        // But that is for later :)
-        const questionID = question["_id"];
-        const cacheInput = question.cacheInput;
-        try  {
-            await Question.findByIdAndUpdate(questionID, {cacheInput});
-            next();
-        } catch(e){
-            // Maybe we should handle error here if it fails?
-            throw e;
-        };
+        const user = await User.findById(userID);
+        const updatedQuestion = user.questions.map(question => {
+            if(question.title == userInput.title){
+                question.cacheInput = userInput.cacheInput;
+                return question;
+            } else {
+                return question;
+            }
+        });
+
+        user.questions = updatedQuestion;
+        user.save();
+
+        next();
     },
 
 }

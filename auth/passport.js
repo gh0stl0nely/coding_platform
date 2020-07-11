@@ -14,7 +14,8 @@ jwtOptions.secretOrKey = 'secret';
 // lets create our strategy for web token
 
 let strategy = new JwtStrategy(jwtOptions, async function(jwt_payload, done) { 
-    let user = await User.findOne({_id: jwt_payload["_id"]}).populate("questions").exec(); 
+    let user = await User.findOne({_id: jwt_payload["_id"]});
+    // console.log(user); 
     if(!user){
         done(null,false, {msg: "User not found!", isAuthenticated: false});
     } else {

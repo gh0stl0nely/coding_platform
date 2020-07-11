@@ -28,7 +28,7 @@ function App() {
               <Route path="/visualization">
                 <Visual />
               </Route>
-              <Route path="/question/id/:id" >
+              <Route path="/question/:questionTitle" >
                 <QuestionPage />
               </Route>
               <Route path="/question">

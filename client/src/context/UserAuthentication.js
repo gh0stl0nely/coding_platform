@@ -8,7 +8,7 @@ function UserContextProvider(props){
         isLoggedin: false,
         username: "",
         questions: [],
-        lastQuestionID: ""
+        lastQuestionTitle: ""
     });
 
     useEffect(() => {
@@ -21,9 +21,9 @@ function UserContextProvider(props){
         window.location.href = "/";
     };
 
-    function goToQuestion(id){
-        window.location.href = `/question/id/${id}`;
-        localStorage.setItem("username", loginStatus.username);
+    function goToQuestion(questionTitle){
+        window.location.href = `/question/${questionTitle}`;
+        // localStorage.setItem("username", loginStatus.username);
     };
 
     async function checkAuthentication(){
@@ -34,7 +34,7 @@ function UserContextProvider(props){
                 isLoggedin: true,
                 username: user.data.username,
                 questions: user.data.questions,
-                lastQuestionID: user.data.lastQuestionID
+                lastQuestionTitle: user.data.lastQuestionTitle
             });
 
         } else {
@@ -42,7 +42,7 @@ function UserContextProvider(props){
                 isLoggedin: false,
                 username: "",
                 questions: [],
-                lastQuestionID: ""
+                lastQuestionTitle: ""
             });
 
             // Since we deleted jwt and username. Just make sure that when the hacker

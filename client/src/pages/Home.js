@@ -34,8 +34,7 @@ function Home() {
     const [difficulty, setDifficulty] = useState('');
     const [questionType, setQuestionType] = useState('');
 
-
-    const questionsToRender = loginStatus.questions.length > 0 ? loginStatus.questions : questionList;
+    const questionsToRender = loginStatus.isLoggedin ? loginStatus.questions : questionList;
 
     const handleChangeDifficulty = (event) => {
         setDifficulty(event.target.value);
@@ -50,7 +49,6 @@ function Home() {
         setQuestionType("");
     }
 
-    // Once done, we can substitute sampleData with questions
     const renderQuestions = () => {
         let result;
 

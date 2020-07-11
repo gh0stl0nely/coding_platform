@@ -26,8 +26,8 @@ export default {
         }
     },
 
-    updateAndGetLastQuestion: async function(userID,questionID){
-        const questionToDisplay = await axios.post(`/api/question`, {userID,questionID});
+    updateAndGetLastQuestion: async function(userID,questionTitle){
+        const questionToDisplay = await axios.post(`/api/question`, {userID,questionTitle});
         return questionToDisplay;
     },
 

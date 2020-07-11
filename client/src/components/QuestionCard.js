@@ -48,7 +48,7 @@ export default function QuestionCard(props) {
     if(item["_id"]){
       return (
         <Tooltip title={item.isSolved ? "I'm solved, yay!" : "Give me a try!"} TransitionComponent={Zoom} arrow>
-          <Link onClick={() => goToQuestion(item["_id"])} style={{cursor: "pointer", color: "white", fontSize: "18px"}}>{item.title} {renderTick(item.isSolved)}</Link>
+          <Link onClick={() => goToQuestion(item["title"])} style={{cursor: "pointer", color: "white", fontSize: "18px"}}>{item.title} {renderTick(item.isSolved)}</Link>
         </Tooltip>
       )
     } else {

@@ -9,7 +9,7 @@ export default {
 
         for (var i = 0; i < allQuestionTypes.length; i++) {
             const questionType = allQuestionTypes[i];
-            const filteredData = data.filter(item => (item.difficulty == difficulty && item.type == questionType));
+            const filteredData = data.filter(item => (item.difficulty == difficulty && item.questionType == questionType));
             const grid = (
                 <Grid item xs={12} sm={6} md={4}>
                     <QuestionCard questionType={questionType} data={filteredData} />
@@ -23,7 +23,7 @@ export default {
 
     renderQuestionsWithQuestionTypeOnly: function(data, type){
         const result = [];
-        const filteredData = data.filter(item => item.type == type);
+        const filteredData = data.filter(item => item.questionType == type);
         const grid = (
             <Grid style={{textAlign: "center"}} item xs={12} sm={6} md={4}>
                 <QuestionCard questionType={type} data={filteredData} />
@@ -35,7 +35,8 @@ export default {
 
     renderQuestionWithBothOptions: function(data, difficulty, type){
         const result = [];
-        const filteredData = data.filter(item => (item.type == type && item.difficulty == difficulty));
+        console.log(data);
+        const filteredData = data.filter(item => (item.questionType == type && item.difficulty == difficulty));
         const grid = (
             <Grid item xs={12} sm={6} md={4}>
                 <QuestionCard questionType={type} data={filteredData} />
@@ -52,7 +53,7 @@ export default {
 
         for (var i = 0; i < allQuestionTypes.length; i++) {
             const questionType = allQuestionTypes[i];
-            const filteredData = data.filter(item => item.type == questionType);
+            const filteredData = data.filter(item => item.questionType == questionType);
             const grid = (
                 <Grid item xs={12} sm={6} md={4}>
                     <QuestionCard questionType={questionType} data={filteredData} />

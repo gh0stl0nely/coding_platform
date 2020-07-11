@@ -12,6 +12,7 @@ import API from "../utils/api";
 import axios from "axios";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Helper from "../utils/helper";
+// import { questionList } from "../utils/question";
 
 const styles = {
     button: {
@@ -36,7 +37,8 @@ const styles = {
 function QuestionPage() {
     // This is sample of a question data model
     // ID represents the question of the ID ! 
-    const { id } = useParams();
+    const { questionTitle } = useParams();
+    // alert(title);
     const { loginStatus } = useContext(UserContext);
     const [theme, setTheme] = useState("twilight");
     const [btnLabel, setBtnLabel] = useState("Theme Toggle");
@@ -48,7 +50,7 @@ function QuestionPage() {
 
     useEffect(() => {
         // Go to backend search for that question by ID... and console log first :)
-        renderChosenQuestion(id);
+        renderChosenQuestion(questionTitle);
     }, []);
 
     // This function always run when the user enters this questionDisplayPage
@@ -68,9 +70,9 @@ function QuestionPage() {
         }
     }
 
-    async function renderChosenQuestion(id) {
+    async function renderChosenQuestion(questionTitle) {
         const userData = await checkValidToken(); // If token is valid, return the user data
-        const response = await API.updateAndGetLastQuestion(userData.uid, id);
+        const response = await API.updateAndGetLastQuestion(userData.uid, questionTitle);
         setQuestion(response.data.question);
     };
 
@@ -96,9 +98,13 @@ function QuestionPage() {
     async function handleRunCode() {
         checkValidToken();
         const userID = loginStatus.uid; // Or loginstatus.uid
+        const userInput = {
+            title: question.title,
+            cacheInput: question.cacheInput
+        };
         const runOutputs = await axios.post("/api/question/run", {
             userID,
-            question
+            userInput
         });
         setResult(runOutputs.data)
         document.getElementById("codeDiv").style.display = "block";
@@ -107,10 +113,15 @@ function QuestionPage() {
 
     async function handleSubmitCode() {
         checkValidToken();
-        const userID = loginStatus.uid
+        const userID = loginStatus.uid;
+        const userInput = {
+            title: question.title,
+            cacheInput: question.cacheInput
+        };
+        
         const submission = await axios.post("/api/question/submit", {
             userID,
-            question
+            userInput
         });
         setResult(submission.data);
         document.getElementById("codeDiv").style.display = "block";
@@ -218,7 +229,7 @@ function QuestionPage() {
                         </Button>
                     </div>
                     <Grid item xs={12} id="questionDiv" style={{ padding: "0px 20px 80px 20px", overflow: "scroll", height: "294px", backgroundColor: "#27496d" }}>
-                        <p style={styles.textStyle}>Category: <span style={{ color: "white", textDecoration: "none" }}>{question.type}</span></p>
+                        <p style={styles.textStyle}>Category: <span style={{ color: "white", textDecoration: "none" }}>{question.questionType}</span></p>
                         <p style={styles.textStyle}> Difficulty: <span style={{ color: "white", textDecoration: "none"  }}>{renderStar(question.difficulty)}</span></p>
                         <p style={styles.textStyle}>Status: <span style={{ color: "white", textDecoration: "none"  }}> {question.isSolved ? <span style={{color: "green"}}>Solved</span> : <span style={{color: "red"}}>Unsolved</span>} </span></p>
                         <p style={styles.textStyle}>Description:</p>
