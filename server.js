@@ -11,11 +11,10 @@ app.use(cors());
 app.use(express.urlencoded({"extended": true}));
 app.use(express.json());
 app.use(passport.initialize());
-// const uri = process.env.MONGO_URI;
 
-const DB_PATH = "mongodb+srv://gh0stl0nely:0903986011Aa>@cluster0.nbjjt.mongodb.net/coding_platform>?retryWrites=true&w=majority";
+const uri = process.env.MONGO_URI || "mongodb://localhost/platform";
 
-mongoose.connect(DB_PATH, {
+mongoose.connect(uri, {
   useNewUrlParser: true,
   useFindAndModify: false
 });
