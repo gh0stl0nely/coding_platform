@@ -11,8 +11,9 @@ app.use(express.urlencoded({"extended": true}));
 app.use(express.json());
 app.use(cors());
 app.use(passport.initialize());
+const uri = process.env.MONGO_URI;
 
-const DB_PATH = process.env.MONGODB_URI || "mongodb://localhost/platform";
+const DB_PATH = uri || "mongodb://localhost/platform";
 
 mongoose.connect(DB_PATH, {
   useNewUrlParser: true,
