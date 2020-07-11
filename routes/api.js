@@ -96,8 +96,7 @@ router.post("/signup", async (req, res) => {
 
     // Issue JWT Token
 
-    const token = jwt.sign(user.toJSON(), 'secret');
-    console.log(token);
+    const token = jwt.sign(user.toJSON(), 'secret');    
     return res.json({
         msg: "Successfully create a new user",
         token: token,
@@ -129,7 +128,7 @@ router.post("/login", async (req, res) => {
         if (password == user.password) {
             const token = jwt.sign(user.toJSON(), 'secret');
             return res.json({
-                success: true,
+                success: true,  
                 token: token,
             });
         } else {

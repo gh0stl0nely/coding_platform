@@ -4,7 +4,6 @@ import API from "../utils/api";
 const UserContext = React.createContext();
 
 function UserContextProvider(props){
-
     const [loginStatus, setLoginStatus] = useState({
         isLoggedin: false,
         username: "",
