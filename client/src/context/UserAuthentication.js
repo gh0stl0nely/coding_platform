@@ -23,7 +23,6 @@ function UserContextProvider(props){
 
     function goToQuestion(questionTitle){
         window.location.href = `/question/${questionTitle}`;
-        // localStorage.setItem("username", loginStatus.username);
     };
 
     async function checkAuthentication(){

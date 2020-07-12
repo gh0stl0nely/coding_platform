@@ -10,7 +10,6 @@ export default {
         const token = localStorage.getItem("jwt");
         if(token){
             try {
-                console.log(token);
                 const user = await axios.get("/api/auth", {
                     headers: {
                         'Authorization': `Bearer ${token}`
