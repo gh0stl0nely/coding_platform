@@ -17,6 +17,7 @@ So that I can prepare for my technical interview
 
 * [React](https://reactjs.org/) - Frontend Javascript framework
 * [Animate.css](https://animate.style/) - Frontend animation library
+* [Material UI](https://material-ui.com/) - Main React library
 * [Ace Editor](https://ace.c9.io/) - Open source code editor
 * [Chai](http://aaronsofaly.github.io/chai-docs/) - Open source TDD assertion library
 * [JSON Web Token](https://jwt.io/) - For decoding, verifying and generating Web Token for user authentication
