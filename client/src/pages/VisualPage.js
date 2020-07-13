@@ -39,8 +39,6 @@ function VisualPage() {
 
     const handleChipClick = (e) => {
         e.stopPropagation();
-        alert(e.target);
-        // if(e.target)
         const target = e.target.innerHTML.toLowerCase();
         // Set everything to normal and then update
         const newState = {
@@ -50,7 +48,6 @@ function VisualPage() {
         console.log(newState)
 
         updateDisplay(newState);
-        // console.log(display);
     };
 
 
