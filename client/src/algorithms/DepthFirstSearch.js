@@ -18,7 +18,7 @@ export default function DepthFirstSearch() {
     function DFS() {
         // Start Depth first search
         const timer = setInterval(() => {
-            
+
         });
 
     };
@@ -34,11 +34,12 @@ export default function DepthFirstSearch() {
     function generateRandomGrid() {
         console.log(rowAndColumn);
         let generatedGrid = [];
-        for (let i = 0; i < rowAndColumn.row; i++) {
+        const row = rowAndColumn.row;
+        for (let i = 0; i < row; i++) {
             const row = [];
-            for(let j = 0; j < rowAndColumn.col; j++){
-                const randomNumber = 2;
-                row.push(randomNumber);
+            const col = rowAndColumn.col;
+            for(let j = 0; j < col; j++){
+                row.push({});
             };
             generatedGrid.push(row);
         };
@@ -56,7 +57,7 @@ export default function DepthFirstSearch() {
                             if (!isNaN(col)) {
                                 return <Node value={""} isGridNode={true} />
                             } else {
-                                return <Node value={col.value} isGridNode={true} color={col.color} />
+                                return <Node value={""} isGridNode={true} color={col.color} />
                             }
                         })}
                     </div>
