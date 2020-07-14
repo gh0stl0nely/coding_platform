@@ -15,10 +15,14 @@ export default function DepthFirstSearch() {
         col: 5
     });
 
+    // Left = col - 1
+    // Right = col + 1
+    // Up = row - 1
+    // Down = row + 1
     function DFS() {
         // Start Depth first search
-        const timer = setInterval(() => {
-
+        const timer = setTimeout(() => {
+            
         });
 
     };
@@ -31,17 +35,48 @@ export default function DepthFirstSearch() {
         });
     };
 
+    // True means the current can go to direction, if not then u have to chooose other
     function generateRandomGrid() {
-        console.log(rowAndColumn);
         let generatedGrid = [];
-        const row = rowAndColumn.row;
-        for (let i = 0; i < row; i++) {
-            const row = [];
-            const col = rowAndColumn.col;
-            for(let j = 0; j < col; j++){
-                row.push({});
+        const totalRow = rowAndColumn.row;
+
+        // If row = 0; col = grid length - 1
+        let end = {
+            color: 'red',
+            left: true,
+            right: true,
+            up: true,
+            down: true
+        };
+
+        // if row = grid length - 1 and col = 0
+        let start = {
+            color: 'green',
+            left: true,
+            right: true,
+            up: true,
+            down: true
+        };
+
+        for (let row = 0; row < totalRow; row++) {
+            const tempRow = [];
+            const totalCol = rowAndColumn.col;
+            for(let col = 0; col < totalCol; col++){
+                if(row == totalRow - 1 && col == 0){
+                    tempRow.push(start);
+                } else if(row == 0 && col == totalCol - 1){
+                    tempRow.push(end);
+                } else {
+                    tempRow.push({
+                        color: 'blue',
+                        left: true,
+                        right: true,
+                        up: true,
+                        down: true
+                    });
+                }
             };
-            generatedGrid.push(row);
+            generatedGrid.push(tempRow);
         };
 
         updateFinalGrid(generatedGrid);
