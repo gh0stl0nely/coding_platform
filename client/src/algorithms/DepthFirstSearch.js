@@ -38,7 +38,7 @@ export default function DepthFirstSearch() {
         for (let i = 0; i < row; i++) {
             const row = [];
             const col = rowAndColumn.col;
-            for(let j = 0; j < col; j++){
+            for (let j = 0; j < col; j++) {
                 row.push({});
             };
             generatedGrid.push(row);
@@ -52,7 +52,7 @@ export default function DepthFirstSearch() {
         return (
             finalGrid.map(row => {
                 return (
-                    <div style={{width: "100%"}}>
+                    <div style={{ width: "100%" }}>
                         {row.map(col => {
                             if (!isNaN(col)) {
                                 return <Node value={""} isGridNode={true} />
@@ -62,10 +62,9 @@ export default function DepthFirstSearch() {
                         })}
                     </div>
                 )
-            }
-        )  
-    )
-}
+            })
+        )
+    }
 
     return (
         <div>
@@ -109,7 +108,7 @@ export default function DepthFirstSearch() {
                     Depth First Search
             </Button>
             </div>
-            <Grid container direction="row" style={{marginTop: "20px"}}>
+            <Grid container direction="row" style={{ marginTop: "20px" }}>
                 <Grid item xs={5}>
                     <div style={{ height: "20px", width: "20px", backgroundColor: "#00FA9A", borderRadius: "10%", display: "inline-block", position: "relative", top: "10px", right: "10px", float: "right" }}></div>
                 </Grid>
@@ -139,7 +138,7 @@ export default function DepthFirstSearch() {
             </Grid>
             <Grid item xs={12} style={{ textAlign: "center", marginTop: "30px" }}>
                 <p style={{ fontWeight: "bold" }}>Explanation</p>
-                <p style={{paddingLeft: "20px", paddingRight: "20px"}}></p>
+                <p style={{ paddingLeft: "20px", paddingRight: "20px" }}></p>
                 {/* <p style={{paddingLeft: "20px", paddingRight: "20px"}}>Be mindful that, under the hood, because inserting into an array actually takes O(N) time complexity due to the need for index shift, we will be making used of swapping in order to emulate index shifting. Compared to bubble sort and selection sort, insertion sort can result in a O(N) time complexity only when the array is almost or already sorted (Best case). No extra space needed.</p> */}
             </Grid>
         </div>
