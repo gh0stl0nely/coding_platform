@@ -61,7 +61,7 @@ export default function InsertionSort() {
         let currentValue = finalArray[current];
         let subArrayValue = finalArray[subArrayIndex];
 
-        if (currentValue < subArrayValue) {
+        if (currentValue <= subArrayValue) {
             finalArray[current] = {
                 value: currentValue,
                 color: "green"
