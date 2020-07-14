@@ -30,6 +30,8 @@ if(process.env.NODE_ENV === 'production'){
   });
 }
 
+// MAKE SURE TO CURSOR POINTER IN EACH ONE OF THE BOX and DESCRIPTION OF EACH AND ** BONUS DFS AND BFS :) **
+
 // Listening
 app.listen(PORT, (req,res) => {
     console.log(`Listening to PORT ${PORT}`);

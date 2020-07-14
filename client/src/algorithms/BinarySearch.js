@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Grid from '@material-ui/core/Grid';
 import Node from "./Node";
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -116,14 +117,19 @@ export default function BinarySearch() {
       <div style={{ marginTop: "20px" }}>
         {renderArray(arrayToRender)}
       </div>
-      <div style={{ marginTop: "30px" }}>
-        <p style={{ fontWeight: "bold" }}>Space complexity: </p>
-        <p style={{ fontWeight: "bold" }}>Time complexity: </p>
-      </div>
-      <div style={{ marginTop: "30px" }}>
-        <p style={{ fontWeight: "bold" }}>Explaination</p>
-        <p>lalalalalalala</p>
-      </div>
+      <Grid item xs={12} style={{ textAlign: "center", marginTop: "30px" }}>
+          <p style={{ fontWeight: "bold" }}>Time complexity: O(Log(N))</p>
+          <p style={{ fontWeight: "bold" }}>Space complexity: O(1)</p>
+      </Grid>
+      <Grid item xs={12} style={{ textAlign: "center", marginTop: "30px" }}>
+          <p style={{ fontWeight: "bold" }}>Explanation</p>
+          <p style={{paddingLeft: "20px", paddingRight: "20px"}}>Binary Search is another searching technique, but faster compared to Linear Search. Think about a time when you use a dictionary, you are not going to "linearly" search for the word right? You would likely start at a page that you think where the word would be located at. 
+          If the word is not found here, you either turn the page left or right depending on where it is located alphabetically. Repeat the steps until you reach the end. 
+          </p>
+          <p style={{paddingLeft: "20px", paddingRight: "20px"}}>
+          Time complexity is a tricky one to analyze. It is denoted as O(Log(N)). One needs to understand what O(Log(N)) means first. Time complexity is computed by counting the number of steps it takes to finish an algorithm. In case of linear search of O(N), if N is 6, then O(6) means it takes 6 steps to find the item. Similar concept applies to binary search in which Log(N) represents the number of steps it takes to find an item. If N is 8, Log(8) is 3, meaning that it takes a total of 3 steps to find the value in an array of length 8. In addition, if you notice, as N doubles, only ONE additional step is needed to find the item (Log(8) = 3 and Log(16) = 4). This fact simply proves that an algoritm whose complexities is O(Log(N)) is considered much faster compared to the ones with time complexity of O(N), given the same N. No extra space needed. 
+          </p>
+      </Grid>
     </div>
   )
 }

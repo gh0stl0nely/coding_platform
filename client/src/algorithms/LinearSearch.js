@@ -85,12 +85,12 @@ export default function LinearSearch() {
                 {renderArray()}
             </Grid>
             <Grid item xs={12} style={{ textAlign: "center", marginTop: "30px" }}>
-                <p style={{ fontWeight: "bold" }}>Space complexity: </p>
-                <p style={{ fontWeight: "bold" }}>Time complexity: </p>
+                <p style={{ fontWeight: "bold" }}>Time complexity: O(N)</p>
+                <p style={{ fontWeight: "bold" }}>Space complexity: O(1)</p>
             </Grid>
             <Grid item xs={12} style={{ textAlign: "center", marginTop: "30px" }}>
-                <p style={{ fontWeight: "bold" }}>Explaination</p>
-                <p>Search down the list one by one until the target is found</p>
+                <p style={{ fontWeight: "bold" }}>Explanation</p>
+                <p style={{paddingLeft: "20px", paddingRight: "20px"}}>Linear search is the most fundamental searching algorithm. Usually starting from the first index, the algorithm simply goes through every single item in the array (or other data structure with linear Length such as LinkedList) until it finds the item it's supposed to look for. If the length of the given array is N (or N items), the  worst case scenario is to search the entire array, which explains the time complexity of O(N). No extra space needed.</p>
             </Grid>
         </div>
     )

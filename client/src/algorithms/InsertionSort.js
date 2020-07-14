@@ -200,6 +200,16 @@ export default function InsertionSort() {
             <div style={{ marginTop: "30px" }}>
                 {renderFinalArray()}
             </div>
+            <Grid item xs={12} style={{ textAlign: "center", marginTop: "30px" }}>
+                <p style={{ fontWeight: "bold" }}>Worst case time complexity: O(N<sup>2</sup>)</p>
+                <p style={{ fontWeight: "bold" }}>Best case time complexity: O(N)</p>
+                <p style={{ fontWeight: "bold" }}>Space complexity: O(1)</p>
+            </Grid>
+            <Grid item xs={12} style={{ textAlign: "center", marginTop: "30px" }}>
+                <p style={{ fontWeight: "bold" }}>Explanation</p>
+                <p style={{paddingLeft: "20px", paddingRight: "20px"}}>The last basic sorting algorithm - Insertion Sort. Insertion sort traverses the array, compares the current and previous item and if the current number is smaller than the previous, it would travese the array one more time to find the correct index to insert the current item into (thus explains the O(N<sup>2</sup>) time complexity).</p>
+                <p style={{paddingLeft: "20px", paddingRight: "20px"}}>Be mindful that, under the hood, because inserting into an array actually takes O(N) time complexity due to the need for index shift, we will be making used of swapping in order to emulate index shifting. Compared to bubble sort and selection sort, insertion sort can result in a O(N) time complexity only when the array is almost or already sorted (Best case). No extra space needed.</p>
+            </Grid>
         </div>
     )
 }

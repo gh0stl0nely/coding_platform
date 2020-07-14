@@ -45,7 +45,6 @@ function VisualPage() {
             ...allDisplayNone,
             [target] : "block"
         };
-        console.log(newState)
 
         updateDisplay(newState);
     };
@@ -62,7 +61,7 @@ function VisualPage() {
             </Grid>
             <Grid container justify="center" alignItems="center">
                 <Grid container justify="center" alignItems="center" style={{ backgroundColor: "#E8EFF5", minHeight: "300px",borderRadius: "20px" }}>
-                    <Grid item xs={12} style={{ textAlign: "center", backgroundColor: "#E8EFF5", paddingBottom: "30px", display: display["linear search"], border: "5px solid #27496d", borderRadius: "20px" }}>
+                    <Grid item xs={12} style={{ textAlign: "center", backgroundColor: "#E8EFF5", paddingBottom: "30px", display: display["linear search"], border: "5px solid #27496d", borderRadius: "20px"}}>
                         <LinearSearch />
                     </Grid>
                     <Grid item xs={12} style={{ textAlign: "center", backgroundColor: "#E8EFF5", paddingBottom: "30px", display: display["binary search"], border: "5px solid #27496d", borderRadius: "20px" }}>
