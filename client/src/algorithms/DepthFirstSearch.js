@@ -70,6 +70,7 @@ export default function DepthFirstSearch() {
         <div>
             <p style={{ color: "#142850", fontSize: "3vw", fontFamily: 'Vidaloka' }}>Depth First Search</p>
             <TextField
+            style={{marginRight: '3vw'}}
                 select
                 onChange={handleChoice}
                 defaultValue={5}
@@ -109,22 +110,22 @@ export default function DepthFirstSearch() {
             </Button>
             </div>
             <Grid container direction="row" style={{ marginTop: "20px" }}>
-                <Grid item xs={5}>
+                <Grid item xs={4} md={5}>
                     <div style={{ height: "20px", width: "20px", backgroundColor: "#00FA9A", borderRadius: "10%", display: "inline-block", position: "relative", top: "10px", right: "10px", float: "right" }}></div>
                 </Grid>
-                <Grid item xs={7}>
+                <Grid item xs={8} md={7}>
                     <p style={{ fontSize: "12px", float: "left" }}>Correct order. Move to next number</p>
                 </Grid>
-                <Grid item xs={5}>
+                <Grid item xs={4} md={5}>
                     <div style={{ height: "20px", width: "20px", backgroundColor: "green", borderRadius: "10%", display: "inline-block", position: "relative", top: "10px", right: "10px", float: "right" }}></div>
                 </Grid>
-                <Grid item xs={7}>
+                <Grid item xs={8} md={7}>
                     <p style={{ fontSize: "12px", float: "left" }}>Found the correct spot to insert</p>
                 </Grid>
-                <Grid item xs={5}>
+                <Grid item xs={4} md={5}>
                     <div style={{ height: "20px", width: "20px", backgroundColor: "red", borderRadius: "10%", display: "inline-block", position: "relative", top: "10px", right: "10px", float: "right" }}></div>
                 </Grid>
-                <Grid item xs={7}>
+                <Grid item xs={8} md={7}>
                     <p style={{ fontSize: "12px", float: "left" }}>Wrong order, looking for the correct spot to insert</p>
                 </Grid>
             </Grid>
