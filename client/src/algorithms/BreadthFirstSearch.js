@@ -3,9 +3,15 @@ import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import Node from "./Node";
+import Alert from '@material-ui/lab/Alert';
+import IconButton from '@material-ui/core/IconButton';
+import Collapse from '@material-ui/core/Collapse';
+import CloseIcon from '@material-ui/icons/Close';
 import Grid from '@material-ui/core/Grid';
 
 export default function BreadthFirstSearch() {
+    const [success, setSuccess] = useState(false);
+    const [warning, setWarning] = useState(false);
 
     const [finalGrid, updateFinalGrid] = useState([]);
     const [isFoundAnswer, updateSearchStatus] = useState(true);
@@ -34,7 +40,7 @@ export default function BreadthFirstSearch() {
             // Ending condition
 
             if(toVisit.length == 0){
-                alert("No more node to visit!");
+                setWarning(true);
                 updateSearchStatus(true);
                 clearInterval(timer);
                 return;
@@ -53,7 +59,7 @@ export default function BreadthFirstSearch() {
                     visualizeCurrentNode(row,col);
     
                     if(isEndNode(current)){
-                        alert("End Node Found!");
+                        setSuccess(true);
                         updateSearchStatus(true);
                         clearInterval(timer);
                         return;
@@ -318,6 +324,49 @@ export default function BreadthFirstSearch() {
                     <p style={{ fontSize: "12px", float: "left" }}>End Node (Node to reach)</p>
                 </Grid>
             </Grid>
+            <div>
+                <Collapse in={success}>
+                    <Alert
+                        variant="filled"
+                        style={{ width: '50%', margin: '10px auto' }}
+                        action={
+                            <IconButton
+                                aria-label="close"
+                                color="inherit"
+                                size="small"
+                                onClick={() => {
+                                    setSuccess(false);
+                                }}
+                            >
+                                <CloseIcon fontSize="inherit" />
+                            </IconButton>
+                        }
+                    >
+                        End Node Found!
+                    </Alert>
+                </Collapse>
+                <Collapse in={warning}>
+                    <Alert
+                        variant="filled"
+                        severity="warning"
+                        style={{ width: '50%', margin: '10px auto' }}
+                        action={
+                            <IconButton
+                                aria-label="close"
+                                color="inherit"
+                                size="small"
+                                onClick={() => {
+                                    setWarning(false);
+                                }}
+                            >
+                                <CloseIcon fontSize="inherit" />
+                            </IconButton>
+                        }
+                    >
+                        No more node to visit!
+                    </Alert>
+                </Collapse>
+            </div>
             <div style={{ marginTop: "30px" }}>
                 {renderFinalGrid()}
             </div>
