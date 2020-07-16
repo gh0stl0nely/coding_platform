@@ -55,7 +55,7 @@ export default function DepthFirstSearch() {
                     visualizeCurrentNode(row,col);
     
                     if(isEndNode(current)){
-                        alert("DONE");
+                        alert("End Node Found!");
                         updateSearchStatus(true);
                         clearInterval(timer);
                         return;
