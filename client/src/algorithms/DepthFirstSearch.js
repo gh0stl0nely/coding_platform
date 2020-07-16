@@ -4,6 +4,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import Node from "./Node";
 import Grid from '@material-ui/core/Grid';
+import { truncate } from 'fs';
 
 export default function DepthFirstSearch() {
 
@@ -11,193 +12,102 @@ export default function DepthFirstSearch() {
     const [isFoundAnswer, updateSearchStatus] = useState(true);
     const [isGeneratedNewArray, updateIsGeneratedNewGrid] = useState(false);
     const [rowAndColumn, setRowAndColumn] = useState({
-        row: 5,
-        col: 5
+        row: 10,
+        col: 10
     });
-    // If row = 0; col = grid length - 1
-    let end = {
-        color: 'red',
-        left: true,
-        right: true,
-        up: true,
-        down: true
-    };
+    const [startingNode, setStartNode] = useState({});
+    const [speed, setSpeed] = useState("Fast");
 
-    // if row = grid length - 1 and col = 0
-    let start = {
-        color: 'green',
-        left: true,
-        right: true,
-        up: true,
-        down: true
-    };
+    function DFS() {
+        // Visited is the things that we already visit
 
-    let wall = {
-        color: 'black'
-    };
-
-
-    function DFS(currentRow, currentCol, direction) {
         // Direction can be:
             // Left = col - 1
             // Right = col + 1
             // Up = row - 1
             // Down = row + 1
+        let visited = [];
+        let toVisit = [];
+
+        toVisit.push(startingNode);
+
+        const timer = setInterval(() => {
+            // Ending condition
+
+            if(toVisit.length == 0){
+                alert("No more node to visit!");
+                updateSearchStatus(true);
+                clearInterval(timer);
+                return;
+            }
+
+            const current = toVisit.pop(); // pop always get last one, (FILO)
+            // Shift is gets first one (FIFO) - BFS
         
-        const currentNode = finalGrid[currentRow][currentCol];
-       
-        // Check if current node is the end node
-        if(isEndNode(currentNode)){
-            alert("FOUND END NODE");
-            visualizeCurrentNode(currentRow,currentCol);
-            updateSearchStatus(true);
-            return;
-        };
+            const col = current.col;
+            const row = current.row;
 
-        if(isSurroundedByWall(currentNode)){
-            alert("Cannot find a path. End algorithm.");
-            updateSearchStatus(true);
-            return;
-        }
-        
-        visualizeCurrentNode(currentRow,currentCol);
+            // CHeck out of bound
+            if(!(row < 0) && !(col < 0) && !(row == rowAndColumn.row) && !(col == rowAndColumn.col)){
 
-        if(isNextNodeOutOfBound(currentRow, currentCol, direction)){
-            setTimeout(() => {
-                // alert("NEXT IS OUT OF BOUND at " + direction)
-                // set that direction false so basically you are not going to move there
-                const newGrid = [...finalGrid];
-                newGrid[currentRow][currentCol][direction] = false;
-                newGrid[currentRow][currentCol]['color'] = 'white';
-                updateFinalGrid(newGrid);
-                
-                currentNode[direction] = false;
-                // Go to another direction THAT IS NOT FALSE
-                const validDirection = chooseDirectionNotTravelled(currentNode,currentRow,currentCol);
-                alert(direction + " is wall. New Dir is " + validDirection);
- 
-                traverse(currentRow,currentCol,validDirection);
-
-            }, 1500);
-        } else {
+                if(!isVisited(row,col,visited) && !isWall(row,col)){
+                    // Visualize current node
+                    visualizeCurrentNode(row,col);
     
-            // Move on to the next one because current is not end node
-            setTimeout(() => {
-    
-                if(isNextNodeAWall(currentRow, currentCol,direction)){
-                    // If the next node in the direction of the current node is a wall (color black)
-                    // If it is a wall, then we can change direction
-                    // alert("NEXT IS WALL at " + direction)
-                    // set that direction false so basically you are not going to move there
-                    
-                    const newGrid = [...finalGrid];
-                    newGrid[currentRow][currentCol][direction] = false;
-                    newGrid[currentRow][currentCol]['color'] = 'white';
-                    updateFinalGrid(newGrid);
-                    
-                    currentNode[direction] = false;
-                    // Go to another direction THAT IS NOT FALSE
-                    const validDirection = chooseDirectionNotTravelled(currentNode,currentRow,currentCol);
-                    alert(direction + " is wall. New Dir is " + validDirection);
-    
-                    // YOU ARE GOING HERE SO U NEED TO MAKE SURE U CHECK OUT OF BOUND IN CHOOSE DIRECTION   
-                    traverse(currentRow,currentCol,validDirection)
-    
-                } else {
-            
-                    // Next node is NOT a wall, we check the only valid moves 
-                    let validDirection;
-
-                    if(!currentNode[direction]){
-                        // If false, we need to look for other valid directions
-                        validDirection = chooseDirectionNotTravelled(currentNode,currentRow,currentCol);// if false we need to find another option
-                        const newGrid = [...finalGrid];
-                        newGrid[currentRow][currentCol][direction] = false;
-                        newGrid[currentRow][currentCol]['color'] = 'white';
-                        updateFinalGrid(newGrid);
-                    } else {
-                        validDirection = direction;
-                        const newGrid = [...finalGrid];
-                        newGrid[currentRow][currentCol][direction] = false;
-                        newGrid[currentRow][currentCol]['color'] = 'white';
-                        updateFinalGrid(newGrid);
+                    if(isEndNode(current)){
+                        alert("DONE");
+                        updateSearchStatus(true);
+                        clearInterval(timer);
+                        return;
                     }
-
-                    // THINK ABOUT IT. WE ARE VERY CLOSE!
-
-                    // HERHERHERHE < REMEMBER THAT WE NEED TO CHECK IF THIS DIRECTION IS FALSE FIRST BECAUSE
-                    // THIS MIGHT RETURNING... like up up and down down and now up is false so only right or left
-                 
-                    
-                    // and move to that direction
-                    traverse(currentRow,currentCol,validDirection)
-                }   
     
-                
-            }, 1500);
-        }
-     
+                    visited.push(current);
+    
+                    // Put more nodes to the stack
+                    checkSurroundingDirections(row,col, toVisit);
+                }
 
+            }
+
+        }, 150);
     };
 
-    function traverse(currentRow, currentCol, direction){
-        switch(direction){
-            case "right":
-                DFS(currentRow, currentCol + 1, "right");
-                break;
-            case "left":
-                DFS(currentRow, currentCol - 1, "left");
-                break;
-            case "up":
-                DFS(currentRow - 1, currentCol, "up");
-                break;
-            case "down":
-                DFS(currentRow + 1, currentCol, "down");
-                break;
+    function isWall(row,col){
+        return finalGrid[row][col].color == "black" ? true : false;
+    }
+
+    function checkSurroundingDirections(row,col,toVisit){
+        // Only go to direction that are not null...abs
+        
+        // Left
+        if(col - 1 >= 0 && !isWall(row, col - 1)){
+            toVisit.push(finalGrid[row][col - 1]);
+        }
+
+        // Right
+        if(col + 1 < rowAndColumn.col && !isWall(row, col + 1)){
+            toVisit.push(finalGrid[row][col + 1])
+        }
+
+        // Up
+        if(row - 1 >= 0 && !isWall(row - 1, col)){
+            toVisit.push(finalGrid[row - 1][col])
+        }
+
+        // Down
+        if(row + 1 < rowAndColumn.row && !isWall(row + 1, col)){
+            toVisit.push(finalGrid[row + 1][col])
         }
     }
 
-    function chooseDirectionNotTravelled(node, row, col){
-        const directions = Object.keys(node).filter(key => {
-            return key != 'color';
-        });
-   
-        const validDirections = [];
-
-        // THIS IS THE PROBLEM. EVEN WHEN IT IS FALSE, still push to list...
-
-        for(let i = 0; i < directions.length; i++){
-            // If the node["right"] is true, then we can travel there. Return 
-            const direction = directions[i];
-            if(node[direction] && !isNextNodeOutOfBound(row,col,direction)){
-                validDirections.push(direction);
-            }
-        };
-        console.log(validDirections);
-
-        const randomizedDirection = Math.floor(Math.random() * validDirections.length);
-
-        return validDirections[randomizedDirection];
-    }
-
-    // Meaning all four directions are false
-    function isSurroundedByWall(node){
-        const directions = Object.keys(node).filter(key => {
-            return key != 'color';
-        });
-
-        for(let i = 0; i < directions.length; i++){
-            // i is for direction (i.e: right, left, up, down)
-            // If there is if returns true, that means there is at least ONE direction to travel, so it is NOT blocked by wall
-            const direction = directions[i];
-            if(node[direction]){
-                return false;
+    function isVisited(row,col, visited){
+        for(let i = 0; i < visited.length ;i++){
+            if(visited[i].row == row && visited[i].col == col){
+                return true;
             }
         }
-
-        // Return true to say that this node is actually surrounded
-        return true;
-    };
+        return false;
+    }
 
     function visualizeCurrentNode(row,col){
         const currentNode = {
@@ -214,46 +124,6 @@ export default function DepthFirstSearch() {
         return node.color == 'red' ? true : false;
     };
 
-    function isNextNodeOutOfBound(row, col,direction){
-        // Whether the next row is actually out of bound
-        // row and col is the current one so need to adjust
-
-        switch(direction){
-            case "right":
-                return col + 1 == rowAndColumn.col ? true : false;
-            case "left":
-                return col - 1 < 0 ? true : false;
-            case "up":
-                return row - 1 < 0 ? true : false;
-            case "down":
-                return row + 1 == rowAndColumn.row ? true : false;
-        };
-    };
-
-    function isNextNodeAWall(row, col,direction){
-        let nextNode;
-        let nextNodeColor;
-
-        switch(direction){
-            case "right":
-                nextNode = finalGrid[row][col+1];
-                nextNodeColor = nextNode.color;
-                return nextNodeColor == 'black' ? true : false;
-            case "left":
-                nextNode = finalGrid[row][col - 1];
-                nextNodeColor = nextNode.color;
-                return nextNodeColor == 'black' ? true : false;
-            case "up":
-                nextNode = finalGrid[row - 1][col];
-                nextNodeColor = nextNode.color;
-                return nextNodeColor == 'black' ? true : false;
-            case "down":
-                nextNode = finalGrid[row + 1][col];
-                nextNodeColor = nextNode.color;
-                return nextNodeColor == 'black' ? true : false;
-        }
-    };
-
     function handleChoice(e) {
         const { name, value } = e.target;
         setRowAndColumn({
@@ -262,26 +132,33 @@ export default function DepthFirstSearch() {
         });
     };
 
-    // True means the current can go to direction, if not then u have to chooose other
+    // If row = 0; col = grid length - 1
+    // if row = grid length - 1 and col = 0
     function generateRandomGrid() {
         let generatedGrid = [];
         const totalRow = rowAndColumn.row;
+        
+        const { startNode, endNode } = generateStartAndEnd();
 
         for (let row = 0; row < totalRow; row++) {
             const tempRow = [];
             const totalCol = rowAndColumn.col;
             for(let col = 0; col < totalCol; col++){
                 const randomNumber = Math.floor(Math.random() * 5);
-                if(row == totalRow - 1 && col == 0){
-                    tempRow.push(start);
-                } else if(row == 0 && col == totalCol - 1){
-                    tempRow.push(end);
+                if(row == startNode.row && col == startNode.col){
+                    tempRow.push(startNode);
+                    setStartNode(startNode);
+                } else if(row == endNode.row && col == endNode.col){
+                    tempRow.push(endNode);
                 } else {
-                    randomNumber == 0 ? tempRow.push(wall) : tempRow.push({
-                        left: true,
-                        right: true,
-                        up: true,
-                        down: true
+                    randomNumber == 0 ? tempRow.push({
+                        color: 'black',
+                        row: row,
+                        col: col
+                    }) : tempRow.push({
+                        color: 'white',
+                        row: row,
+                        col: col
                     });
                 }
             };
@@ -291,6 +168,38 @@ export default function DepthFirstSearch() {
         updateFinalGrid(generatedGrid);
         updateIsGeneratedNewGrid(true);
     };
+
+    function generateStartAndEnd(){
+        let startNode = {
+            color: 'green',
+            row: Math.floor(Math.random() * rowAndColumn.row),
+            col: Math.floor(Math.random() * rowAndColumn.col)
+        };
+        let endNode = {
+            color: 'red',
+            row: Math.floor(Math.random() * rowAndColumn.row),
+            col: Math.floor(Math.random() * rowAndColumn.col)
+        };
+
+        while(startNode.row == endNode.row && endNode.col == startNode.col){
+            startNode = {
+                color: 'green',
+                row: Math.floor(Math.random() * rowAndColumn.row),
+                col: Math.floor(Math.random() * rowAndColumn.col)
+            };
+
+            endNode = {
+                color: 'red',
+                row: Math.floor(Math.random() * rowAndColumn.row),
+                col: Math.floor(Math.random() * rowAndColumn.col)
+            };
+        }
+        
+        return {
+            startNode,
+            endNode
+        }
+    }
 
     function renderFinalGrid() {
         return (
@@ -317,7 +226,7 @@ export default function DepthFirstSearch() {
             <TextField
                 select
                 onChange={handleChoice}
-                defaultValue={5}
+                defaultValue={10}
                 disabled={isFoundAnswer ? false : true}
                 helperText="Choose number of column"
                 name="col"
@@ -331,7 +240,7 @@ export default function DepthFirstSearch() {
             <TextField
                 select
                 onChange={handleChoice}
-                defaultValue={5}
+                defaultValue={10}
                 disabled={isFoundAnswer ? false : true}
                 helperText="Choose number of Row"
                 name="row"
@@ -349,7 +258,7 @@ export default function DepthFirstSearch() {
             </Button>
             </div>
             <div style={{ marginTop: "25px" }}>
-                <Button id="start-bubble-sort-btn" onClick={() => { updateSearchStatus(false); updateIsGeneratedNewGrid(false); DFS(rowAndColumn.row - 1, 0, "right") }} variant="contained" disabled={isGeneratedNewArray ? false : true} color="secondary">
+                <Button id="start-bubble-sort-btn" onClick={() => { updateSearchStatus(false); updateIsGeneratedNewGrid(false); DFS() }} variant="contained" disabled={isGeneratedNewArray ? false : true} color="secondary">
                     Depth First Search
             </Button>
             </div>
