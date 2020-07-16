@@ -4,9 +4,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import Node from "./Node";
 import Grid from '@material-ui/core/Grid';
-import { truncate } from 'fs';
 
-export default function DepthFirstSearch() {
+export default function BreadthFirstSearch() {
 
     const [finalGrid, updateFinalGrid] = useState([]);
     const [isFoundAnswer, updateSearchStatus] = useState(true);
@@ -18,7 +17,7 @@ export default function DepthFirstSearch() {
     const [startingNode, setStartNode] = useState({});
     const [speed, setSpeed] = useState(110);
 
-    function DFS() {
+    function BFS() {
         // Visited is the things that we already visit
 
         // Direction can be:
@@ -41,8 +40,7 @@ export default function DepthFirstSearch() {
                 return;
             }
 
-            const current = toVisit.pop(); // pop always get last one, (FILO)
-            // Shift is gets first one (FIFO) - BFS
+            const current = toVisit.shift(); 
         
             const col = current.col;
             const row = current.row;
@@ -131,6 +129,7 @@ export default function DepthFirstSearch() {
             [name]: value
         });
     };
+
     function handleSpeed(e){
         const { value } = e.target;
         switch(value){
@@ -235,7 +234,7 @@ export default function DepthFirstSearch() {
 
     return (
         <div>
-            <p style={{ color: "#142850", fontSize: "3vw", fontFamily: 'Vidaloka' }}>Depth First Search</p>
+            <p style={{ color: "#142850", fontSize: "3vw", fontFamily: 'Vidaloka' }}>Breadth First Search</p>
             <p style={{ color: "#142850", fontSize: "2.5vw", fontFamily: 'Vidaloka' }}>Visualization is best viewed on full screen.</p>
             <TextField
             style={{marginRight: '3vw'}}
@@ -285,13 +284,13 @@ export default function DepthFirstSearch() {
 
             <div style={{ marginTop: "25px" }}>
                 <Button id="gen-random-array-btn" onClick={generateRandomGrid} variant="contained" disabled={isFoundAnswer ? false : true} color="primary">
-                    Generate Grid
-            </Button>
+                        Generate Grid
+                </Button>
             </div>
             <div style={{ marginTop: "25px" }}>
-                <Button id="start-bubble-sort-btn" onClick={() => { updateSearchStatus(false); updateIsGeneratedNewGrid(false); DFS() }} variant="contained" disabled={isGeneratedNewArray ? false : true} color="secondary">
-                    Depth First Search
-            </Button>
+                <Button id="start-bubble-sort-btn" onClick={() => { updateSearchStatus(false); updateIsGeneratedNewGrid(false); BFS() }} variant="contained" disabled={isGeneratedNewArray ? false : true} color="secondary">
+                        Breadth First Search
+                </Button>
             </div>
             <Grid container direction="row" style={{ marginTop: "20px" }}>
                 <Grid item xs={4} md={5}>
@@ -329,10 +328,10 @@ export default function DepthFirstSearch() {
             </Grid>
             <Grid item xs={12} style={{ textAlign: "center", marginTop: "30px" }}>
                 <p style={{ fontWeight: "bold" }}>Explanation</p>
-                <p style={{ paddingLeft: "20px", paddingRight: "20px" }}>To be fundamentally prepared for coding interview, one needs to know about Depth First Search. Depth First Search is a type of graph & tree traversal algorithm that, literally, searches a graph, tree or, in our case, a 2D array, DEEPLY. Each squares on the graph are called VERTICES and each neightboring squares (left, right, top, under) are EDGES. Notice in the exampe above, the traversal path goes very DEEP - meaning the path will go straight until it hits a Wall, is out of bound or the End Node in red is found. Depth First Search is faster if the End Node is further to the Start Node.</p>
-                <p style={{ paddingLeft: "20px", paddingRight: "20px" }}>In order to analyze the complexity, we should consider our graph implementation. Normally graphs are implemented using a 2D array (or Adjacency Matrix) or a 1D array of LinkedList (or Adjacency List). We are using in our implementation Adjacency Matrix for simplicity. Each square on the 2D Matrix are represented by its position in terms of row and column; for instance the very top left node is where row = 0 and column = 0.</p>
-                <p style={{ paddingLeft: "20px", paddingRight: "20px" }}>O(Vertices<sup>2</sup>) = O(Vertices * Vertices) - essentially means that we are traversing every single vertices (or squares) in the matrix more than once. Every vertex will look at its neighboring squares to determine whether it should keep deeply search its path or move onto another direction.</p>
-                <p style={{ paddingLeft: "20px", paddingRight: "20px" }}>We are seeing something new here, a space complexity of O(Vertices). Why is that? Under the hood, the algorithm keeps track of all vertices to visit next in a STACK. If there are 10 squares (5 rows and 5 columns), in the worst case, we might need to push all 10 squares in our STACK to track until the End Node is eventually found. We will essentially cover STACK in the future, but in essence, a STACK or Queue (in case of Breadth First Search), are more efficient implementation of an Array. Note that we are not recreating the 2D Matrix, but only pushing specific visited vertex ONCE onto the STACK (or 1D array)</p>
+                <p style={{ paddingLeft: "20px", paddingRight: "20px" }}>If you haven't read the explanation of Depth First Search, we recommend you do because the idea behind Breadth First Search is quite similar to Depth First Search. Two major differences are that Breadth First Search checks for End Node in its immediate surrounding squares before moving further out, hence "breadth first". Breadth First Search is faster if the End Node is closer to the Start Node.</p>
+                <p style={{ paddingLeft: "20px", paddingRight: "20px" }}>Since time complexity depends on the data structure that we use to implement the graph, the explanation is similar to that of Depth First Search.</p>
+                
+                <p style={{ paddingLeft: "20px", paddingRight: "20px" }}>Although space complexity is almost identical to Depth First Search, we still need to beware as to how it stores all vertices to visit. In the case of Depth First Search, we use a STACK, but Breadth First Search makes use of a QUEUE. Think of a QUEUE as a line up, what comes in first, goes out first. Because immediate neighborings edges of a vertex are pushed onto the QUEUE first, thus the algorithm will visit those first.</p>
             </Grid>
         </div>
     )

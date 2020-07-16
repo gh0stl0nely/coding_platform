@@ -9,10 +9,11 @@ import BubbleSort from "../algorithms/BubbleSort.js";
 import SelectionSort from "../algorithms/SelectionSort.js";
 import InsertionSort from "../algorithms/InsertionSort.js";
 import DepthFirstSearch from "../algorithms/DepthFirstSearch.js";
+import BreadthFirstSearch from "../algorithms/BreadthFirstSearch.js";
 import Copyright from "../components/Copyright";
 
 function VisualPage() {
-    const options = ["Linear Search", "Binary Search", "Bubble Sort", "Selection Sort", "Insertion Sort", "Depth First Search"];
+    const options = ["Linear Search", "Binary Search", "Bubble Sort", "Selection Sort", "Insertion Sort", "Depth First Search", "Breadth First Search"];
     
     const allDisplayNone = {
         "linear search": "none",
@@ -20,7 +21,8 @@ function VisualPage() {
         "bubble sort": "none",
         "selection sort": "none",
         "insertion sort": "none",
-        "depth first search": "none"
+        "depth first search": "none",
+        "breadth first search": "none",
     };
 
     const [display, updateDisplay] = useState({
@@ -29,7 +31,8 @@ function VisualPage() {
         "bubble sort": "none",
         "selection sort": "none",
         "insertion sort": "none",
-        "depth first search": "none"
+        "depth first search": "none",
+        "breadth first search": "none"
     });
 
     function renderChipsOptions() {
@@ -81,6 +84,9 @@ function VisualPage() {
                     </Grid>
                     <Grid item xs={12} style={{ textAlign: "center", backgroundColor: "#E8EFF5", paddingBottom: "30px", display: display["depth first search"], border: "5px solid #27496d", borderRadius: "20px" }}>
                         <DepthFirstSearch />
+                    </Grid>
+                    <Grid item xs={12} style={{ textAlign: "center", backgroundColor: "#E8EFF5", paddingBottom: "30px", display: display["breadth first search"], border: "5px solid #27496d", borderRadius: "20px" }}>
+                        <BreadthFirstSearch />
                     </Grid>
                 </Grid>
             </Grid>
