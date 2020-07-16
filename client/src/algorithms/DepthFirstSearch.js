@@ -4,9 +4,15 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import Node from "./Node";
 import Grid from '@material-ui/core/Grid';
+import Alert from '@material-ui/lab/Alert';
+import IconButton from '@material-ui/core/IconButton';
+import Collapse from '@material-ui/core/Collapse';
+import CloseIcon from '@material-ui/icons/Close';
 import { truncate } from 'fs';
 
 export default function DepthFirstSearch() {
+    const [success, setSuccess] = useState(false);
+    const [warning, setWarning] = useState(false);
 
     const [finalGrid, updateFinalGrid] = useState([]);
     const [isFoundAnswer, updateSearchStatus] = useState(true);
@@ -22,10 +28,10 @@ export default function DepthFirstSearch() {
         // Visited is the things that we already visit
 
         // Direction can be:
-            // Left = col - 1
-            // Right = col + 1
-            // Up = row - 1
-            // Down = row + 1
+        // Left = col - 1
+        // Right = col + 1
+        // Up = row - 1
+        // Down = row + 1
         let visited = [];
         let toVisit = [];
 
@@ -34,8 +40,8 @@ export default function DepthFirstSearch() {
         const timer = setInterval(() => {
             // Ending condition
 
-            if(toVisit.length == 0){
-                alert("No more node to visit!");
+            if (toVisit.length == 0) {
+                setWarning(true);
                 updateSearchStatus(true);
                 clearInterval(timer);
                 return;
@@ -43,28 +49,28 @@ export default function DepthFirstSearch() {
 
             const current = toVisit.pop(); // pop always get last one, (FILO)
             // Shift is gets first one (FIFO) - BFS
-        
+
             const col = current.col;
             const row = current.row;
 
             // CHeck out of bound
-            if(!(row < 0) && !(col < 0) && !(row == rowAndColumn.row) && !(col == rowAndColumn.col)){
+            if (!(row < 0) && !(col < 0) && !(row == rowAndColumn.row) && !(col == rowAndColumn.col)) {
 
-                if(!isVisited(row,col,visited) && !isWall(row,col)){
+                if (!isVisited(row, col, visited) && !isWall(row, col)) {
                     // Visualize current node
-                    visualizeCurrentNode(row,col);
-    
-                    if(isEndNode(current)){
-                        alert("End Node Found!");
+                    visualizeCurrentNode(row, col);
+
+                    if (isEndNode(current)) {
+                        setSuccess(true);
                         updateSearchStatus(true);
                         clearInterval(timer);
                         return;
                     }
-    
+
                     visited.push(current);
-    
+
                     // Put more nodes to the stack
-                    checkSurroundingDirections(row,col, toVisit);
+                    checkSurroundingDirections(row, col, toVisit);
                 }
 
             }
@@ -72,44 +78,44 @@ export default function DepthFirstSearch() {
         }, speed);
     };
 
-    function isWall(row,col){
+    function isWall(row, col) {
         return finalGrid[row][col].color == "black" ? true : false;
     }
 
-    function checkSurroundingDirections(row,col,toVisit){
+    function checkSurroundingDirections(row, col, toVisit) {
         // Only go to direction that are not null...abs
-        
+
         // Left
-        if(col - 1 >= 0 && !isWall(row, col - 1)){
+        if (col - 1 >= 0 && !isWall(row, col - 1)) {
             toVisit.push(finalGrid[row][col - 1]);
         }
 
         // Right
-        if(col + 1 < rowAndColumn.col && !isWall(row, col + 1)){
+        if (col + 1 < rowAndColumn.col && !isWall(row, col + 1)) {
             toVisit.push(finalGrid[row][col + 1])
         }
 
         // Up
-        if(row - 1 >= 0 && !isWall(row - 1, col)){
+        if (row - 1 >= 0 && !isWall(row - 1, col)) {
             toVisit.push(finalGrid[row - 1][col])
         }
 
         // Down
-        if(row + 1 < rowAndColumn.row && !isWall(row + 1, col)){
+        if (row + 1 < rowAndColumn.row && !isWall(row + 1, col)) {
             toVisit.push(finalGrid[row + 1][col])
         }
     }
 
-    function isVisited(row,col, visited){
-        for(let i = 0; i < visited.length ;i++){
-            if(visited[i].row == row && visited[i].col == col){
+    function isVisited(row, col, visited) {
+        for (let i = 0; i < visited.length; i++) {
+            if (visited[i].row == row && visited[i].col == col) {
                 return true;
             }
         }
         return false;
     }
 
-    function visualizeCurrentNode(row,col){
+    function visualizeCurrentNode(row, col) {
         const currentNode = {
             ...finalGrid[row][col],
             color: "#00FA9A"
@@ -120,7 +126,7 @@ export default function DepthFirstSearch() {
         updateFinalGrid(newGrid);
     };
 
-    function isEndNode(node){
+    function isEndNode(node) {
         return node.color == 'red' ? true : false;
     };
 
@@ -131,9 +137,9 @@ export default function DepthFirstSearch() {
             [name]: value
         });
     };
-    function handleSpeed(e){
+    function handleSpeed(e) {
         const { value } = e.target;
-        switch(value){
+        switch (value) {
             case "Slow":
                 setSpeed(200);
                 break;
@@ -151,18 +157,18 @@ export default function DepthFirstSearch() {
     function generateRandomGrid() {
         let generatedGrid = [];
         const totalRow = rowAndColumn.row;
-        
+
         const { startNode, endNode } = generateStartAndEnd();
 
         for (let row = 0; row < totalRow; row++) {
             const tempRow = [];
             const totalCol = rowAndColumn.col;
-            for(let col = 0; col < totalCol; col++){
+            for (let col = 0; col < totalCol; col++) {
                 const randomNumber = Math.floor(Math.random() * 5);
-                if(row == startNode.row && col == startNode.col){
+                if (row == startNode.row && col == startNode.col) {
                     tempRow.push(startNode);
                     setStartNode(startNode);
-                } else if(row == endNode.row && col == endNode.col){
+                } else if (row == endNode.row && col == endNode.col) {
                     tempRow.push(endNode);
                 } else {
                     randomNumber == 0 ? tempRow.push({
@@ -183,7 +189,7 @@ export default function DepthFirstSearch() {
         updateIsGeneratedNewGrid(true);
     };
 
-    function generateStartAndEnd(){
+    function generateStartAndEnd() {
         let startNode = {
             color: 'green',
             row: Math.floor(Math.random() * rowAndColumn.row),
@@ -195,7 +201,7 @@ export default function DepthFirstSearch() {
             col: Math.floor(Math.random() * rowAndColumn.col)
         };
 
-        while(startNode.row == endNode.row && endNode.col == startNode.col){
+        while (startNode.row == endNode.row && endNode.col == startNode.col) {
             startNode = {
                 color: 'green',
                 row: Math.floor(Math.random() * rowAndColumn.row),
@@ -208,7 +214,7 @@ export default function DepthFirstSearch() {
                 col: Math.floor(Math.random() * rowAndColumn.col)
             };
         }
-        
+
         return {
             startNode,
             endNode
@@ -238,7 +244,7 @@ export default function DepthFirstSearch() {
             <p style={{ color: "#142850", fontSize: "3vw", fontFamily: 'Vidaloka' }}>Depth First Search</p>
             <p style={{ color: "#142850", fontSize: "2.5vw", fontFamily: 'Vidaloka' }}>Visualization is best viewed on full screen.</p>
             <TextField
-            style={{marginRight: '3vw'}}
+                style={{ marginRight: '3vw' }}
                 select
                 onChange={handleChoice}
                 defaultValue={10}
@@ -246,7 +252,7 @@ export default function DepthFirstSearch() {
                 helperText="Choose number of column"
                 name="col"
             >
-                {[10, 11, 12,13,14,15,16,17].map((number, index) => (
+                {[10, 11, 12, 13, 14, 15, 16, 17].map((number, index) => (
                     <MenuItem key={index} value={number}>
                         {number}
                     </MenuItem>
@@ -260,7 +266,7 @@ export default function DepthFirstSearch() {
                 helperText="Choose number of Row"
                 name="row"
             >
-                {[10, 11, 12,13,14,15,16,17].map((number, index) => (
+                {[10, 11, 12, 13, 14, 15, 16, 17].map((number, index) => (
                     <MenuItem key={index} value={number}>
                         {number}
                     </MenuItem>
@@ -319,7 +325,50 @@ export default function DepthFirstSearch() {
                     <p style={{ fontSize: "12px", float: "left" }}>End Node (Node to reach)</p>
                 </Grid>
             </Grid>
-            <div style={{ marginTop: "30px" }}>
+            <div>
+                <Collapse in={success}>
+                    <Alert
+                        variant="filled"
+                        style={{ width: '50%', margin: '10px auto' }}
+                        action={
+                            <IconButton
+                                aria-label="close"
+                                color="inherit"
+                                size="small"
+                                onClick={() => {
+                                    setSuccess(false);
+                                }}
+                            >
+                                <CloseIcon fontSize="inherit" />
+                            </IconButton>
+                        }
+                    >
+                        End Node Found!
+                    </Alert>
+                </Collapse>
+                <Collapse in={warning}>
+                    <Alert
+                        variant="filled"
+                        severity="warning"
+                        style={{ width: '50%', margin: '10px auto' }}
+                        action={
+                            <IconButton
+                                aria-label="close"
+                                color="inherit"
+                                size="small"
+                                onClick={() => {
+                                    setWarning(false);
+                                }}
+                            >
+                                <CloseIcon fontSize="inherit" />
+                            </IconButton>
+                        }
+                    >
+                        No more node to visit!
+                    </Alert>
+                </Collapse>
+            </div>
+            <div style={{ marginTop: "20px" }}>
                 {renderFinalGrid()}
             </div>
             <Grid item xs={12} style={{ textAlign: "center", marginTop: "30px" }}>
