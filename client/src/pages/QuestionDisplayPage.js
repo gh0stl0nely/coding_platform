@@ -231,7 +231,7 @@ function QuestionPage() {
                     <Grid item xs={12} id="questionDiv" style={{ padding: "0px 20px 80px 20px", overflow: "scroll", height: "294px", backgroundColor: "#27496d" }}>
                         <p style={styles.textStyle}>Category: <span style={{ color: "white", textDecoration: "none" }}>{question.questionType}</span></p>
                         <p style={styles.textStyle}> Difficulty: <span style={{ color: "white", textDecoration: "none"  }}>{renderStar(question.difficulty)}</span></p>
-                        <p style={styles.textStyle}>Status: <span style={{ color: "white", textDecoration: "none"  }}> {question.isSolved ? <span style={{color: "green"}}>Solved</span> : <span style={{color: "red"}}>Unsolved</span>} </span></p>
+                        <p style={styles.textStyle}>Status: <span style={{ color: "white", textDecoration: "none"  }}> {question.isSolved ? <span style={{color: "#79FE4F"}}>Solved</span> : <span style={{color: "#FF4343"}}>Unsolved</span>} </span></p>
                         <p style={styles.textStyle}>Description:</p>
                         <p style={{ color: "white", lineHeight: "20px" }}>{question.description}</p>
                         <p style={styles.textStyle}>Sample Input 1: </p><span style={{ color: "white" }}>{renderInput(question.inputOne)}</span>

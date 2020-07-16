@@ -154,6 +154,9 @@ export default function BreadthFirstSearch() {
     // If row = 0; col = grid length - 1
     // if row = grid length - 1 and col = 0
     function generateRandomGrid() {
+        setSuccess(false);
+        setWarning(false);
+        
         let generatedGrid = [];
         const totalRow = rowAndColumn.row;
         

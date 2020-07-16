@@ -87,10 +87,10 @@ export default {
 function renderAllTestsPassed(testResultArray){
         return (
             <>
-                <p style={{ color: "green" }}>Woohoo! All {testResultArray.length} Tests Passed !</p>
+                <p style={{ color: "#79FE4F" }}>Woohoo! All {testResultArray.length} Tests Passed !</p>
                 {testResultArray.map((test, index) => {
                     return (
-                        <p style={{ color: "green" }}>Test {index + 1} passed</p>
+                        <p style={{ color: "#79FE4F" }}>Test {index + 1} passed</p>
                     )
                 })}
             </> 
@@ -100,12 +100,12 @@ function renderAllTestsPassed(testResultArray){
 function renderSomeTestsPassed(testResultArray, numberOfFailedQuestions){
     return (
         <>
-            <p style={{ color: "red" }}>Argg! {numberOfFailedQuestions} out of {testResultArray.length} Tests Failed...</p>
+            <p style={{ color: "#FF4343" }}>Argg! {numberOfFailedQuestions} out of {testResultArray.length} Tests Failed...</p>
             {testResultArray.map((test, index) => {
                 return test.success ? (
-                    <p style={{ color: "green" }}>Test {index + 1} passed</p>
+                    <p style={{ color: "#79FE4F" }}>Test {index + 1} passed</p>
                 ) : (
-                    <p style={{ color: "red" }}>Test {index + 1} failed</p>
+                    <p style={{ color: "#FF4343" }}>Test {index + 1} failed</p>
                 )
             })}
         </> 
@@ -118,7 +118,7 @@ function renderLoggingOutputSuccess(result){
 
     return (
        <>
-           <p style={{color: "green"}}>Your code was tested for the first test case and passed.</p>
+           <p style={{color: "#79FE4F"}}>Your code was tested for the first test case and passed.</p>
            <p style={{color: "white"}}> ------------ Here are the logged outputs ------------</p>
            {loggingOutputs.map(logOutput => {
                return (
@@ -134,15 +134,15 @@ function renderLoggingOutputError(result){
 
     return (
         <>
-            <p style={{color: "red"}}>Your code was tested for the first test case and failed.</p>
+            <p style={{color: "#FF4343"}}>Your code was tested for the first test case and failed.</p>
             <p style={{color: "white"}}>------------ Here are the logged outputs ------------</p>
             {loggingOutputs.map(logOutput => {
                 return (
                     <p style={{color: "white"}}>{JSON.stringify(logOutput)}</p>
                 )
             })}
-            <p style={{color: "red"}}>------------ Error message ------------</p>
-            <p style={{color: "red"}}>{JSON.stringify(message.error)}</p>
+            <p style={{color: "#FF4343"}}>------------ Error message ------------</p>
+            <p style={{color: "#FF4343"}}>{JSON.stringify(message.error)}</p>
         </>
     )
 };
