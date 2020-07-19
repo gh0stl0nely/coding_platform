@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Visual from "./pages/VisualPage";
 import QuestionPage from "./pages/QuestionDisplayPage";
+import QuestionListPage from "./pages/QuestionListPage";
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import NoMatch from './pages/NoMatch';
@@ -31,8 +32,8 @@ function App() {
               <Route path="/question/:questionTitle" >
                 <QuestionPage />
               </Route>
-              <Route path="/question">
-                <Home />
+              <Route exact path="/questionlist">
+                <QuestionListPage />
               </Route>
               <Route path="*">
                 <NoMatch />

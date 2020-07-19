@@ -127,6 +127,7 @@ export default function NavBar() {
           <Hidden smDown>
             <Button href="/" color="inherit">Home</Button>
             <Button href="/visualization" color="inherit">Algorithm Visualizer</Button>
+            <Button href="/questionlist" color="inherit">Questions</Button>
             <Button href={loginStatus.isLoggedin ? "/" : "/signin"} color="inherit">{loginStatus.isLoggedin ? `Hi ${loginStatus.username}` : "Sign in"}</Button>
             <Button href="/signup" style={{display: loginStatus.isLoggedin ? "none" : "block"}} color="inherit">Sign Up</Button>
             <Button onClick={logout} style={{ display: loginStatus.isLoggedin ? "block" : "none" }} color="inherit">Logout</Button>
