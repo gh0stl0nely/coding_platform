@@ -26,6 +26,7 @@ export default function QuestionListPage() {
     const [questionType, setQuestionType] = useState('');
 
     const questionsToRender = loginStatus.isLoggedin ? loginStatus.questions : questionList;
+    console.log(questionsToRender);
 
     const handleChangeDifficulty = (event) => {
         setDifficulty(event.target.value);

@@ -174,4 +174,36 @@ module.exports = {
         next();
     },
 
+    IsNewQuestionAdded: async function(req,res,next){
+        const userID = req.user["_id"];
+
+        // This means that new questions has been added, we need to update the question list of the user
+        const currentUserQuestionListLength = req.user.questions.length;
+        const serverQuestionListLength = questionList.length;
+        if(req.user.questions.length < questionList.length){
+            const oldQuestionList = req.user.questions;
+            const newQuestionList = updateQuestionList(oldQuestionList,currentUserQuestionListLength, serverQuestionListLength)
+            await User.findByIdAndUpdate(userID, {questions: newQuestionList});
+            next();
+        } else {
+            next();
+        }
+    },  
+
+}
+
+function updateQuestionList(oldQuestionList,currentUserQuestionListLength, serverQuestionListLength){
+
+    for(let i = currentUserQuestionListLength; i < serverQuestionListLength; i++){
+        const question = questionList[i];
+        oldQuestionList.push({
+            questionType: question.questionType,
+            difficulty: question.difficulty,
+            title: question.title,
+            cacheInput: "",
+            isSolved: false
+        });
+    }
+
+    return oldQuestionList;
 }

@@ -580,4 +580,60 @@ var findMaxVowels = function(str, k) {
         inputs: [{ arg1: "aabiiidefg", arg2: 3 }, { arg1: "aeiou", arg2: 2 }, { arg1: "rhythms", arg2: 4 }, { arg1: "tryhard", arg2: 4 }, { arg1: "today", arg2: 3 }],
         expectedOutputs: [3,2,0, 1, 2]
     }
+},{
+    title: "Maximum Vowels 5",
+    description: `Given a string (str) with only lowercase letters and an integer (k), return the maximum number of vowels in the substring with the length (k).`,
+    difficulty: "Medium",
+    questionType: "String",
+    cacheInput: "",
+    isSolved: false,
+    beginningCode: `
+// Please write inside this function
+var findMaxVowels = function(str, k) {
+        
+}
+
+
+// Do not edit this line
+module.exports = findMaxVowels;
+`,
+    solutionCode: `
+var findMaxVowels = function(str, k) {
+    const vowels = 'aeiou';
+    let max = 0; 
+    let count = 0; 
+    
+    for (let i = 0; i < str.length; i++) {
+        if (i >= k) {
+            if (vowels.indexOf(str[i - k]) > -1) {
+                count--;
+            }
+        }
+
+        if (vowels.indexOf(str[i]) > -1) {
+            count++;
+            max = Math.max(max, count);
+            if (max === k) {
+                return k;
+            }
+        }
+    }
+     
+    return max;   
+}
+    `,
+    inputOne: {
+        arg1: "aabiiidefg",
+        arg2: 3
+    },
+    inputTwo: {
+        arg1: "aeiou",
+        arg2: 2
+    },
+    outputOne: 3,
+    outputTwo: 2,
+    answers: {
+        inputs: [{ arg1: "aabiiidefg", arg2: 3 }, { arg1: "aeiou", arg2: 2 }, { arg1: "rhythms", arg2: 4 }, { arg1: "tryhard", arg2: 4 }, { arg1: "today", arg2: 3 }],
+        expectedOutputs: [3,2,0, 1, 2]
+    }
 }]

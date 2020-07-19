@@ -4,7 +4,7 @@ const User = require("../model/User");
 const { questionList } = require("../question");
 const passport = require("../auth/passport");
 const jwt = require('jsonwebtoken');
-const { saveUserInput , processUserInput, processLogging, checkIsQuestionSolved } = require("./middleware");
+const { saveUserInput , processUserInput, processLogging, checkIsQuestionSolved, IsNewQuestionAdded } = require("./middleware");
 
 // Find the correct question by ID to display
 router.post("/question", async (req, res) => {
@@ -157,8 +157,7 @@ router.post("/login", async (req, res) => {
 router.get("/auth", passport.authenticate('jwt', {
     session: false,
     failureRedirect: "/api/notAuth"
-}), (req, res) => {    
-
+}), IsNewQuestionAdded, (req, res) => {    
     return res.json({
         uid: req.user["_id"],
         isAuthenticated: true,
