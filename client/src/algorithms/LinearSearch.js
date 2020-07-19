@@ -4,6 +4,16 @@ import Node from "./Node";
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 
+const styles = theme => ({
+    explanationStyle: {
+        paddingLeft: "20px", 
+        paddingRight: "20px",
+        [theme.breakpoints.up('md')]: {
+            width: '80%',
+          },
+    }
+})
+
 export default function LinearSearch() {
     const givenArray = [14, 94, 8, 23, 88, 6, 55, 62, 40, 70, 39];
     const sortedArray = [...givenArray].sort(function (a, b) { return a - b });
@@ -90,7 +100,7 @@ export default function LinearSearch() {
             </Grid>
             <Grid item xs={12} style={{ textAlign: "center", marginTop: "30px" }}>
                 <p style={{ fontWeight: "bold" }}>Explanation</p>
-                <p style={{paddingLeft: "20px", paddingRight: "20px"}}>Linear search is the most fundamental searching algorithm. Usually starting from the first index, the algorithm simply goes through every single item in the array (or other data structure with linear Length such as LinkedList) until it finds the item it's supposed to look for. If the length of the given array is N (or N items), the  worst case scenario is to search the entire array, which explains the time complexity of O(N). No extra space needed.</p>
+                <p style={styles.explanationStyle}>Linear search is the most fundamental searching algorithm. Usually starting from the first index, the algorithm simply goes through every single item in the array (or other data structure with linear Length such as LinkedList) until it finds the item it's supposed to look for. If the length of the given array is N (or N items), the  worst case scenario is to search the entire array, which explains the time complexity of O(N). No extra space needed.</p>
             </Grid>
         </div>
     )
