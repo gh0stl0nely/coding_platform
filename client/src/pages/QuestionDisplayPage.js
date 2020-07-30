@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import React, { useState, useEffect, useContext } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import ReplayIcon from '@material-ui/icons/Replay';
@@ -14,7 +15,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Helper from "../utils/helper";
 // import { questionList } from "../utils/question";
 
-const styles = {
+const useStyles = makeStyles(theme => ({
     button: {
         backgroundColor: "#00909e",
         color: "white",
@@ -32,9 +33,10 @@ const styles = {
         fontSize: "20px",
         textDecoration: "underline"
     }
-}
+}));
 
 function QuestionPage() {
+    const classes = useStyles();
     // This is sample of a question data model
     // ID represents the question of the ID ! 
     const { questionTitle } = useParams();
@@ -118,7 +120,7 @@ function QuestionPage() {
             title: question.title,
             cacheInput: question.cacheInput
         };
-        
+
         const submission = await axios.post("/api/question/submit", {
             userID,
             userInput
@@ -129,7 +131,7 @@ function QuestionPage() {
     };
 
     function renderMessagesInTerminal() {
-        return result.event == "Run code" ? Helper.renderLoggingOutput(result) : Helper.renderTestResults(result);
+        return result.event === "Run code" ? Helper.renderLoggingOutput(result) : Helper.renderTestResults(result);
     }
 
     // Right now saveCode only saves in the frontend... If decides to do autosave, remember 
@@ -158,22 +160,22 @@ function QuestionPage() {
             case "Easy":
                 return (
                     <>
-                        <StarIcon  style={styles.iconStyle} />
+                        <StarIcon className={classes.iconStyle} />
                     </>
                 )
             case "Medium":
                 return (
                     <>
-                        <StarIcon style={styles.iconStyle} />
-                        <StarIcon style={styles.iconStyle} />
+                        <StarIcon className={classes.iconStyle} />
+                        <StarIcon className={classes.iconStyle} />
                     </>
                 )
             case "Hard":
                 return (
                     <>
-                        <StarIcon style={styles.iconStyle} />
-                        <StarIcon style={styles.iconStyle} />
-                        <StarIcon style={styles.iconStyle} />
+                        <StarIcon className={classes.iconStyle} />
+                        <StarIcon className={classes.iconStyle} />
+                        <StarIcon className={classes.iconStyle} />
                     </>
                 )
         }
@@ -198,11 +200,11 @@ function QuestionPage() {
         }
     };
 
-    function renderInput(input){
-        if(!Array.isArray(input) && typeof input === 'object' && input !== null){
+    function renderInput(input) {
+        if (!Array.isArray(input) && typeof input === 'object' && input !== null) {
             const values = Object.values(input);
             const resultingString = values.map((value, index) => {
-                return (index != values.length -1) ? `Args ${index + 1} = ${JSON.stringify(value)} , ` :  `Args ${index + 1} = ${JSON.stringify(value)}`
+                return (index !== values.length - 1) ? `Args ${index + 1} = ${JSON.stringify(value)} , ` : `Args ${index + 1} = ${JSON.stringify(value)}`
             }).join("");
 
             return resultingString;
@@ -210,55 +212,55 @@ function QuestionPage() {
 
         // console.log("Not object")
         return JSON.stringify(input);
-  
+
     }
 
     return (
-        <Container maxWidth="md" style={{ marginTop: "80px" }}>
+        <Container style={{ marginTop: "80px", padding: '0px' }}>
             <Grid container direction="row" justify="center" key={question._id} data-isSolved={question.isSolved}>
                 <Grid item xs={12} style={{ textAlign: "center" }}>
-                    <h2 style={{ color: "#142850" }}>Question title: {question.title}</h2>
+                    <h1 style={{ color: "#142850" }}>{question.title}</h1>
                 </Grid>
-                <Grid item xs={12} md={6} style={{ border: "10px", borderStyle: "solid solid none solid", borderColor: "#142850", backgroundColor: "#27496d" }}>
+                <Grid item xs={12} md={6} style={{ border: '10px', borderStyle: "solid solid none solid", borderColor: "#142850", backgroundColor: "#27496d" }}>
                     <div style={{ textAlign: "center" }}>
-                        <Button size="small" variant="contained" style={styles.button} onClick={() => { handleShowSolution("question") }}>
+                        <Button size="small" variant="contained" className={classes.button} onClick={() => { handleShowSolution("question") }}>
                             Question
                         </Button>
-                        <Button size="small" variant="contained" style={styles.button} onClick={() => { handleShowSolution("solution") }}>
+                        <Button size="small" variant="contained" className={classes.button} onClick={() => { handleShowSolution("solution") }}>
                             Solution
                         </Button>
                     </div>
-                    <Grid item xs={12} id="questionDiv" style={{ padding: "0px 20px 80px 20px", overflow: "scroll", height: "294px", backgroundColor: "#27496d" }}>
-                        <p style={styles.textStyle}>Category: <span style={{ color: "white", textDecoration: "none" }}>{question.questionType}</span></p>
-                        <p style={styles.textStyle}> Difficulty: <span style={{ color: "white", textDecoration: "none"  }}>{renderStar(question.difficulty)}</span></p>
-                        <p style={styles.textStyle}>Status: <span style={{ color: "white", textDecoration: "none"  }}> {question.isSolved ? <span style={{color: "#79FE4F"}}>Solved</span> : <span style={{color: "#FF4343"}}>Unsolved</span>} </span></p>
-                        <p style={styles.textStyle}>Description:</p>
+                    <Grid item xs={12} id="questionDiv" style={{ padding: "0px 20px 80px 40px", overflow: "scroll", height: "294px", backgroundColor: "#27496d" }}>
+                        <p className={classes.textStyle} style={{ display: 'inline-block' }}>Category:</p><span style={{ fontSize: "20px", color: "white", fontWeight: 'bold' }}> {question.questionType}</span>
+                        <p className={classes.textStyle}> Difficulty:<span style={{ color: "white", textDecoration: "none" }}>{renderStar(question.difficulty)}</span></p>
+                        <p className={classes.textStyle} style={{ display: 'inline-block' }}>Status: </p>{question.isSolved ? <span style={{ fontSize: "20px",color: "#79FE4F", fontWeight: 'bold' }}> Solved</span> : <span style={{ fontSize: "20px",color: "#FF4343", fontWeight: 'bold'}}> Unsolved</span>}
+                        <p className={classes.textStyle}>Description:</p>
                         <p style={{ color: "white", lineHeight: "20px" }}>{question.description}</p>
-                        <p style={styles.textStyle}>Sample Input 1: </p><span style={{ color: "white" }}>{renderInput(question.inputOne)}</span>
-                        <p style={styles.textStyle}>Sample Output 1: </p><span style={{ color: "white" }}>{JSON.stringify(question.outputOne)}</span>
-                        <p style={styles.textStyle}>Sample Input 2: </p><span style={{ color: "white" }}>{renderInput(question.inputTwo)}</span>
-                        <p style={styles.textStyle}>Sample Output 2: </p><span style={{ color: "white" }}>{JSON.stringify(question.outputTwo)}</span>
+                        <p className={classes.textStyle}>Sample Input 1: </p><span style={{ color: "white" }}>{renderInput(question.inputOne)}</span>
+                        <p className={classes.textStyle}>Sample Output 1: </p><span style={{ color: "white" }}>{JSON.stringify(question.outputOne)}</span>
+                        <p className={classes.textStyle}>Sample Input 2: </p><span style={{ color: "white" }}>{renderInput(question.inputTwo)}</span>
+                        <p className={classes.textStyle}>Sample Output 2: </p><span style={{ color: "white" }}>{JSON.stringify(question.outputTwo)}</span>
                     </Grid>
                     {/* Solution */}
-                    <Grid item xs={12} id="solutionDiv" style={{ padding: "0px 20px 20px 20px", display: "none", overflow: "scroll", backgroundColor: "#27496d" }}>
+                    <Grid item xs={12} id="solutionDiv" style={{ display: "none", overflow: "scroll", backgroundColor: "#27496d" }}>
                         <CodeEditor id={"solutionEditor"} isHighLightActiveLine={false} editorTheme={theme} isReadOnly={true} code={question.solutionCode} />
                     </Grid>
                 </Grid>
-                <Grid item xs={12} md={6} id="codeDiv" style={{ border: "10px", borderStyle: "solid solid none solid", borderColor: "#142850", textAlign: "center", backgroundColor: "#27496d" }}>
+                <Grid item xs={12} md={6} id="codeDiv" style={{ border: '10px', borderStyle: "solid solid none solid", borderColor: "#142850", backgroundColor: "#27496d", textAlign: "center"  }}>
                     <IconButton onClick={refreshCode} aria-label="replay">
                         <ReplayIcon size="small" style={{ color: "white", fontWeight: "bold" }} />
                     </IconButton>
-                    <Button onClick={toggleEditorTheme} size="small" variant="contained" style={styles.button}>
+                    <Button onClick={toggleEditorTheme} size="small" variant="contained" className={classes.button}  >
                         {btnLabel}
                     </Button>
-                    <Button size="small" onClick={loadingRun} variant="contained" style={styles.button}>
+                    <Button size="small" onClick={loadingRun} variant="contained" className={classes.button}  >
                         Run / Log
                         </Button>
-                    <Button onClick={loadingSubmit} size="small" variant="contained" style={styles.button}>
+                    <Button onClick={loadingSubmit} size="small" variant="contained" className={classes.button} >
                         Submit
                         </Button>
                     <Grid item xs={12}>
-                        <CodeEditor id={"userEditor"} saveCode={saveCode} isHighLightActiveLine={true} editorTheme={theme} isReadOnly={false} code={question.cacheInput == "" ? question.beginningCode : question.cacheInput} />
+                        <CodeEditor id={"userEditor"} saveCode={saveCode} isHighLightActiveLine={true} editorTheme={theme} isReadOnly={false} code={question.cacheInput === "" ? question.beginningCode : question.cacheInput} />
                     </Grid>
                 </Grid>
                 <Grid item xs={12} md={6} id="progressDiv" style={{ border: "10px", borderStyle: "solid solid none solid", borderColor: "#142850", textAlign: "center", backgroundColor: "#27496d", display: "none" }}>
