@@ -4,18 +4,8 @@ import Node from "./Node";
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 
-const styles = theme => ({
-    explanationStyle: {
-        paddingLeft: "20px", 
-        paddingRight: "20px",
-        [theme.breakpoints.up('md')]: {
-            width: '80%',
-          },
-    }
-})
-
 export default function LinearSearch() {
-    const givenArray = [14, 94, 8, 23, 88, 6, 55, 62, 40, 70, 39];
+    const givenArray = [14, 94, 8, 23, 88, 72, 6, 55, 62, 40, 70, 39, 31];
     const sortedArray = [...givenArray].sort(function (a, b) { return a - b });
     const [isFoundAnswer, updateSearchStatus] = useState(true);
 
@@ -34,9 +24,6 @@ export default function LinearSearch() {
     };
 
     function startSearch(e) {
-        // const givenArray = [14, 94, 8, 23, 88, 6, 55, 62, 40, 70, 39];
-        // If confused, startSearch IS NOT changing the givenArray. It is similiar to creating another copy of givenArray and change that. 
-
         target = e.target.value;
         updateArray(givenArray);
         updateSearchStatus(false);
@@ -98,9 +85,12 @@ export default function LinearSearch() {
                 <p style={{ fontWeight: "bold" }}>Time complexity: O(N)</p>
                 <p style={{ fontWeight: "bold" }}>Space complexity: O(1)</p>
             </Grid>
-            <Grid item xs={12} style={{ textAlign: "center", marginTop: "30px" }}>
+            <Grid item xs={12} style={{ textAlign: "center", marginTop: "30px", padding: '0px 40px' }}>
                 <p style={{ fontWeight: "bold" }}>Explanation</p>
-                <p style={styles.explanationStyle}>Linear search is the most fundamental searching algorithm. Usually starting from the first index, the algorithm simply goes through every single item in the array (or other data structure with linear Length such as LinkedList) until it finds the item it's supposed to look for. If the length of the given array is N (or N items), the  worst case scenario is to search the entire array, which explains the time complexity of O(N). No extra space needed.</p>
+                <div style={{ textAlign: "justify" }}>
+                    <p>Linear search is the most fundamental searching algorithm. Usually starting from the first index, the algorithm simply goes through every single item in the array (or other data structure with linear Length such as LinkedList) until it finds the item it's supposed to look for. If the length of the given array is N (or N items), the  worst case scenario is to search the entire array, which explains the time complexity of O(N). No extra space needed.</p>
+                </div>
+
             </Grid>
         </div>
     )

@@ -140,7 +140,7 @@ export default function SelectionSort() {
           <p style={{ fontWeight: "bold" }}>Time complexity: O(N<sup>2</sup>)</p>
           <p style={{ fontWeight: "bold" }}>Space complexity: O(1)</p>
       </Grid>
-      <Grid item xs={12} style={{ textAlign: "center", marginTop: "30px" }}>
+      <Grid item xs={12} style={{ textAlign: "center", marginTop: "30px", padding: '0px 40px'  }}>
           <p style={{ fontWeight: "bold" }}>Explanation</p>
           <p style={{paddingLeft: "20px", paddingRight: "20px"}}>Selection sort is another basic sorting algorithm and is deemed better than Bubble sort in terms of the number of swaps. The algorithm starts out with the first item, traverses the array until it finds another number that is less than itself, and then make the swap (or not), moves onto the next and repeats.</p>
           <p style={{paddingLeft: "20px", paddingRight: "20px"}}>Similar to bubble sort, in the worst case, asymptotically, selection sort goes through the array N<sup>2</sup> times but the number of swap is lesser. Think of an already sorted array like [1,2,3] - the number of swap required is ZERO, yet the number of steps to determine that the array is sorted is 9 (or 3<sup>3</sup>), which is why the time complexity is O(N<sup>2</sup>) and rarely used in practice. No extra space needed.</p>

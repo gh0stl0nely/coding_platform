@@ -12,10 +12,11 @@ import DepthFirstSearch from "../algorithms/DepthFirstSearch.js";
 import BreadthFirstSearch from "../algorithms/BreadthFirstSearch.js";
 import KadaneAlgorithm from "../algorithms/Kadane.js";
 import Copyright from "../components/Copyright";
+import TwoCounter from '../algorithms/TwoCounter';
 
 function VisualPage() {
-    const options = ["Linear Search", "Binary Search", "Bubble Sort", "Selection Sort", "Insertion Sort", "Depth First Search", "Breadth First Search", "Kadane Algorithm"];
-    
+    const options = ["Linear Search", "Binary Search", "Two Counter Algorithm", "Bubble Sort", "Selection Sort", "Insertion Sort", "Depth First Search", "Breadth First Search", "Kadane Algorithm"];
+
     const allDisplayNone = {
         "linear search": "none",
         "binary search": "none",
@@ -24,7 +25,8 @@ function VisualPage() {
         "insertion sort": "none",
         "depth first search": "none",
         "breadth first search": "none",
-        "kadane algorithm": "none"
+        "kadane algorithm": "none",
+        "two counter algorithm":'none'
     };
 
     const [display, updateDisplay] = useState({
@@ -35,7 +37,8 @@ function VisualPage() {
         "insertion sort": "none",
         "depth first search": "none",
         "breadth first search": "none",
-        "kadane algorithm": "none"
+        "kadane algorithm": "none",
+        "two counter algorithm":'none'
     });
 
     function renderChipsOptions() {
@@ -52,7 +55,7 @@ function VisualPage() {
         // Set everything to normal and then update
         const newState = {
             ...allDisplayNone,
-            [target] : "block"
+            [target]: "block"
         };
 
         updateDisplay(newState);
@@ -63,15 +66,18 @@ function VisualPage() {
     return (
         <Container maxWidth="lg" style={{ marginTop: "50px" }}>
             <Grid container style={{ padding: "20px 0px", marginTop: "10px" }} justify="center" alignItems="center">
-                <Grid item xs={12} style={{textAlign: "center"}}>
-                    <p style={{fontSize: "20px"}}>Choose the algorithm methods you want to visualize </p>
+                <Grid item xs={12} style={{ textAlign: "center" }}>
+                    <p style={{ fontSize: "20px" }}>Choose the algorithm methods you want to visualize </p>
                 </Grid>
                 {renderChipsOptions()}
             </Grid>
             <Grid container justify="center" alignItems="center">
-                <Grid container justify="center" alignItems="center" style={{ backgroundColor: "#E8EFF5", minHeight: "300px",borderRadius: "20px" }}>
-                    <Grid item xs={12} style={{ textAlign: "center", backgroundColor: "#E8EFF5", paddingBottom: "30px", display: display["linear search"], border: "5px solid #27496d", borderRadius: "20px"}}>
+                <Grid container justify="center" alignItems="center" style={{ backgroundColor: "#E8EFF5", minHeight: "300px", borderRadius: "20px" }}>
+                    <Grid item xs={12} style={{ textAlign: "center", backgroundColor: "#E8EFF5", paddingBottom: "30px", display: display["linear search"], border: "5px solid #27496d", borderRadius: "20px" }}>
                         <LinearSearch />
+                    </Grid>
+                    <Grid item xs={12} style={{ textAlign: "center", backgroundColor: "#E8EFF5", paddingBottom: "30px", display: display["two counter algorithm"], border: "5px solid #27496d", borderRadius: "20px" }}>
+                        <TwoCounter />
                     </Grid>
                     <Grid item xs={12} style={{ textAlign: "center", backgroundColor: "#E8EFF5", paddingBottom: "30px", display: display["binary search"], border: "5px solid #27496d", borderRadius: "20px" }}>
                         <BinarySearch />
