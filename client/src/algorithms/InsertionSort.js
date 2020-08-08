@@ -177,7 +177,7 @@ export default function InsertionSort() {
                     Insertion Sort
             </Button>
             </div>
-            <Grid container direction="row" style={{marginTop: "20px"}}>
+            <Grid container direction="row" style={{ marginTop: "20px" }}>
                 <Grid item xs={5}>
                     <div style={{ height: "20px", width: "20px", backgroundColor: "#00FA9A", borderRadius: "10%", display: "inline-block", position: "relative", top: "10px", right: "10px", float: "right" }}></div>
                 </Grid>
@@ -205,10 +205,12 @@ export default function InsertionSort() {
                 <p style={{ fontWeight: "bold" }}>Best case time complexity: O(N)</p>
                 <p style={{ fontWeight: "bold" }}>Space complexity: O(1)</p>
             </Grid>
-            <Grid item xs={12} style={{ textAlign: "center", marginTop: "30px" }}>
+            <Grid item xs={12} style={{ textAlign: "center", marginTop: "30px", padding: '0px 40px' }}>
                 <p style={{ fontWeight: "bold" }}>Explanation</p>
-                <p style={{paddingLeft: "20px", paddingRight: "20px"}}>The last basic sorting algorithm - Insertion Sort. Insertion sort traverses the array, compares the current and previous item and if the current number is smaller than the previous, it would travese the array one more time to find the correct index to insert the current item into (thus explains the O(N<sup>2</sup>) time complexity).</p>
-                <p style={{paddingLeft: "20px", paddingRight: "20px"}}>Be mindful that, under the hood, because inserting into an array actually takes O(N) time complexity due to the need for index shift, we will be making used of swapping in order to emulate index shifting. Compared to bubble sort and selection sort, insertion sort can result in a O(N) time complexity only when the array is almost or already sorted (Best case). No extra space needed.</p>
+                <div style={{ textAlign: "justify" }}>
+                    <p style={{ paddingLeft: "20px", paddingRight: "20px" }}>The last basic sorting algorithm - Insertion Sort. Insertion sort traverses the array, compares the current and previous item and if the current number is smaller than the previous, it would travese the array one more time to find the correct index to insert the current item into (thus explains the O(N<sup>2</sup>) time complexity).</p>
+                    <p style={{ paddingLeft: "20px", paddingRight: "20px" }}>Be mindful that, under the hood, because inserting into an array actually takes O(N) time complexity due to the need for index shift, we will be making used of swapping in order to emulate index shifting. Compared to bubble sort and selection sort, insertion sort can result in a O(N) time complexity only when the array is almost or already sorted (Best case). No extra space needed.</p>
+                </div>
             </Grid>
         </div>
     )

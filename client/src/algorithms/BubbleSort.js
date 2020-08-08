@@ -142,10 +142,12 @@ export default function BubbleSort() {
                 <p style={{ fontWeight: "bold" }}>Time complexity: O(N<sup>2</sup>)</p>
                 <p style={{ fontWeight: "bold" }}>Space complexity: O(1)</p>
             </Grid>
-            <Grid item xs={12} style={{ textAlign: "center", marginTop: "30px" }}>
+            <Grid item xs={12} style={{ textAlign: "center", marginTop: "30px", padding: '0px 40px' }}>
                 <p style={{ fontWeight: "bold" }}>Explanation</p>
-                <p style={{paddingLeft: "20px", paddingRight: "20px"}}>Bubble sort is the most basic sorting algorithm. Bubble sort uses simple brute force method to compare every single item with one another and swap positions until the array is sorted, meaning when no more swap occurs. Under bubble sort, the array will be traversed N<sup>2</sup> times asymptotically (we will have a section to explain Asymptotic Complexity), meaning each item within the array is being "touched on" N times, in the worst case.</p>
-                <p style={{paddingLeft: "20px", paddingRight: "20px"}}>For instance, an array of length 3 will require 9 comparisons (3<sup>3</sup>) and items are passed through 3 times each in the worst case (when the array is completed unsorted). Due to its relatively slow time complexity, Bubble Sort is rarely used in solving real life problems, but rather for educational purpose. No extra space is needed.</p>
+                <div style={{ textAlign: "justify" }}>
+                    <p>Bubble sort is the most basic sorting algorithm. Bubble sort uses simple brute force method to compare every single item with one another and swap positions until the array is sorted, meaning when no more swap occurs. Under bubble sort, the array will be traversed N<sup>2</sup> times asymptotically (we will have a section to explain Asymptotic Complexity), meaning each item within the array is being "touched on" N times, in the worst case.</p>
+                    <p>For instance, an array of length 3 will require 9 comparisons (3<sup>3</sup>) and items are passed through 3 times each in the worst case (when the array is completed unsorted). Due to its relatively slow time complexity, Bubble Sort is rarely used in solving real life problems, but rather for educational purpose. No extra space is needed.</p>
+                </div>
             </Grid>
         </div>
     )

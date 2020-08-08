@@ -27,10 +27,10 @@ export default function BreadthFirstSearch() {
         // Visited is the things that we already visit
 
         // Direction can be:
-            // Left = col - 1
-            // Right = col + 1
-            // Up = row - 1
-            // Down = row + 1
+        // Left = col - 1
+        // Right = col + 1
+        // Up = row - 1
+        // Down = row + 1
         let visited = [];
         let toVisit = [];
 
@@ -39,36 +39,36 @@ export default function BreadthFirstSearch() {
         const timer = setInterval(() => {
             // Ending condition
 
-            if(toVisit.length == 0){
+            if (toVisit.length == 0) {
                 setWarning(true);
                 updateSearchStatus(true);
                 clearInterval(timer);
                 return;
             }
 
-            const current = toVisit.shift(); 
-        
+            const current = toVisit.shift();
+
             const col = current.col;
             const row = current.row;
 
             // CHeck out of bound
-            if(!(row < 0) && !(col < 0) && !(row == rowAndColumn.row) && !(col == rowAndColumn.col)){
+            if (!(row < 0) && !(col < 0) && !(row == rowAndColumn.row) && !(col == rowAndColumn.col)) {
 
-                if(!isVisited(row,col,visited) && !isWall(row,col)){
+                if (!isVisited(row, col, visited) && !isWall(row, col)) {
                     // Visualize current node
-                    visualizeCurrentNode(row,col);
-    
-                    if(isEndNode(current)){
+                    visualizeCurrentNode(row, col);
+
+                    if (isEndNode(current)) {
                         setSuccess(true);
                         updateSearchStatus(true);
                         clearInterval(timer);
                         return;
                     }
-    
+
                     visited.push(current);
-    
+
                     // Put more nodes to the stack
-                    checkSurroundingDirections(row,col, toVisit);
+                    checkSurroundingDirections(row, col, toVisit);
                 }
 
             }
@@ -76,44 +76,44 @@ export default function BreadthFirstSearch() {
         }, speed);
     };
 
-    function isWall(row,col){
+    function isWall(row, col) {
         return finalGrid[row][col].color == "black" ? true : false;
     }
 
-    function checkSurroundingDirections(row,col,toVisit){
+    function checkSurroundingDirections(row, col, toVisit) {
         // Only go to direction that are not null...abs
-        
+
         // Left
-        if(col - 1 >= 0 && !isWall(row, col - 1)){
+        if (col - 1 >= 0 && !isWall(row, col - 1)) {
             toVisit.push(finalGrid[row][col - 1]);
         }
 
         // Right
-        if(col + 1 < rowAndColumn.col && !isWall(row, col + 1)){
+        if (col + 1 < rowAndColumn.col && !isWall(row, col + 1)) {
             toVisit.push(finalGrid[row][col + 1])
         }
 
         // Up
-        if(row - 1 >= 0 && !isWall(row - 1, col)){
+        if (row - 1 >= 0 && !isWall(row - 1, col)) {
             toVisit.push(finalGrid[row - 1][col])
         }
 
         // Down
-        if(row + 1 < rowAndColumn.row && !isWall(row + 1, col)){
+        if (row + 1 < rowAndColumn.row && !isWall(row + 1, col)) {
             toVisit.push(finalGrid[row + 1][col])
         }
     }
 
-    function isVisited(row,col, visited){
-        for(let i = 0; i < visited.length ;i++){
-            if(visited[i].row == row && visited[i].col == col){
+    function isVisited(row, col, visited) {
+        for (let i = 0; i < visited.length; i++) {
+            if (visited[i].row == row && visited[i].col == col) {
                 return true;
             }
         }
         return false;
     }
 
-    function visualizeCurrentNode(row,col){
+    function visualizeCurrentNode(row, col) {
         const currentNode = {
             ...finalGrid[row][col],
             color: "#00FA9A"
@@ -124,7 +124,7 @@ export default function BreadthFirstSearch() {
         updateFinalGrid(newGrid);
     };
 
-    function isEndNode(node){
+    function isEndNode(node) {
         return node.color == 'red' ? true : false;
     };
 
@@ -136,9 +136,9 @@ export default function BreadthFirstSearch() {
         });
     };
 
-    function handleSpeed(e){
+    function handleSpeed(e) {
         const { value } = e.target;
-        switch(value){
+        switch (value) {
             case "Slow":
                 setSpeed(200);
                 break;
@@ -156,21 +156,21 @@ export default function BreadthFirstSearch() {
     function generateRandomGrid() {
         setSuccess(false);
         setWarning(false);
-        
+
         let generatedGrid = [];
         const totalRow = rowAndColumn.row;
-        
+
         const { startNode, endNode } = generateStartAndEnd();
 
         for (let row = 0; row < totalRow; row++) {
             const tempRow = [];
             const totalCol = rowAndColumn.col;
-            for(let col = 0; col < totalCol; col++){
+            for (let col = 0; col < totalCol; col++) {
                 const randomNumber = Math.floor(Math.random() * 5);
-                if(row == startNode.row && col == startNode.col){
+                if (row == startNode.row && col == startNode.col) {
                     tempRow.push(startNode);
                     setStartNode(startNode);
-                } else if(row == endNode.row && col == endNode.col){
+                } else if (row == endNode.row && col == endNode.col) {
                     tempRow.push(endNode);
                 } else {
                     randomNumber == 0 ? tempRow.push({
@@ -191,7 +191,7 @@ export default function BreadthFirstSearch() {
         updateIsGeneratedNewGrid(true);
     };
 
-    function generateStartAndEnd(){
+    function generateStartAndEnd() {
         let startNode = {
             color: 'green',
             row: Math.floor(Math.random() * rowAndColumn.row),
@@ -203,7 +203,7 @@ export default function BreadthFirstSearch() {
             col: Math.floor(Math.random() * rowAndColumn.col)
         };
 
-        while(startNode.row == endNode.row && endNode.col == startNode.col){
+        while (startNode.row == endNode.row && endNode.col == startNode.col) {
             startNode = {
                 color: 'green',
                 row: Math.floor(Math.random() * rowAndColumn.row),
@@ -216,7 +216,7 @@ export default function BreadthFirstSearch() {
                 col: Math.floor(Math.random() * rowAndColumn.col)
             };
         }
-        
+
         return {
             startNode,
             endNode
@@ -246,7 +246,7 @@ export default function BreadthFirstSearch() {
             <p style={{ color: "#142850", fontSize: "3vw", fontFamily: 'Vidaloka' }}>Breadth First Search</p>
             <p style={{ color: "#142850", fontSize: "2.5vw", fontFamily: 'Vidaloka' }}>Visualization is best viewed on full screen.</p>
             <TextField
-            style={{marginRight: '3vw'}}
+                style={{ marginRight: '3vw' }}
                 select
                 onChange={handleChoice}
                 defaultValue={10}
@@ -254,7 +254,7 @@ export default function BreadthFirstSearch() {
                 helperText="Choose number of column"
                 name="col"
             >
-                {[10, 11, 12,13,14,15,16,17].map((number, index) => (
+                {[10, 11, 12, 13, 14, 15, 16, 17].map((number, index) => (
                     <MenuItem key={index} value={number}>
                         {number}
                     </MenuItem>
@@ -268,7 +268,7 @@ export default function BreadthFirstSearch() {
                 helperText="Choose number of Row"
                 name="row"
             >
-                {[10, 11, 12,13,14,15,16,17].map((number, index) => (
+                {[10, 11, 12, 13, 14, 15, 16, 17].map((number, index) => (
                     <MenuItem key={index} value={number}>
                         {number}
                     </MenuItem>
@@ -293,12 +293,12 @@ export default function BreadthFirstSearch() {
 
             <div style={{ marginTop: "25px" }}>
                 <Button id="gen-random-array-btn" onClick={generateRandomGrid} variant="contained" disabled={isFoundAnswer ? false : true} color="primary">
-                        Generate Grid
+                    Generate Grid
                 </Button>
             </div>
             <div style={{ marginTop: "25px" }}>
                 <Button id="start-bubble-sort-btn" onClick={() => { updateSearchStatus(false); updateIsGeneratedNewGrid(false); BFS() }} variant="contained" disabled={isGeneratedNewArray ? false : true} color="secondary">
-                        Breadth First Search
+                    Breadth First Search
                 </Button>
             </div>
             <Grid container direction="row" style={{ marginTop: "20px" }}>
@@ -378,12 +378,13 @@ export default function BreadthFirstSearch() {
                 <p style={{ fontWeight: "bold" }}>Time complexity if using Adjacency List : O(Vertices + Edges) </p>
                 <p style={{ fontWeight: "bold" }}>Space complexity: O(Vertices)</p>
             </Grid>
-            <Grid item xs={12} style={{ textAlign: "center", marginTop: "30px" }}>
+            <Grid item xs={12} style={{ textAlign: "center", marginTop: "30px", padding: '0px 40px' }}>
                 <p style={{ fontWeight: "bold" }}>Explanation</p>
-                <p style={{ paddingLeft: "20px", paddingRight: "20px" }}>If you haven't read the explanation of Depth First Search, we recommend you do because the idea behind Breadth First Search is quite similar to Depth First Search. Two major differences are that Breadth First Search checks for End Node in its immediate surrounding squares before moving further out, hence "breadth first". Breadth First Search is faster if the End Node is closer to the Start Node.</p>
-                <p style={{ paddingLeft: "20px", paddingRight: "20px" }}>Since time complexity depends on the data structure that we use to implement the graph, the explanation is similar to that of Depth First Search.</p>
-                
-                <p style={{ paddingLeft: "20px", paddingRight: "20px" }}>Although space complexity is almost identical to Depth First Search, we still need to beware as to how it stores all vertices to visit. In the case of Depth First Search, we use a STACK, but Breadth First Search makes use of a QUEUE. Think of a QUEUE as a line up, what comes in first, goes out first. Because immediate neighborings edges of a vertex are pushed onto the QUEUE first, thus the algorithm will visit those first.</p>
+                <div style={{ textAlign: "justify" }}>
+                    <p>If you haven't read the explanation of Depth First Search, we recommend you do because the idea behind Breadth First Search is quite similar to Depth First Search. Two major differences are that Breadth First Search checks for End Node in its immediate surrounding squares before moving further out, hence "breadth first". Breadth First Search is faster if the End Node is closer to the Start Node.</p>
+                    <p>Since time complexity depends on the data structure that we use to implement the graph, the explanation is similar to that of Depth First Search.</p>
+                    <p>Although space complexity is almost identical to Depth First Search, we still need to beware as to how it stores all vertices to visit. In the case of Depth First Search, we use a STACK, but Breadth First Search makes use of a QUEUE. Think of a QUEUE as a line up, what comes in first, goes out first. Because immediate neighborings edges of a vertex are pushed onto the QUEUE first, thus the algorithm will visit those first.</p>
+                </div>
             </Grid>
         </div>
     )
