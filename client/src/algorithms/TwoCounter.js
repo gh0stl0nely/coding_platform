@@ -8,7 +8,7 @@ import Collapse from '@material-ui/core/Collapse';
 import CloseIcon from '@material-ui/icons/Close';
 
 export default function TwoCounter() {
-    const palindromeArray = ['racecar', 'happy', 'level', 'kayak', 'radar', 'civic', 'madam', 'refer', 'laptop', 'communication', 'environment', 'calculation'];
+    const palindromeArray = ['racecar', 'happy', 'level', 'Kayak', 'radar', 'civIc', 'madam', 'laptop', 'communication', 'npcmpn'];
     const [isFoundAnswer, updateSearchStatus] = useState(true);
     const [isGeneratedNewWord, updateIsGeneratedNewWord] = useState(false);
     const [success, setSuccess] = useState(false);
@@ -27,7 +27,7 @@ export default function TwoCounter() {
     };
 
     function generateNewWord() {
-        let index = Math.floor(Math.random() * 12);
+        let index = Math.floor(Math.random() * 10);
         let newWord = palindromeArray[index];
         let generatedArray = newWord.split('');
 
@@ -156,10 +156,10 @@ export default function TwoCounter() {
             <Grid item xs={12} style={{ textAlign: "center", marginTop: "30px", padding: '0px 40px' }}>
                 <p style={{ fontWeight: "bold" }}>Explanation</p>
                 <div style={{ textAlign: "justify" }}>
-                    <p>
-                        This is an algorithm for solving the "Valid Palindrome Check" problem. If you haven't done it before, sign in to our platform and give it a try!<br></br>
-                    Since a palindrome reads the same backward as forward, we can go through the word and check if the first letter is the same as the last letter, the second letter is the same as the second last letter, etc. This way we don't need to go through the whole word, instead, only half of it! If any letters don't match, then it is not a palindrome. After checking all the letters in the first half of the word match those of the last half, we can confirm that it is a palindrome.
-                    </p>
+                    <p>This is the so-called "Optimal solution" for checking whether a word is a palindrome or not (i.e: racecar or dood). For those who don't know, a palindrome is a word that is the same forward and backward. * Our platform has this question! *</p>
+                    <p>While it might seem intriguing to think that reversing a string and comparing the reversed version to the original one is a good solution, that approach would result in a O(N) space complexity, where N is the length of the original string. That is due to the fact that reversing a string, under the hood, will create another version of the original string backward, which will be stored in another variable of length N.</p>
+                    <p>Using Two Counter algorithm, we are not using additional space to store anything, hence O(1) space complexity. As for time complexity of O(N), the algorithms only goes through the string only once with two counters (one from the start of the string and one from the end of the string) and checks whether there is a mismatch of letter at any point.</p>
+                    <p>Note: the implementation of this visualization checks for strict equality, meaning uppercase and lowercase letter is not deemed equal (i.e: K is NOT equal to k)</p>
                 </div>
 
             </Grid>
