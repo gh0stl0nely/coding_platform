@@ -670,11 +670,11 @@ function spinalCase(str) {
     // Please write inside this function
 function reverseString(str) {
     
-    }
+}
     
     
-    // Do not edit this line
-    module.exports = reverseString;
+// Do not edit this line
+module.exports = reverseString;
     `,
     solutionCode: `
 function reverseString(str) {
