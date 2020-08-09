@@ -589,24 +589,31 @@ var findMaxVowels = function(str, k) {
     isSolved: false,
     beginningCode: `
     // Please write inside this function
-    function diffArray(arr1, arr2) {
-        var newArr = [];
-        return newArr;
-      }
+function diffArray(arr1, arr2) {
+    
+}
     
     
-    // Do not edit this line
-    module.exports = diffArray;
-    `,
+// Do not edit this line
+module.exports = diffArray;
+`,
     solutionCode: `
-    function diffArray(arr1, arr2) {
-        return [...diff(arr1, arr2), ...diff(arr2, arr1)];
-      
-        function diff(a, b) {
-          return a.filter(item => b.indexOf(item) === -1);
+function diffArray(arr1, arr2) {
+    var newArr = [];
+
+    function onlyInFirst(first, second) {
+        for (var i = 0; i < first.length; i++) {
+            if (second.indexOf(first[i]) === -1) {
+                newArr.push(first[i]);
+            }
         }
-      }
-        `,
+    }
+
+    onlyInFirst(arr1, arr2);
+    onlyInFirst(arr2, arr1);
+
+    return newArr;
+}`,
     inputOne: {
         arg1: [1, 2, 3, 5],
         arg2: [1, 2, 3, 4, 5]
@@ -618,8 +625,8 @@ var findMaxVowels = function(str, k) {
     outputOne: [4],
     outputTwo: ['pink', 4],
     answers: {
-        inputs: [{ arg1: [1, 2, 3, 5], arg2: [1, 2, 3, 4, 5] }, { arg1: ['pig', 'horse', 'lion', 'tiger'], arg2: ['pig', 'dog', 'cat', 'tiger'] }, { arg1: [], arg2: [33, 52, 40, 17] }, { arg1: [30, 28, 49, 61, 3, 58, 14, 75], arg2: [30, 28, 49, 61, 3, 58, 14, 75] }, { arg1: ['park', 'school', 'bread', 'bank', 'fruit'], arg2: ['park', 'school', 'supermarket', 'bank'] }],
-        expectedOutputs: [[4], ['horse', 'dog', 'lion', 'cat'], [33, 52, 40, 17], [], ['bread', 'supermarket', 'fruit']]
+        inputs: [{ arg1: [1, 2, 3, 5], arg2: [1, 2, 3, 4, 5] }, { arg1: ['pig', 'horse', 'lion', 'tiger'], arg2: ['pig', 'dog', 'cat', 'tiger'] }, { arg1: [], arg2: [33, 52, 40, 17] }, { arg1: [30, 28, 49, 61, 3, 58, 14, 75], arg2: [30, 28, 49, 61, 3, 58, 14, 75] }, { arg1: ['park', 'school', 'bread', 'bank', 'fruit'], arg2: ['park', 'hospital', 'school', 'supermarket', 'bank'] }],
+        expectedOutputs: [[4], ['horse', 'lion', 'dog', 'cat'], [33, 52, 40, 17], [], ['bread', 'fruit', 'hospital', 'supermarket']]
     }
 }, {
     title: "Convert to Spinal Tap Case",
@@ -630,28 +637,63 @@ var findMaxVowels = function(str, k) {
     isSolved: false,
     beginningCode: `
     // Please write inside this function
-    function spinalCaseConverter(str) {
-        return str;
-      }
+function spinalCaseConverter(str) {
+    
+}
     
     
-    // Do not edit this line
-    module.exports = spinalCaseConverter;
+// Do not edit this line
+module.exports = spinalCaseConverter;
     `,
     solutionCode: `
-    function spinalCase(str) {
-        str = str.replace(/([a-z])([A-Z])/g, "$1 $2");
+function spinalCase(str) {
+    str = str.replace(/([a-z])([A-Z])/g, "$1 $2");
 
-        return str.toLowerCase().split(/(?:_| )+/).join("-");
-    }
-        `,
+    return str.toLowerCase().split(/(?:_| )+/).join("-");
+}`,
     inputOne: 'Today Is Monday',
     inputTwo: "THIS IS A PEN",
     outputOne: 'today-is-monday',
     outputTwo: "this-is-a-pen",
     answers: {
-        inputs: ['Today Is Monday', 'MaryPLays the-piano', 'ChrisLoveEatingSushi', 'Tom_hates_Chemistry_and_Math_classes'],
-        expectedOutputs: ['today-is-monday', 'mary-plays-the-piano', 'i-love-eating-sushi', 'tom-hates-chemistry-and-math-classes']
+        inputs: ['Today Is Monday', 'MaryPLays the-piano', 'HeLovesReadingBooks', 'Tom_hates_Chemistry_and_Math_classes'],
+        expectedOutputs: ['today-is-monday', 'mary-plays-the-piano', 'he-loves-reading-books', 'tom-hates-chemistry-and-math-classes']
+    }
+}, {
+    title: "Reversing a String",
+    description: `Given a string, write a function that returns the reversed string without using the reverse() method.`,
+    difficulty: "Easy",
+    questionType: "String",
+    cacheInput: "",
+    isSolved: false,
+    beginningCode: `
+    // Please write inside this function
+function reverseString(str) {
+    
+}
+    
+    
+// Do not edit this line
+module.exports = reverseString;
+    `,
+    solutionCode: `
+function reverseString(str) {
+    let result = [];
+    let array = str.split('');
+    for (var i = array.length-1; i >= 0; i--){
+        result.push(array[i]);
+    }
+
+    return result.join('');
+}
+        `,
+    inputOne: 'Today Is Monday',
+    inputTwo: "THIS IS A PEN",
+    outputOne: 'yadnoM sI yadoT',
+    outputTwo: "NEP A SI SIHT",
+    answers: {
+        inputs: ['Today Is Monday', 'hello world', 'coding is fun', 'GOOD JOB'],
+        expectedOutputs: ['yadnoM sI yadoT', 'dlrow olleh', 'nuf si gnidoc', 'BOJ DOOG']
     }
 }
 ]

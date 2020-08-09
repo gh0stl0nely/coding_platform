@@ -8,9 +8,9 @@ import Collapse from '@material-ui/core/Collapse';
 import CloseIcon from '@material-ui/icons/Close';
 
 export default function TwoCounter() {
-    const palindromeArray = ['racecar', 'happy', 'level', 'Kayak', 'radar', 'civIc', 'madam', 'laptop', 'communication', 'npcmpn'];
+    const palindromeArray = ['racecar', 'level', 'Kayak', 'radar', 'civIc', 'madam', 'laptop', 'communication', 'npcmpn', 'health'];
     const [isFoundAnswer, updateSearchStatus] = useState(true);
-    const [isGeneratedNewWord, updateIsGeneratedNewWord] = useState(false);
+    const [startNewSearch, updatestartNewSearch] = useState(true);
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
 
@@ -32,11 +32,13 @@ export default function TwoCounter() {
         let generatedArray = newWord.split('');
 
         updateArray(generatedArray);
-        updateIsGeneratedNewWord(true);
+        setError(false);
+        setSuccess(false);
+        updatestartNewSearch(true);
     };
 
     function startSearch() {
-        setSuccess(false);
+        updatestartNewSearch(false);
         let targetIndex = arrayToRender.length - 1;
 
         updateSearchStatus(false);
@@ -84,6 +86,7 @@ export default function TwoCounter() {
                 let newArray = [...arrayToRender];
                 updateArray(newArray);
                 setError(true);
+                updateSearchStatus(true);
                 clearInterval(timer);
                 return;
             };
@@ -102,7 +105,7 @@ export default function TwoCounter() {
                 <Button id="gen-random-array-btn" onClick={generateNewWord} variant="contained" disabled={isFoundAnswer ? false : true} color="primary" style={{ margin: '10px' }}>
                     generate new word
                 </Button>
-                <Button id="gen-random-array-btn" onClick={startSearch} variant="contained" disabled={isFoundAnswer ? false : true} color="primary" style={{ margin: '10px' }}>
+                <Button id="gen-random-array-btn" onClick={startSearch} variant="contained" disabled={startNewSearch ? false : true} color="primary" style={{ margin: '10px' }}>
                     Start
                 </Button>
                 <div>
