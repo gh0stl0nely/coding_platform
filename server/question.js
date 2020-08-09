@@ -581,14 +581,14 @@ var findMaxVowels = function(str, k) {
         expectedOutputs: [3, 2, 0, 1, 2]
     }
 }, {
-    title: "Find Differences between arrays",
+    title: "Find Differences Between Arrays",
     description: `Write a function that compares two given arrays and return a new array with items only found in one of the two arrays (not found in both arrays). If two arrays contain the same items, return an empty array.`,
     difficulty: "Easy",
     questionType: "Array",
     cacheInput: "",
     isSolved: false,
     beginningCode: `
-    // Please write inside this function
+// Please write inside this function
 function diffArray(arr1, arr2) {
     
 }
