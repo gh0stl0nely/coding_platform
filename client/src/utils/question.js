@@ -157,8 +157,8 @@ var fib = function(N) {
     outputOne: 1,
     outputTwo: 2,
     answers: {
-        inputs: [2,3,4, 6, 8],
-        expectedOutputs: [1,2,3, 8, 21]
+        inputs: [2, 3, 4, 6, 8],
+        expectedOutputs: [1, 2, 3, 8, 21]
     }
 }, {
     title: "Reverse a String Recursively",
@@ -200,8 +200,8 @@ function reverseStringRecursive(str) {
     outputOne: "htraE olleH",
     outputTwo: "gnidoc evol I",
     answers: {
-        inputs: ["Hello Earth",  "I love coding", "Monday", "Chocolate", "cat"],
-        expectedOutputs: ["htraE olleH", "gnidoc evol I","yadnoM", "etalocohC", "tac"]
+        inputs: ["Hello Earth", "I love coding", "Monday", "Chocolate", "cat"],
+        expectedOutputs: ["htraE olleH", "gnidoc evol I", "yadnoM", "etalocohC", "tac"]
     }
 }, {
     title: "Unique Occurences",
@@ -293,8 +293,8 @@ var findMajority = function(nums) {
     outputOne: 3,
     outputTwo: 2,
     answers: {
-        inputs: [[3, 2, 3],  [2, 2, 1, 1, 4, 2, 2], [3, 3, 4, 2, 3], [6, 5, 5, 7, 5, 1, 5], [8, 6, 8, 7, 4, 8, 3, 8, 8]],
-        expectedOutputs: [3,2,3, 5, 8]
+        inputs: [[3, 2, 3], [2, 2, 1, 1, 4, 2, 2], [3, 3, 4, 2, 3], [6, 5, 5, 7, 5, 1, 5], [8, 6, 8, 7, 4, 8, 3, 8, 8]],
+        expectedOutputs: [3, 2, 3, 5, 8]
     }
 }, {
     title: "All Repeated Numbers",
@@ -341,8 +341,8 @@ var findNumbers = function(nums) {
     outputOne: [2, 3],
     outputTwo: [2, 4],
     answers: {
-        inputs: [[4, 3, 2, 7, 8, 2, 3, 1], [4, 6, 4, 2, 3, 2], [1, 1, 3, 4, 6, 9, 5, 7, 9], [6, 1, 3, 4, 3, 2], [1, 3, 4, 9, 2, 5], [1,1,1,1,1]],
-        expectedOutputs: [[2, 3], [2, 4], [1, 9], [3], -1, [1,1]]
+        inputs: [[4, 3, 2, 7, 8, 2, 3, 1], [4, 6, 4, 2, 3, 2], [1, 1, 3, 4, 6, 9, 5, 7, 9], [6, 1, 3, 4, 3, 2], [1, 3, 4, 9, 2, 5], [1, 1, 1, 1, 1]],
+        expectedOutputs: [[2, 3], [2, 4], [1, 9], [3], -1, [1, 1]]
     }
 }, {
     title: "Sum Pair",
@@ -416,8 +416,8 @@ function helper(current,compliment){
     outputOne: [-3, 1],
     outputTwo: [-1, 5],
     answers: {
-        inputs: [{arg1: [0, -1, 2, -3, 1], arg2: -2}, {arg1: [0, -1, 2, 3, 5, 7], arg2: 4},{ arg1: [1, -2, -1, 0, 5], arg2: 0 }, { arg1: [6, 1, 3, 4, 0, 2], arg2: 8 }, { arg1: [1, 3, 4, 9, 2, 5], arg2: 10 }],
-        expectedOutputs: [[-3,1], [-1,5], [-1,1], [2, 6], [1, 9]]
+        inputs: [{ arg1: [0, -1, 2, -3, 1], arg2: -2 }, { arg1: [0, -1, 2, 3, 5, 7], arg2: 4 }, { arg1: [1, -2, -1, 0, 5], arg2: 0 }, { arg1: [6, 1, 3, 4, 0, 2], arg2: 8 }, { arg1: [1, 3, 4, 9, 2, 5], arg2: 10 }],
+        expectedOutputs: [[-3, 1], [-1, 5], [-1, 1], [2, 6], [1, 9]]
     }
 }, {
     title: "Longest Consecutive Sequence",
@@ -521,8 +521,8 @@ var findPattern = function(str, pat) {
     outputOne: [0, 9, 12],
     outputTwo: [10],
     answers: {
-        inputs: [{arg1: "AABAACAADAABAABA", arg2: "AABA"},{arg1: "THIS IS A PEN", arg2: "PEN"}, { arg1: "Hello World", arg2: "World" }, { arg1: "red hat, yellow hat, blue hat", arg2: "hat" }, { arg1: "Today is a sunny day", arg2: "day" }],
-        expectedOutputs: [[0,9,12], [10], [6], [4, 16, 26], [2, 17]]
+        inputs: [{ arg1: "AABAACAADAABAABA", arg2: "AABA" }, { arg1: "THIS IS A PEN", arg2: "PEN" }, { arg1: "Hello World", arg2: "World" }, { arg1: "red hat, yellow hat, blue hat", arg2: "hat" }, { arg1: "Today is a sunny day", arg2: "day" }],
+        expectedOutputs: [[0, 9, 12], [10], [6], [4, 16, 26], [2, 17]]
     }
 }, {
     title: "Maximum Vowels",
@@ -578,6 +578,80 @@ var findMaxVowels = function(str, k) {
     outputTwo: 2,
     answers: {
         inputs: [{ arg1: "aabiiidefg", arg2: 3 }, { arg1: "aeiou", arg2: 2 }, { arg1: "rhythms", arg2: 4 }, { arg1: "tryhard", arg2: 4 }, { arg1: "today", arg2: 3 }],
-        expectedOutputs: [3,2,0, 1, 2]
+        expectedOutputs: [3, 2, 0, 1, 2]
     }
-}]
+}, {
+    title: "Find Differences between arrays",
+    description: `Write a function that compares two given arrays and return a new array with items only found in one of the two arrays (not found in both arrays). If two arrays contain the same items, return an empty array.`,
+    difficulty: "Easy",
+    questionType: "Array",
+    cacheInput: "",
+    isSolved: false,
+    beginningCode: `
+    // Please write inside this function
+    function diffArray(arr1, arr2) {
+        var newArr = [];
+        return newArr;
+      }
+    
+    
+    // Do not edit this line
+    module.exports = diffArray;
+    `,
+    solutionCode: `
+    function diffArray(arr1, arr2) {
+        return [...diff(arr1, arr2), ...diff(arr2, arr1)];
+      
+        function diff(a, b) {
+          return a.filter(item => b.indexOf(item) === -1);
+        }
+      }
+        `,
+    inputOne: {
+        arg1: [1, 2, 3, 5],
+        arg2: [1, 2, 3, 4, 5]
+    },
+    inputTwo: {
+        arg1: [1, 'red', 3, 'pink'],
+        arg2: [1, 'red', 3, 4]
+    },
+    outputOne: [4],
+    outputTwo: ['pink', 4],
+    answers: {
+        inputs: [{ arg1: [1, 2, 3, 5], arg2: [1, 2, 3, 4, 5] }, { arg1: ['pig', 'horse', 'lion', 'tiger'], arg2: ['pig', 'dog', 'cat', 'tiger'] }, { arg1: [], arg2: [33, 52, 40, 17] }, { arg1: [30, 28, 49, 61, 3, 58, 14, 75], arg2: [30, 28, 49, 61, 3, 58, 14, 75] }, { arg1: ['park', 'school', 'bread', 'bank', 'fruit'], arg2: ['park', 'school', 'supermarket', 'bank'] }],
+        expectedOutputs: [[4], ['horse', 'dog', 'lion', 'cat'], [33, 52, 40, 17], [], ['bread', 'supermarket', 'fruit']]
+    }
+}, {
+    title: "Convert to Spinal Tap Case",
+    description: `Write a function to convert a given string to spinal case. Spinal case is all lowercase words joined by dashes, for example "happy-birthday".`,
+    difficulty: "Medium",
+    questionType: "String",
+    cacheInput: "",
+    isSolved: false,
+    beginningCode: `
+    // Please write inside this function
+    function spinalCaseConverter(str) {
+        return str;
+      }
+    
+    
+    // Do not edit this line
+    module.exports = spinalCaseConverter;
+    `,
+    solutionCode: `
+    function spinalCase(str) {
+        str = str.replace(/([a-z])([A-Z])/g, "$1 $2");
+
+        return str.toLowerCase().split(/(?:_| )+/).join("-");
+    }
+        `,
+    inputOne: 'Today Is Monday',
+    inputTwo: "THIS IS A PEN",
+    outputOne: 'today-is-monday',
+    outputTwo: "this-is-a-pen",
+    answers: {
+        inputs: ['Today Is Monday', 'MaryPLays the-piano', 'ChrisLoveEatingSushi', 'Tom_hates_Chemistry_and_Math_classes'],
+        expectedOutputs: ['today-is-monday', 'mary-plays-the-piano', 'i-love-eating-sushi', 'tom-hates-chemistry-and-math-classes']
+    }
+}
+]
